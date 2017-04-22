@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_View="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_wine_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_background" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/add_wine_photo"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:adjustViewBounds="true" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="6dp"
+                    android:text="Wine: "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/wineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textAutoComplete"
+                    tools:text="Wine" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="6dp"
+                    android:text="Winery: "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/wineryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wineName"
+                    android:ems="10"
+                    android:inputType="textAutoComplete"
+                    tools:text="Winery" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="6dp"
+                    android:text="Vintage: "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/vintage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wineryName"
+                    android:ems="10"
+                    android:inputType="number"
+                    tools:text="Vintage" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="6dp"
+                    android:text="Grape Variety: "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/grapeVariety"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/vintage"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    tools:text="Grape Variety" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="6dp"
+                    android:text="Tasting Date: "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/tastingDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/vintage"
+                    android:ems="10"
+                    android:inputType="date"
+                    tools:text="Tasting Date" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:text="Description:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/wine_description"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/grapeVariety"
+                android:layout_marginBottom="6dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                tools:text="Description" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:text="Aroma"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <HorizontalScrollView
+                android:id="@+id/aroma_scroll_view"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="6dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/aa_grapefruit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/aa_grapefruit" />
+
+                    <ImageView
+                        android:id="@+id/ab_lemon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ab_lemon" />
+
+                    <ImageView
+                        android:id="@+id/ac_lime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ac_lime" />
+
+                    <ImageView
+                        android:id="@+id/ad_orange"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ad_orange" />
+
+                    <ImageView
+                        android:id="@+id/ae_pear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ae_pear" />
+
+                    <ImageView
+                        android:id="@+id/af_apple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/af_apple" />
+
+                    <ImageView
+                        android:id="@+id/ag_greenapple"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ag_greenapple" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:text="Taste"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <HorizontalScrollView
+                android:id="@+id/taste_scroll_view"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="6dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/previous_flavour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="back" />
+
+                    <ImageSwitcher
+                        android:id="@+id/switcher_taste_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/aa_grapefruit" />
+
+                    <Button
+                        android:id="@+id/next_flavour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="next" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/test234"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="6dp"
+        android:text="Lemon: "
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
+
+    <SeekBar
+        android:id="@+id/seekBarLemon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="250dp"/>
+
+</LinearLayout>
+
+            <TextView
+                android:id="@+id/my_wine_rating_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:text="My Rating: "
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <RatingBar
+                android:id="@+id/my_wine_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:numStars="5"
+                android:rating="3" />
+
+            <Button
+                android:id="@+id/add_new_wine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:text="@string/newWineSubmit" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addWinePhotoFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_photo_camera_white_24dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@color/colorAccent" />
+</RelativeLayout>

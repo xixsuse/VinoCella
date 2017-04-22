@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_View="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wine_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/wine_list_item_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/task_card_half_spacing"
+        android:elevation="@dimen/task_card_elevation"
+        card_View:cardCornerRadius="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:id="@+id/wine_photo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/vintage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/textColorEarthquakeLocation"
+                        android:textSize="20sp"
+                        tools:text="Year" />
+
+                    <TextView
+                        android:id="@+id/wine_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/textColorEarthquakeLocation"
+                        android:textSize="20sp"
+                        tools:text="Wine" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/sub_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/header"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/winery_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/textColorEarthquakeLocation"
+                        android:textSize="20sp"
+                        tools:text="Winery" />
+
+                    <TextView
+                        android:id="@+id/grape_variety"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/textColorEarthquakeLocation"
+                        android:textSize="20sp"
+                        tools:text="Grape" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/wine_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grape_variety"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-light"
+                    android:maxLines="2"
+                    android:textColor="@color/textColorEarthquakeLocation"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+                    tools:text="Description of the wine" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+

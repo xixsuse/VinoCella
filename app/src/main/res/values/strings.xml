@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">VinoCella</string>
+    <string name="homescreen">Hello World</string>
+    <string name="newWineSubmit">Submit</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+</resources>

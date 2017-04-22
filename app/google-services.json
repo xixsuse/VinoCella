@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "395914642074",
+    "firebase_url": "https://vinocella-ae4d9.firebaseio.com",
+    "project_id": "vinocella-ae4d9",
+    "storage_bucket": "vinocella-ae4d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395914642074:android:bbe11c27a1999d9f",
+        "android_client_info": {
+          "package_name": "com.example.android.cellavino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395914642074-2qm3u4r1uagm5b6ftcpsjbiocufndemr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.cellavino",
+            "certificate_hash": "87f70fa3c82e517fd01abd6976b40355ab380dc5"
+          }
+        },
+        {
+          "client_id": "395914642074-o8p8fk0o2h1ibaiumqpmtj6u9dlu4omo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ2arZ3lCSr9eEMLb6O5Jn3RZCSnOujMA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395914642074-o8p8fk0o2h1ibaiumqpmtj6u9dlu4omo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    tools:context="com.example.android.cellavino.UserInterface.MainActivity">
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_navigation"
+        app:menu="@menu/activity_navigation_drawer"
+        android:fitsSystemWindows="true">
+    </android.support.design.widget.NavigationView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home_background" />
+
+        <ListView
+            android:id="@+id/wineListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll"
+            tools:listitem="@layout/wine_list_item" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addWineFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:src="@drawable/grape_logo"
+            app:elevation="6dp"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp"
+            app:srcCompat="@color/colorAccent" />
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
+
