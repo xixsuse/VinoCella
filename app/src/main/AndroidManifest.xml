@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserInterface.AddWine" />
+        <activity android:name=".UserInterface.CreateNewWine" />
+        <activity android:name=".UserInterface.MyWinesFragment" />
+
     </application>
 
 </manifest>

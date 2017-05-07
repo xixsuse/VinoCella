@@ -17,7 +17,10 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
+import com.example.android.cellavino.PojoDirectory.WineDetails;
 import com.example.android.cellavino.R;
+import com.example.android.cellavino.Utils.Constants;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
@@ -135,7 +138,11 @@ public class AddWine extends AppCompatActivity {
         mAddNewWine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final WineDetails wineDetails = new WineDetails(mWineName.getText().toString(), mWineryName.getText().toString(), mVintage.getText().toString(), mGrapeVariety.getText().toString(), mTastingDate.getText().toString(), mWineDescription.getText().toString(), mMyWineRating.getRating(), mWinePhotoUrl.toString());
+                addNewWineToDatabase();
+            }
+
+            public void addNewWineToDatabase() {
+                WineDetails wineDetails = new WineDetails(mWineName.getText().toString(), mWineryName.getText().toString(), mVintage.getText().toString(), mGrapeVariety.getText().toString(), mTastingDate.getText().toString(), mWineDescription.getText().toString(), mMyWineRating.getRating(), mWinePhotoUrl.toString());
                 mWineDatabaseReference.push().setValue(wineDetails);
 
                 // Clear input box
@@ -146,6 +153,13 @@ public class AddWine extends AppCompatActivity {
                 mTastingDate.setText("");
                 mWineDescription.setText("");
 
+                //if (!wineDetails.equals(""))
+                //{
+                //    Firebase wineDetails2 = new Firebase(Constants.FIREBASE_LOCATION_WINE_DETAILS);
+                //    Firebase newDetailsRef = wineDetails2.push();
+                //    /* Save wineDetails2.push() to maintain same random Id */
+                //    final String listId = newDetailsRef.getKey();
+                //}
                 // Create a new intent to go back to the home screen
                 Intent MainActivity = new Intent(AddWine.this, MainActivity.class);
                 // Start the new activity
