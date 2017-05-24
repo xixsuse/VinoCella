@@ -20,76 +20,202 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/wine_list_item_details"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/task_card_half_spacing"
-            android:layout_marginTop="@dimen/task_card_half_spacing"
-            android:elevation="@dimen/task_card_elevation"
-            card_View:cardCornerRadius="0dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/wine_list_item_details"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:text="Wine: "
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/create_wine_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            tools:text="Wine" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:text="Winery: "
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/create_wine_winery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            tools:text="Winery" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:text="Year: "
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/create_wine_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            tools:text="Year" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:text="Variety: "
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/create_wine_variety"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            tools:text="Variety" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:text="Tasting Date: "
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/create_wine_tasting_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            tools:text="Tasting Date" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:layout_marginLeft="6dp"
-                        android:text="Wine: "
+                        android:layout_marginTop="4dp"
+                        android:text="Notes/Description: "
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/create_wine_name"
+                        android:id="@+id/create_wine_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:ems="10"
+                        android:inputType="textMultiLine"
+                        tools:text=" " />
+
+
+                    <Button
+                        android:id="@+id/create_new_wine_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textAutoComplete"
-                        tools:text="Wine" />
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/newWineSubmit" />
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="6dp"
-                        android:text="Year: "
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/create_wine_year"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textAutoComplete"
-                        tools:text="Year" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/create_new_wine_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/newWineSubmit" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </ScrollView>
 </RelativeLayout>

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.android.cellavino.PojoDirectory.WineDetails;
+import com.example.android.cellavino.PojoDirectory.UI1.WineDetails;
 import com.example.android.cellavino.R;
 
 

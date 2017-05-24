@@ -1,4 +1,4 @@
-package com.example.android.cellavino.PojoDirectory;
+package com.example.android.cellavino.PojoDirectory.UI2;
 
 import com.example.android.cellavino.Utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;

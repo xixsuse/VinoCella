@@ -1,18 +1,18 @@
-package com.example.android.cellavino.UserInterface;
+package com.example.android.cellavino.UserInterface2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.android.cellavino.PojoDirectory.WinePojo;
+import com.example.android.cellavino.PojoDirectory.UI2.WinePojo;
 import com.example.android.cellavino.R;
+import com.example.android.cellavino.UserInterface.AddWine;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.firebase.client.ServerValue;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -24,6 +24,9 @@ public class CreateNewWine extends AppCompatActivity {
 
     public TextView mCreateWineName;
     public TextView mCreateWineVintage;
+    public TextView mCreateWineVariety;
+    public TextView mCreateWineTastingDate;
+    public TextView mCreateWineDescription;
     public Button mCreateNewWine;
 
     @Override
@@ -32,6 +35,9 @@ public class CreateNewWine extends AppCompatActivity {
         setContentView(R.layout.create_new_wine);
         mCreateWineVintage = (TextView) findViewById(R.id.create_wine_year);
         mCreateWineName = (TextView) findViewById(R.id.create_wine_name);
+        mCreateWineVariety = (TextView) findViewById(R.id.create_wine_variety);
+        mCreateWineTastingDate = (TextView) findViewById(R.id.create_wine_tasting_date);
+        mCreateWineDescription = (TextView) findViewById(R.id.create_wine_description);
         mCreateNewWine = (Button) findViewById(R.id.create_new_wine_button);
 
         //set the click listener on the button that  pushes wine into the database
@@ -53,6 +59,9 @@ public class CreateNewWine extends AppCompatActivity {
         // Get the dtails that the user has entered and pass them into a string.
         String newWineToAdd = mCreateWineName.getText().toString();
         String newWineToAddVintage = mCreateWineVintage.getText().toString();
+        String newWineToAddVariety = mCreateWineVariety.getText().toString();
+        String newWineToAddTastingDate = mCreateWineTastingDate.getText().toString();
+        String newWineToAddDescription = mCreateWineDescription.getText().toString();
         String taster = "Andrew Marshall".toString();
 
         if (!mCreateWineName.equals("")) {
@@ -66,18 +75,24 @@ public class CreateNewWine extends AppCompatActivity {
             timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP_CREATED, ServerValue.TIMESTAMP);
 
             //Building the wine POJO so that it can be added to Firebase.
-            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddVintage, taster, timestampCreated);
+            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddVintage, newWineToAddVariety, taster, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
 
             // Go to the "WineListName" child node of the root node.  This will create the node for you if it doesn't already exist.
             // Then using the setValue menu it will set value the node to WineName.
             //Firebase wineNamePushID;
             wineNameFirebaseRef.setValue(winePojo);
 
-            //This then resets the text to Blank, and returns the user to the ABC activity.
+            //This then resets the text to lank.
             mCreateWineName.setText("");
             mCreateWineVintage.setText("");
+            mCreateWineVariety.setText("");
+            mCreateWineTastingDate.setText("");
+            mCreateWineDescription.setText("");
 
-            //TODO send the customer back to the desired activyt.
+            //Send the user back the the wine list.  They'll be able to see all the wines they're recently added.
+            Intent MyWinesList = new Intent(CreateNewWine.this, MyWinesList.class);
+            // Start the new activity
+            startActivity(MyWinesList);
         }
 
     }

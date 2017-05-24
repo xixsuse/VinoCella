@@ -1,4 +1,4 @@
-package com.example.android.cellavino.PojoDirectory;
+package com.example.android.cellavino.PojoDirectory.UI2;
 
 import com.example.android.cellavino.Utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +13,9 @@ import java.util.HashMap;
 public class WinePojo {
     String wineName;
     String wineVintage;
+    String wineVariety;
+    String wineTastingDate;
+    String wineDescription;
     String taster;
     private HashMap<String, Object> timestampLastChanged;
     private HashMap<String, Object> timestampCreated;
@@ -22,9 +25,12 @@ public class WinePojo {
 
     }
 
-    public WinePojo(String wineName, String wineVintage, String taster, HashMap<String, Object> timestampCreated) {
+    public WinePojo(String wineName, String wineVintage, String wineVariety, String taster, String wineTastingDate, String wineDescription, HashMap<String, Object> timestampCreated) {
         this.wineName = wineName;
         this.wineVintage = wineVintage;
+        this.wineVariety = wineVariety;
+        this.wineTastingDate = wineTastingDate;
+        this.wineDescription = wineDescription;
         this.taster = taster;
         this.timestampCreated = timestampCreated;
 
@@ -42,6 +48,19 @@ public class WinePojo {
     public String getWineVintage() {
         return wineVintage;
     }
+
+    public String getWineVariety() {
+        return wineVariety;
+    }
+
+    public String getWineTastingDate() {
+        return wineTastingDate;
+    }
+
+    public String getWineDescription() {
+        return wineDescription;
+    }
+
 
     public String getTaster() {
         return taster;

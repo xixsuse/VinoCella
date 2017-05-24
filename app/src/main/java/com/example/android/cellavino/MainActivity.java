@@ -1,4 +1,4 @@
-package com.example.android.cellavino.UserInterface;
+package com.example.android.cellavino;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,15 +12,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.cellavino.PojoDirectory.WineDetails;
-import com.example.android.cellavino.R;
+import com.example.android.cellavino.PojoDirectory.UI1.WineDetails;
+import com.example.android.cellavino.UserInterface.AddWine;
+import com.example.android.cellavino.UserInterface.WineAdapter;
+import com.example.android.cellavino.UserInterface2.CreateNewWine;
+import com.example.android.cellavino.UserInterface2.MyWinesList;
 import com.firebase.client.Firebase;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,15 +104,6 @@ public class MainActivity extends AppCompatActivity {
         mNavigationDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //this causes issues when running the app.
-        // Set the drawer adapter for the attempt at he navigation view
-        //mMenuOptions = getResources().getStringArray(R.array.navigation_drawer_options);
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mMenuOptions));
-
-        //Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 
         //Initialise the ListView
         List<WineDetails> wineDetails = new ArrayList<>();
@@ -214,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.view_my_wines:
                 //view the test screens for Andrews Wines
-                Intent intent2 = new Intent(MainActivity.this, MyWinesFragment.class);
+                Intent intent2 = new Intent(MainActivity.this, MyWinesList.class);
                 startActivity(intent2);
                 return true;
 
