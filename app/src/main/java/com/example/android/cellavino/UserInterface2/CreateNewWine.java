@@ -23,6 +23,7 @@ import java.util.HashMap;
 public class CreateNewWine extends AppCompatActivity {
 
     public TextView mCreateWineName;
+    public TextView mCreateWineWinery;
     public TextView mCreateWineVintage;
     public TextView mCreateWineVariety;
     public TextView mCreateWineTastingDate;
@@ -35,6 +36,7 @@ public class CreateNewWine extends AppCompatActivity {
         setContentView(R.layout.create_new_wine);
         mCreateWineVintage = (TextView) findViewById(R.id.create_wine_year);
         mCreateWineName = (TextView) findViewById(R.id.create_wine_name);
+        mCreateWineWinery = (TextView) findViewById(R.id.create_wine_winery);
         mCreateWineVariety = (TextView) findViewById(R.id.create_wine_variety);
         mCreateWineTastingDate = (TextView) findViewById(R.id.create_wine_tasting_date);
         mCreateWineDescription = (TextView) findViewById(R.id.create_wine_description);
@@ -58,6 +60,7 @@ public class CreateNewWine extends AppCompatActivity {
         //get the reference to the Firebase URL, then get the string that user has entered and push that into the Database.
         // Get the dtails that the user has entered and pass them into a string.
         String newWineToAdd = mCreateWineName.getText().toString();
+        String newWineToAddWinery = mCreateWineWinery.getText().toString();
         String newWineToAddVintage = mCreateWineVintage.getText().toString();
         String newWineToAddVariety = mCreateWineVariety.getText().toString();
         String newWineToAddTastingDate = mCreateWineTastingDate.getText().toString();
@@ -75,7 +78,7 @@ public class CreateNewWine extends AppCompatActivity {
             timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP_CREATED, ServerValue.TIMESTAMP);
 
             //Building the wine POJO so that it can be added to Firebase.
-            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddVintage, newWineToAddVariety, taster, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
+            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddWinery, newWineToAddVintage, newWineToAddVariety, taster, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
 
             // Go to the "WineListName" child node of the root node.  This will create the node for you if it doesn't already exist.
             // Then using the setValue menu it will set value the node to WineName.
@@ -84,6 +87,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             //This then resets the text to lank.
             mCreateWineName.setText("");
+            mCreateWineWinery.setText("");
             mCreateWineVintage.setText("");
             mCreateWineVariety.setText("");
             mCreateWineTastingDate.setText("");

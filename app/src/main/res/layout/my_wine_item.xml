@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_View="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ImageView
@@ -12,97 +13,164 @@
         android:scaleType="centerCrop"
         android:src="@drawable/home_background" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/wine_list_item_details"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/task_card_half_spacing"
-        android:elevation="@dimen/task_card_elevation"
-        card_View:cardCornerRadius="0dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/wine_list_item_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="Winery: "
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/view_wine_winery"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="6dp"
-                    android:ems="10"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    tools:text="Winery" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <LinearLayout
+
+                    <TextView
+                        android:id="@+id/view_wine_winery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:ems="10"
+                        android:layout_marginLeft="6dp"
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/textColorEarthquakeLocation"
+                        tools:text="Winery" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/view_wine_variety"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:ems="10"
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-light"
+                            android:textAllCaps="true"
+                            android:textColor="@color/textColorEarthquakeLocation"
+                            tools:text="Variety" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="Variety: "
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/view_wine_variety"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="6dp"
-                    android:ems="10"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    tools:text="Variety" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="Date Tasted: "
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:text="Date Tasted: "
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textAllCaps="true"
+                            android:textColor="@color/textColorEarthquakeLocation" />
 
-                <TextView
-                    android:id="@+id/view_wine_date_tasted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    tools:text="Date Tasted" />
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/view_wine_date_tasted"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:layout_marginLeft="6dp"
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-light"
+                            android:textAllCaps="true"
+                            android:textColor="@color/textColorEarthquakeLocation"
+                            tools:text="Date Tasted" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="My Notes / Description: "
+                            android:layout_marginLeft="6dp"
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textAllCaps="true"
+                            android:textColor="@color/textColorEarthquakeLocation" />
+
+                        <TextView
+                            android:id="@+id/view_wine_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:ems="10"
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-light"
+                            android:textAllCaps="true"
+                            android:textColor="@color/textColorEarthquakeLocation"
+                            tools:text="Description" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
 
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/delete_my_wine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_white_24dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@color/colorAccent" />
 
 </RelativeLayout>

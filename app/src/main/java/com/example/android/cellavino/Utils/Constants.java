@@ -13,9 +13,9 @@ public class Constants {
 
     public static final String FIREBASE_LOCATION_WINE_DETAILS = "New_Wine_Details";
     public static final String FIREBASE_LOCATION_THIS_WINE_DETAILS = "Specific_Wine_Details";
-    public static final String FIREBASE_LOCATION_USER_DETAILS = "User_Details";
     public static final String FIREBASE_LOCATION_WINERY_DETAILS = "Winery_Details";
     public static final String FIREBASE_WINE_FLAVOR_PROFILE = "Flavor_Profile";
+    public static final String FIREBASE_LOCATION_USERS = "CellaVino_Users";
 
 
 
@@ -34,17 +34,19 @@ public class Constants {
      */
 
     public static final String FIREBASE_URL = "https://vinocella-ae4d9.firebaseio.com/";
-    public static final String FIREBASE_URL_LOCATION_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINE_DETAILS;
     public static final String FIREBASE_URL_LOCATION_THIS_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_THIS_WINE_DETAILS;
+    public static final String FIREBASE_URL_LOCATION_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINE_DETAILS;
+    public static final String FIREBASE_URL_LOCATION_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
 
     public static final String FIREBASE_URL_LOCATION_WINERY_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINERY_DETAILS;
-    public static final String FIREBASE_URL_USER_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_DETAILS;
     public static final String FIREBASE_URL_WINE_FLAVOR_PROFILE = FIREBASE_URL + "/" + FIREBASE_WINE_FLAVOR_PROFILE;
     public static final String FIREBASE_URL_MY_WINE_LIST = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINE_DETAILS;
 
     /**
      * Constants for bundles, extras and shared preferences keys
      */
+    public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
+
 
 
     public static final String WINE_LIST_ID = "WINE_LIST_ID";

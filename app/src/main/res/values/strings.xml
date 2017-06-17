@@ -9,6 +9,37 @@
     <string-array name="navigation_drawer_options">
         <item>AddWine</item>
         <item>CreateNewWine</item>
+        <item>Test Option</item>
         <item>Sign Out</item>
     </string-array>
+
+    <!-- Base Error Strings-->
+    <string name="log_error_updating_data">Error updating data: </string>
+    <string name="log_error_the_read_failed">The read failed: </string>
+    <string name="log_error_occurred">"Error occurred: "</string>
+
+
+    <!-- Activity Titles  -->
+    <string name="title_activity_create_account">Create Account</string>
+
+    <!-- LoginActivity and Create Account Screen  -->
+    <string name="text_dont_have_account">Don\'t have an account?</string>
+    <string name="text_already_have_account">Already have an account?</string>
+    <string name="button_create_account">Sign Up</string>
+    <string name="button_sign_in">Sign In</string>
+    <string name="button_signin_with_google">SIGN IN WITH GOOGLE</string>
+    <string name="button_signin_with_password">SIGN IN</string>
+    <string name="hint_enter_email">Enter your email</string>
+    <string name="hint_enter_wine_name">Wine name</string>
+    <string name="hint_enter_winery_name">Winery</string>
+    <string name="hint_enter_wine_vintage">Vintage</string>
+    <string name="hint_enter_wine_variety">Grape Variety</string>
+    hint_description
+    <string name="hint_description">Enter your description here</string>
+    <string name="hint_enter_wine_tasting_date">Tasting Date</string>
+    <string name="hint_enter_username">Enter your name</string>
+    <string name="hint_enter_password">Enter password</string>
+    <string name="image_view_logo_image">Logo Image</string>
+
+
 </resources>

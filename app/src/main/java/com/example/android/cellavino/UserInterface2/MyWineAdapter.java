@@ -36,10 +36,4 @@ public class MyWineAdapter extends FirebaseListAdapter<SpecificWineDetailsPojo> 
         this.notifyDataSetChanged();
     }
 
-    //TODO update this
-    /**
-     * Protected method that populates the view attached to the adapter (list_view_friends_autocomplete)
-     * with items inflated from single_active_list_item.xml
-     * populateView also handles data changes and updates the listView accordingly
-     */
 }

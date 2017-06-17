@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,12 +18,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.cellavino.Accounts.Login;
 import com.example.android.cellavino.PojoDirectory.UI1.WineDetails;
+import com.example.android.cellavino.PojoDirectory.UI2.UserDetailsPojo;
 import com.example.android.cellavino.UserInterface.AddWine;
 import com.example.android.cellavino.UserInterface.WineAdapter;
 import com.example.android.cellavino.UserInterface2.CreateNewWine;
 import com.example.android.cellavino.UserInterface2.MyWinesList;
+import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,16 +37,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
     private String mUsername;
@@ -151,14 +160,51 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(MainActivity.this, "You are now signed in!", Toast.LENGTH_SHORT).show();
+                FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                String uid = user.getUid();
+                String userName = user.getDisplayName();
+                String userEmail = user.getEmail();
+                createUserInFirebaseHelper(uid, userName, userEmail);
+                Toast.makeText(MainActivity.this, "Hello " + userName + "!", Toast.LENGTH_SHORT).show();
+
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(MainActivity.this, "Sign in cancelled", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
+    }
+
+    private void createUserInFirebaseHelper(String uid, String userName, String userEmail) {
+
+        final String mUserName = userName;
+        final String mUserEmail = userEmail;
+        final Firebase userDetailLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid);
+
+        //See if there is already a user (for example, if they already logged in with an associated google account
+
+        userDetailLocation.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
+                // If there is no user, make one
+                if (dataSnapshot.getValue() == null) {
+                    //Set raw version of date to the ServerValue.TIMESTAMP value and save into dateCreatedMap
+                    HashMap<String, Object> timestampJoined = new HashMap<>();
+                    timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+                    UserDetailsPojo newUser = new UserDetailsPojo(mUserName, mUserEmail, timestampJoined);
+                    userDetailLocation.setValue(newUser);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d(LOG_TAG, getString(R.string.log_error_occurred) + firebaseError.getMessage());
+
+            }
+        });
     }
 
     //When the app comes back from background state etc
@@ -205,9 +251,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.view_my_wines:
-                //view the test screens for Andrews Wines
+                //view the working wine list Andrews Wines
                 Intent intent2 = new Intent(MainActivity.this, MyWinesList.class);
                 startActivity(intent2);
+                return true;
+
+            case R.id.test_option:
+                //view the test screens for Andrews Wines
+                Intent intent3 = new Intent(MainActivity.this, Login.class);
+                startActivity(intent3);
                 return true;
 
             default:
@@ -272,19 +324,4 @@ public class MainActivity extends AppCompatActivity {
         mWineName = (TextView) rootView.findViewById(R.id.wine_name);
     }
 
-
-    /* The click listner for ListView in the navigation drawer */
-    //private class DrawerItemClickListener implements ListView.OnItemClickListener {
-    //    @Override
-    //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    //        selectItem(position);
-    //    }
-    //}
-
-    //private void selectItem(int position) {
-    //    // just testing this to see if it works
-    //    //To Do: update this to a toast message, and then start adding functionality.
-    //    mDrawerList.setItemChecked(position, true);
-    //    mNavigationDrawerLayout.closeDrawer(mDrawerList);
-    //}
 }

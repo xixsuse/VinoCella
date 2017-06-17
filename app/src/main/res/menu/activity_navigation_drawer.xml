@@ -14,6 +14,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="My Wines" />
         <item
+            android:id="@+id/test_option"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Test Option" />
+        <item
             android:id="@+id/sign_out_menu"
             android:title="@string/sign_out"
             app:showAsAction="never"/>

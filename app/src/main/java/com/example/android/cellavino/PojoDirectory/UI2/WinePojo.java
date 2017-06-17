@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 public class WinePojo {
     String wineName;
+    String wineWinery;
     String wineVintage;
     String wineVariety;
     String wineTastingDate;
@@ -25,8 +26,9 @@ public class WinePojo {
 
     }
 
-    public WinePojo(String wineName, String wineVintage, String wineVariety, String taster, String wineTastingDate, String wineDescription, HashMap<String, Object> timestampCreated) {
+    public WinePojo(String wineName, String wineWinery, String wineVintage, String wineVariety, String taster, String wineTastingDate, String wineDescription, HashMap<String, Object> timestampCreated) {
         this.wineName = wineName;
+        this.wineWinery = wineWinery;
         this.wineVintage = wineVintage;
         this.wineVariety = wineVariety;
         this.wineTastingDate = wineTastingDate;
@@ -43,6 +45,10 @@ public class WinePojo {
 
     public String getWineName() {
         return wineName;
+    }
+
+    public String getWineWinery() {
+        return wineWinery;
     }
 
     public String getWineVintage() {

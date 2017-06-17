@@ -28,4 +28,12 @@
     <color name="magnitude9">#D93218</color>
     <!-- Magnitude circle color for an earthquake with magnitude over 10 -->
     <color name="magnitude10plus">#C03823</color>
+
+    <color name="grey">#EDEEEF</color>
+    <color name="dark_green">#388E3C</color>
+    <color name="dark_grey">#AEAEAE</color>
+    <color name="accent">#DF4A32</color>
+    <color name="light_black">#747474</color>
+    <color name="black">#616161</color>
+    <color name="google">#C6412C</color>
 </resources>

@@ -3,6 +3,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    android:layout_marginStart="6dp"
         android:elevation="4dp">
 
         <LinearLayout
@@ -13,16 +16,46 @@
             android:drawSelectorOnTop="true"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/detail_wine_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Wine Name"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/detail_wine_vintage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="true"
+                    android:textColor="@color/textColorEarthquakeLocation"
+                    android:text="Vintage" />
+
+                <TextView
+                    android:id="@+id/detail_wine_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="true"
+                    android:textColor="@color/textColorEarthquakeLocation"
+                    android:text="Wine Name" />
+
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/detail_wine_vintage"
+                android:id="@+id/detail_wine_variety"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vintage"/>
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/textColorEarthquakeLocation"
+                android:textSize="20sp"
+                android:text="Variety" />
         </LinearLayout>
 </FrameLayout>
