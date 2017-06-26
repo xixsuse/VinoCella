@@ -1,6 +1,7 @@
 package com.example.android.cellavino;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.example.android.cellavino.UserInterface.AddWine;
 import com.example.android.cellavino.UserInterface.WineAdapter;
 import com.example.android.cellavino.UserInterface2.CreateNewWine;
 import com.example.android.cellavino.UserInterface2.MyWinesList;
+import com.example.android.cellavino.UserInterface2.MyWinesListFragment;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
-    private String mUsername;
+    public String mUsername;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mWineDatabaseReference;
     private DatabaseReference mUserDatabaseReference;
+    private DatabaseReference mMyWinesReference;
     private ChildEventListener mChildEventListener;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -78,11 +82,17 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private ListView mDrawerList;
     private String[] mMenuOptions;
+    private Uri userProfilePic;
+    private TextView mUsernameTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //setContentView(R.layout.my_wines_list);
+        //setContentView(R.layout.activity_container);
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container, new MyWinesListFragment()).commit();
 
         //Initialise Firebase
         Firebase.setAndroidContext(this);
@@ -100,12 +110,15 @@ public class MainActivity extends AppCompatActivity {
         //WineDatabase in Firebase initialisation
         mWineDatabaseReference = mFirebaseDatabase.getReference().child("Wine Details");
         mUserDatabaseReference = mFirebaseDatabase.getReference().child("Users");
+        mMyWinesReference = mFirebaseDatabase.getReference().child("Users").child("myWines");
+
 
         //initialising the views
-        ListView mWineListView = (ListView) findViewById(R.id.wineListView);
+        //ListView mWineListView = (ListView) findViewById(R.id.wineListView);
 
 
-        //Navigation Drawer setup
+        //Navigation Drawer setup.  Temporarily disabling it until I've worked out how to do it properly.
+        /*
         mDrawerList = (ListView) findViewById(R.id.navigation_drawer_menu);
         mNavigationDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mNavigationDrawerLayout, R.string.Open, R.string.Close);
@@ -114,10 +127,16 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        */
+
+        //Removing the List View from the main page to get a Minimum Usable Subset out to production.
+        /*
         //Initialise the ListView
         List<WineDetails> wineDetails = new ArrayList<>();
         mWineAdapter = new WineAdapter(this, R.layout.wine_list_item, (ArrayList<WineDetails>) wineDetails);
         mWineListView.setAdapter(mWineAdapter);
+        */
+
 
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -127,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     //user is signed in
                     onSignedInInialise(user.getDisplayName());
+
                 } else {
                     //user is signed out
                     onSignedOutCleanup();
@@ -145,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         //add code that will bring up the Add_Wine screen when a user clicks on the floating action button for addwine.
+
         FloatingActionButton addWineFab = (FloatingActionButton) findViewById(R.id.addWineFab);
         addWineFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +174,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        //Add a View My Wines button
+
+
+        Button viewMyWinesButton = (Button) findViewById(R.id.view_my_wines);
+        viewMyWinesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MyWinesList.class);
+                startActivity(intent);
+
+            }
+        });
+
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        String userName = user.getDisplayName();
+        mUsernameTextView = (TextView) findViewById(R.id.user_name);
+        mUsernameTextView.setText(userName);
 
     }
 
@@ -163,11 +203,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(MainActivity.this, "You are now signed in!", Toast.LENGTH_SHORT).show();
                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
                 String uid = user.getUid();
                 String userName = user.getDisplayName();
                 String userEmail = user.getEmail();
+                Uri userProfilePic = user.getPhotoUrl();
                 createUserInFirebaseHelper(uid, userName, userEmail);
                 Toast.makeText(MainActivity.this, "Hello " + userName + "!", Toast.LENGTH_SHORT).show();
 
@@ -222,8 +262,8 @@ public class MainActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
-        detachDatabaseReadListener();
-        mWineAdapter.clear();
+        //detachDatabaseReadListener();
+        //mWineAdapter.clear();
     }
 
     @Override
@@ -235,15 +275,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mActionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
+        //if (mActionBarDrawerToggle.onOptionsItemSelected(item)) {
+        //    return true;
+        //}
 
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
                 //sign out
                 AuthUI.getInstance().signOut(this);
                 return true;
+            /*
             case R.id.menu_add_wine:
                 //add wine
                 Intent intent = new Intent(MainActivity.this, AddWine.class);
@@ -261,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent3 = new Intent(MainActivity.this, Login.class);
                 startActivity(intent3);
                 return true;
-
+            */
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -270,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignedInInialise(String username) {
         mUsername = username;
-        attachDatabaseReadListener();
+        //attachDatabaseReadListener();
 
         //this code adds a new user name each time it logs in.
         //mUserDatabaseReference.push().setValue(username);
@@ -279,17 +320,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
-        mWineAdapter.clear();
+        //mWineAdapter.clear();
         detachDatabaseReadListener();
     }
 
+    /*
     private void attachDatabaseReadListener() {
         if (mChildEventListener == null) {
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     WineDetails wineDetails = dataSnapshot.getValue(WineDetails.class);
-                    mWineAdapter.add(wineDetails);
+                    //mWineAdapter.add(wineDetails);
                 }
 
                 @Override
@@ -311,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
             mWineDatabaseReference.addChildEventListener(mChildEventListener);
         }
     }
-
+*/
     private void detachDatabaseReadListener() {
         if (mChildEventListener != null) {
             mWineDatabaseReference.removeEventListener(mChildEventListener);
@@ -319,9 +361,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void initializeScreen(View rootView) {
         mWineInformation = (ListView) rootView.findViewById(R.id.wine_list_item_details);
         mWineName = (TextView) rootView.findViewById(R.id.wine_name);
     }
+
 
 }

@@ -13,8 +13,12 @@ import com.example.android.cellavino.UserInterface.AddWine;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.firebase.client.ServerValue;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
+
+import static com.example.android.cellavino.Utils.Constants.FIREBASE_LOCATION_USERS;
 
 /**
  * Created by Andrew on 25/04/2017.
@@ -29,11 +33,16 @@ public class CreateNewWine extends AppCompatActivity {
     public TextView mCreateWineTastingDate;
     public TextView mCreateWineDescription;
     public Button mCreateNewWine;
+    public FirebaseAuth mFirebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_wine);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
         mCreateWineVintage = (TextView) findViewById(R.id.create_wine_year);
         mCreateWineName = (TextView) findViewById(R.id.create_wine_name);
         mCreateWineWinery = (TextView) findViewById(R.id.create_wine_winery);
@@ -65,25 +74,36 @@ public class CreateNewWine extends AppCompatActivity {
         String newWineToAddVariety = mCreateWineVariety.getText().toString();
         String newWineToAddTastingDate = mCreateWineTastingDate.getText().toString();
         String newWineToAddDescription = mCreateWineDescription.getText().toString();
-        String taster = "Andrew Marshall".toString();
+
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        String uid = user.getUid().toString();
+        String userName = user.getDisplayName().toString();
+        String taster = user.getDisplayName().toString();
+        //String taster = "Andrew Marshall".toString();
 
         if (!mCreateWineName.equals("")) {
+            //Write the wine details to the main wine database.
             Firebase wineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS);
-
             Firebase wineNameFirebaseRef = wineNameRef.push();
             final String winePushID = wineNameFirebaseRef.getKey();
-
-
             HashMap<String, Object> timestampCreated = new HashMap<>();
             timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP_CREATED, ServerValue.TIMESTAMP);
 
             //Building the wine POJO so that it can be added to Firebase.
-            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddWinery, newWineToAddVintage, newWineToAddVariety, taster, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
+            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddWinery, newWineToAddVintage, newWineToAddVariety, taster, userName, uid, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
 
             // Go to the "WineListName" child node of the root node.  This will create the node for you if it doesn't already exist.
             // Then using the setValue menu it will set value the node to WineName.
             //Firebase wineNamePushID;
             wineNameFirebaseRef.setValue(winePojo);
+
+
+            // then this part of the code will write the details that are needed to be put into the card under the uid.
+            //myWineSummary
+
+            Firebase myWinesRefLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.FIREBASE_MY_WINES).child(winePushID);
+            myWinesRefLocation.setValue(winePojo);
+
 
             //This then resets the text to lank.
             mCreateWineName.setText("");

@@ -19,15 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Accounts.Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Accounts.Login" />
         <activity android:name=".Accounts.CreateAccount" />
         <activity android:name=".UserInterface.AddWine" />
         <activity android:name=".UserInterface2.CreateNewWine" />
+        <activity android:name=".UserInterface2.EditWine" />
         <activity android:name=".UserInterface2.WineInformation" />
         <activity android:name=".UserInterface2.MyWinesList" />
 

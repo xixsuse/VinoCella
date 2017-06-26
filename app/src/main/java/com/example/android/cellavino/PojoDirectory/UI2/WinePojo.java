@@ -18,6 +18,8 @@ public class WinePojo {
     String wineTastingDate;
     String wineDescription;
     String taster;
+    String userName;
+    String uid;
     private HashMap<String, Object> timestampLastChanged;
     private HashMap<String, Object> timestampCreated;
 
@@ -26,7 +28,7 @@ public class WinePojo {
 
     }
 
-    public WinePojo(String wineName, String wineWinery, String wineVintage, String wineVariety, String taster, String wineTastingDate, String wineDescription, HashMap<String, Object> timestampCreated) {
+    public WinePojo(String wineName, String wineWinery, String wineVintage, String wineVariety, String taster, String userName, String uid, String wineTastingDate, String wineDescription, HashMap<String, Object> timestampCreated) {
         this.wineName = wineName;
         this.wineWinery = wineWinery;
         this.wineVintage = wineVintage;
@@ -34,6 +36,8 @@ public class WinePojo {
         this.wineTastingDate = wineTastingDate;
         this.wineDescription = wineDescription;
         this.taster = taster;
+        this.userName = userName;
+        this.uid = uid;
         this.timestampCreated = timestampCreated;
 
         HashMap<String, Object> timestampLastChangedObj = new HashMap<String, Object>();
@@ -67,9 +71,16 @@ public class WinePojo {
         return wineDescription;
     }
 
-
     public String getTaster() {
         return taster;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public HashMap<String, Object> getTimestampLastChanged() {

@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +20,10 @@ import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ServerValue;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
 
@@ -33,14 +38,19 @@ public class WineInformation extends MainActivity {
     private String mWinePushID;
     private WineInformationAdapter mWineInformationAdapter;
     private ValueEventListener mActiveWineInformation;
+    private ValueEventListener mUpdateWineInformation;
     private SpecificWineDetailsPojo mSpecificWineDetailsPojo;
     private Firebase mWineInformationRef;
+    private Firebase mWineNameRef;
+    private FirebaseAuth mFirebaseAuth;
 
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_wine_item);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
 
         Intent intent = this.getIntent();
         mWinePushID = intent.getStringExtra(Constants.WINE_LIST_ID);
@@ -91,8 +101,9 @@ public class WineInformation extends MainActivity {
         });
 
 
-        //Initialsie the Delete Item Floating Action Button, so that it an on click listener can be set on it.
+        //Initialsie the Delete Item Floating Action Buttons, so that it an on click listener can be set on it.
         FloatingActionButton buttonDeleteWine = (FloatingActionButton) findViewById(R.id.delete_my_wine);
+        FloatingActionButton buttonEditWine = (FloatingActionButton) findViewById(R.id.edit_my_wine);
         //final String wineToRemoveId = this.getRef(position).getKey();
 
         //Set the onClickListener for remove wine.
@@ -103,28 +114,58 @@ public class WineInformation extends MainActivity {
                 //TODO: Remove the Toast Message and replace with a "Are your sure" pop up.
                 //TODO: Ensure the user has permission to delete.
                 removeWine();
+            }
+        });
 
+        buttonEditWine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Add in editability functionality.
+                editWine();
             }
         });
     }
 
     private void removeWine() {
+
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        String uid = user.getUid().toString();
+
         HashMap<String, Object> removeWineData = new HashMap<String, Object>();
         removeWineData.put("/" + Constants.FIREBASE_LOCATION_WINE_DETAILS + "/" + mWinePushID, null);
 
+        HashMap<String, Object> removeWineDataTwo = new HashMap<String, Object>();
+        removeWineDataTwo.put(("/" + Constants.FIREBASE_LOCATION_USERS + "/" + uid + "/" + Constants.FIREBASE_MY_WINES + "/" + mWinePushID), null);
+
         Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL);
+        Firebase firebaseRefTwo = new Firebase(Constants.FIREBASE_URL);
 
         firebaseRef.updateChildren(removeWineData, new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                 if (firebaseError != null) {
-                    Log.e(LOG_TAG, "Error udpating Firebase: " + firebaseError.getMessage());
+                    Log.e(LOG_TAG, "Error updating Master List: " + firebaseError.getMessage());
+                }
+            }
+        });
+
+        firebaseRefTwo.updateChildren(removeWineDataTwo, new Firebase.CompletionListener() {
+            @Override
+            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                if (firebaseError != null) {
+                    Log.e(LOG_TAG, "Error updating My List: " + firebaseError.getMessage());
                 }
             }
         });
 
     }
 
-
+    private void editWine() {
+        Intent EditWine = new Intent(WineInformation.this, EditWine.class);
+        //Toast.makeText(WineInformation.this, mWinePushID, Toast.LENGTH_SHORT).show();
+        EditWine.putExtra("thisWinePushID", mWinePushID);
+        // Start the new activity
+        startActivity(EditWine);
+    }
 }
 

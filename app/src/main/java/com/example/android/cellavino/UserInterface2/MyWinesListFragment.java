@@ -2,6 +2,7 @@ package com.example.android.cellavino.UserInterface2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.android.cellavino.MainActivity;
 import com.example.android.cellavino.PojoDirectory.UI2.SpecificWineDetailsPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WinePojo;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by Andrew on 14/05/2017.
@@ -27,6 +31,7 @@ public class MyWinesListFragment extends Fragment {
     private ListView mListView;
     private WineInformationAdapter mWineInformationAdapter;
     private String mWineId;
+    public FirebaseAuth mFirebaseAuth;
 
     public MyWinesListFragment() {
         //This is the required empty class
@@ -55,6 +60,8 @@ public class MyWinesListFragment extends Fragment {
         //TODO: Add a message that says 'no wines found' if the list items equal zero.
         //Intent intent = new Intent(context, );
         //mWineId = intent.getStringExtra(Constants.WINE_LIST_ID);
+
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +69,11 @@ public class MyWinesListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.my_wines_list, container, false);
         initializeScreen(rootView);
 
-        Firebase newWinesReference = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        String uid = user.getUid().toString();
+
+        Firebase newWinesReference = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.FIREBASE_MY_WINES);
 
         mWineInformationAdapter = new WineInformationAdapter(getActivity(), WinePojo.class, R.layout.wine_details, newWinesReference, mWineId);
         // set the adapter to the actual list view in the app.
@@ -77,7 +88,7 @@ public class MyWinesListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WinePojo selectedWine = mWineInformationAdapter.getItem(position);
                 if (selectedWine != null) {
-                    Toast.makeText(getActivity(), "Click Sucessful " + position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Retrieving Wine", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), WineInformation.class);
                     String listId = mWineInformationAdapter.getRef(position).getKey();
                     intent.putExtra(Constants.WINE_LIST_ID, listId);
@@ -88,6 +99,7 @@ public class MyWinesListFragment extends Fragment {
 
             }
         });
+
 
         return rootView;
 

@@ -43,15 +43,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="6dp"
-                            android:text="Wine: "
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp" />
-
                         <EditText
                             android:id="@+id/create_wine_name"
                             android:layout_width="match_parent"
@@ -66,15 +57,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="6dp"
-                            android:text="Winery: "
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp" />
-
                         <EditText
                             android:id="@+id/create_wine_winery"
                             android:layout_width="match_parent"
@@ -88,15 +70,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="6dp"
-                            android:text="Year: "
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp" />
 
                         <EditText
                             android:id="@+id/create_wine_year"
@@ -127,15 +100,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="6dp"
-                            android:text="Variety: "
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp" />
-
                         <EditText
                             android:id="@+id/create_wine_variety"
                             android:layout_width="match_parent"
@@ -150,14 +114,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="6dp"
-                            android:text="Tasting Date: "
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20sp" />
 
                         <EditText
                             android:id="@+id/create_wine_tasting_date"
