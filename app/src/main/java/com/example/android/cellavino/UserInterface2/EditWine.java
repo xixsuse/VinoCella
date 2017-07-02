@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,58 @@ public class EditWine extends MainActivity {
     public TextView mUpdateWineDescription;
     public Button mUpdateWine;
 
+    public SeekBar mGrapefuit;
+    public SeekBar mLemon;
+    public SeekBar mLime;
+    public SeekBar mOrange;
+    public SeekBar mPear;
+    public SeekBar mApple;
+    public SeekBar mGrannysmith;
+    public SeekBar mApricot;
+    public SeekBar mMelon;
+    public SeekBar mGuava;
+    public SeekBar mPineapple;
+    public SeekBar mPassionfruit;
+    public SeekBar mLychee;
+    public SeekBar mRedcurrant;
+    public SeekBar mBlackcurrant;
+    public SeekBar mStrawberry;
+    public SeekBar mBlackberry;
+    public SeekBar mCherry;
+    public SeekBar mPlum;
+    public SeekBar mGreenpepper;
+    public SeekBar mTomato;
+    public SeekBar mMint;
+    public SeekBar mTobacco;
+    public SeekBar mHay;
+    public SeekBar mKerosene;
+    public SeekBar mButter;
+    public SeekBar mToastedbread;
+    public SeekBar mCoffee;
+    public SeekBar mVanila;
+    public SeekBar mPepper;
+    public SeekBar mCinnamon;
+    public SeekBar mLicorice;
+    public SeekBar mClove;
+    public SeekBar mCoconut;
+    public SeekBar mHazelnut;
+    public SeekBar mAlmond;
+    public SeekBar mOak;
+    public SeekBar mOrangepeel;
+    public SeekBar mDriedapricot;
+    public SeekBar mPrune;
+    public SeekBar mHoney;
+    public SeekBar mChocolate;
+    public SeekBar mLeather;
+    public SeekBar mMushroom;
+    public SeekBar mTruffle;
+    public SeekBar mCork;
+    public SeekBar mRubberband;
+    public SeekBar mEgg;
+    public SeekBar mOnion;
+    public SeekBar mCorn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +109,64 @@ public class EditWine extends MainActivity {
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         String uid = user.getUid().toString();
 
-        Firebase wineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID);
-        mWineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID);
+        Firebase wineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_SUMMARY_DETAILS);
+        mWineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_SUMMARY_DETAILS);
         Firebase myWinesRefLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.FIREBASE_MY_WINES).child(mWinePushID);
 
 
+        //initialise the seekbars
+        mGrapefuit = (SeekBar) findViewById(R.id.seekBar_grapefruit);
+        mLemon = (SeekBar) findViewById(R.id.seekBar_lemon);
+        mLime = (SeekBar) findViewById(R.id.seekBar_lime);
+        mOrange = (SeekBar) findViewById(R.id.seekBar_orange);
+        mPear = (SeekBar) findViewById(R.id.seekBar_pear);
+        mApple = (SeekBar) findViewById(R.id.seekBar_apple);
+        mGrannysmith = (SeekBar) findViewById(R.id.seekBar_grannysmith);
+        mApricot = (SeekBar) findViewById(R.id.seekBar_apricot);
+        mMelon = (SeekBar) findViewById(R.id.seekBar_melon);
+        mGuava = (SeekBar) findViewById(R.id.seekBar_guava);
+        mPineapple = (SeekBar) findViewById(R.id.seekBar_pineapple);
+        mPassionfruit = (SeekBar) findViewById(R.id.seekBar_passionfruit);
+        mLychee = (SeekBar) findViewById(R.id.seekBar_am_lychee);
+        mRedcurrant = (SeekBar) findViewById(R.id.seekBar_an_redcurrant);
+        mBlackcurrant = (SeekBar) findViewById(R.id.seekBar_ao_blackcurrant);
+        mStrawberry = (SeekBar) findViewById(R.id.seekBar_ap_strawberry);
+        mBlackberry = (SeekBar) findViewById(R.id.seekBar_aq_blackberry);
+        mCherry = (SeekBar) findViewById(R.id.seekBar_ar_cherry);
+        mPlum = (SeekBar) findViewById(R.id.seekBar_as_plum);
+        mGreenpepper = (SeekBar) findViewById(R.id.seekBar_bb_greenpepper);
+        mTomato = (SeekBar) findViewById(R.id.seekBar_bc_tomato);
+        mMint = (SeekBar) findViewById(R.id.seekBar_bg_mint);
+        mTobacco = (SeekBar) findViewById(R.id.seekBar_bh_tobacco);
+        mHay = (SeekBar) findViewById(R.id.seekBar_bi_hay);
+        mKerosene = (SeekBar) findViewById(R.id.seekBar_bm_kerosene);
+        mButter = (SeekBar) findViewById(R.id.seekBar_bq_butter);
+        mToastedbread = (SeekBar) findViewById(R.id.seekBar_br_toastedbread);
+        mCoffee = (SeekBar) findViewById(R.id.seekBar_bs_coffee);
+        mVanila = (SeekBar) findViewById(R.id.seekBar_bu_vanilla);
+        mPepper = (SeekBar) findViewById(R.id.seekBar_bv_pepper);
+        mCinnamon = (SeekBar) findViewById(R.id.seekBar_bw_cinnamon);
+        mLicorice = (SeekBar) findViewById(R.id.seekBar_bx_licorice);
+        mClove = (SeekBar) findViewById(R.id.seekBar_bz_clove);
+        mCoconut = (SeekBar) findViewById(R.id.seekBar_ca_coconut);
+        mHazelnut = (SeekBar) findViewById(R.id.seekBar_cb_hazelnut);
+        mAlmond = (SeekBar) findViewById(R.id.seekBar_cc_almond);
+        mOak = (SeekBar) findViewById(R.id.seekBar_cd_oak);
+        mOrangepeel = (SeekBar) findViewById(R.id.seekBar_ch_orangepeel);
+        mDriedapricot = (SeekBar) findViewById(R.id.seekBar_ci_driedapricot);
+        mPrune = (SeekBar) findViewById(R.id.seekBar_cj_prune);
+        mHoney = (SeekBar) findViewById(R.id.seekBar_ck_honey);
+        mChocolate = (SeekBar) findViewById(R.id.seekBar_cl_chocolate);
+        mLeather = (SeekBar) findViewById(R.id.seekBar_cn_leather);
+        mMushroom = (SeekBar) findViewById(R.id.seekBar_co_mushroom);
+        mTruffle = (SeekBar) findViewById(R.id.seekBar_cp_truffle);
+        mCork = (SeekBar) findViewById(R.id.seekBar_cq_cork);
+        mRubberband = (SeekBar) findViewById(R.id.seekBar_cv_rubberband);
+        mEgg = (SeekBar) findViewById(R.id.seekBar_cw_egg);
+        mOnion = (SeekBar) findViewById(R.id.seekBar_cx_onion);
+        mCorn = (SeekBar) findViewById(R.id.seekBar_cy_corn);
+
+        //initialise the fields
         mUpdateWineVintage = (TextView) findViewById(R.id.create_wine_year);
         mUpdateWineName = (TextView) findViewById(R.id.create_wine_name);
         mUpdateWineWinery = (TextView) findViewById(R.id.create_wine_winery);
@@ -127,10 +233,10 @@ public class EditWine extends MainActivity {
         if (!mUpdateWineName.equals("")) {
             //Write the wine details to the main wine database.
 
-            Firebase wineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID);
+            Firebase wineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_SUMMARY_DETAILS);
             Firebase myWinesRefLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.FIREBASE_MY_WINES).child(mWinePushID);
 
-            mWineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID);
+            mWineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_SUMMARY_DETAILS);
 
             HashMap<String, Object> updatedWineDetailsMap = new HashMap<String, Object>();
 

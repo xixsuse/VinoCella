@@ -2,6 +2,7 @@ package com.example.android.cellavino.UserInterface2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,12 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.cellavino.MainActivity;
 import com.example.android.cellavino.PojoDirectory.UI2.SpecificWineDetailsPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WinePojo;
+import com.example.android.cellavino.PojoDirectory.UI2.WineTastePojo;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.DataSnapshot;
@@ -36,11 +39,17 @@ public class WineInformation extends MainActivity {
 
     private static final String LOG_TAG = WineInformation.class.getSimpleName();
     private String mWinePushID;
+    private int mGrapefruit;
     private WineInformationAdapter mWineInformationAdapter;
     private ValueEventListener mActiveWineInformation;
+    private ValueEventListener mActiveWineFlavors;
     private ValueEventListener mUpdateWineInformation;
     private SpecificWineDetailsPojo mSpecificWineDetailsPojo;
     private Firebase mWineInformationRef;
+    private Firebase mWineFlavorRef;
+    private Firebase mGrapefruitTaste;
+    private String mGrapefruitFlavor;
+    private SeekBar mSeekBar_Grapefruit;
     private Firebase mWineNameRef;
     private FirebaseAuth mFirebaseAuth;
 
@@ -59,8 +68,8 @@ public class WineInformation extends MainActivity {
             return;
         }
 
-        mWineInformationRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID);
-        Firebase specificWineDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_THIS_WINE_DETAILS).child(mWinePushID);
+        //this will get the summary wine details and channel through the WinePojo
+        mWineInformationRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_SUMMARY_DETAILS);
 
         mActiveWineInformation = mWineInformationRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,6 +107,44 @@ public class WineInformation extends MainActivity {
                         getString(R.string.app_not_available) + firebaseError.getMessage());
             }
 
+        });
+
+        //this will pull all the flavours from the wine Flavor secion the the database.
+        mWineFlavorRef = new Firebase(Constants.FIREBASE_URL_LOCATION_THIS_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_FLAVOR_DETAILS);
+        mGrapefruitTaste = new Firebase(Constants.FIREBASE_URL_LOCATION_THIS_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_FLAVOR_DETAILS).child(Constants.GRAPEFRUIT_TASTE);
+
+        mGrapefruitFlavor = mGrapefruitTaste.toString();
+
+        mWineFlavorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                WineTastePojo wineTastePojo = dataSnapshot.getValue(WineTastePojo.class);
+                if (wineTastePojo == null) {
+                    Toast.makeText(WineInformation.this, "No flavors found", Toast.LENGTH_SHORT).show();
+                }
+
+                if (wineTastePojo != null) {
+                    Toast.makeText(WineInformation.this, "There are flavors found", Toast.LENGTH_SHORT).show();
+                }
+                //insert a wine adapter here?
+
+                //SeekBar mSeekBar_Grapefruit = (SeekBar) findViewById(R.id.seekBar_grapefruit);
+                //mSeekBar_Grapefruit.setProgress(wineTastePojo.getmGrapefruitTaste());
+
+                //wineTastePojo.getmLemonTaste();
+                //wineTastePojo.getmLimeTaste();
+                //TextView mGrapefruitTextValue = (TextView) findViewById(R.id.grapfruit_text_value);
+                //mGrapefruitTextValue.setText(mGrapefruit);
+                Toast.makeText(WineInformation.this, mGrapefruitFlavor, Toast.LENGTH_SHORT).show();
+
+                //invalidateOptionsMenu();
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
         });
 
 

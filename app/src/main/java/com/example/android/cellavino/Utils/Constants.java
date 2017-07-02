@@ -14,7 +14,8 @@ public class Constants {
     public static final String FIREBASE_LOCATION_WINE_DETAILS = "New_Wine_Details";
     public static final String FIREBASE_LOCATION_THIS_WINE_DETAILS = "Specific_Wine_Details";
     public static final String FIREBASE_LOCATION_WINERY_DETAILS = "Winery_Details";
-    public static final String FIREBASE_WINE_FLAVOR_PROFILE = "Flavor_Profile";
+    public static final String FIREBASE_WINE_SUMMARY_DETAILS = "summaryDetails";
+    public static final String FIREBASE_WINE_FLAVOR_DETAILS = "flavorDetails";
     public static final String FIREBASE_LOCATION_USERS = "CellaVino_Users";
     public static final String FIREBASE_MY_WINES = "myWines";
 
@@ -45,7 +46,6 @@ public class Constants {
     public static final String FIREBASE_URL_LOCATION_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINE_DETAILS;
     public static final String FIREBASE_URL_LOCATION_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
     public static final String FIREBASE_URL_LOCATION_WINERY_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINERY_DETAILS;
-    public static final String FIREBASE_URL_WINE_FLAVOR_PROFILE = FIREBASE_URL + "/" + FIREBASE_WINE_FLAVOR_PROFILE;
 
     /**
      * Constants for bundles, extras and shared preferences keys
@@ -57,6 +57,9 @@ public class Constants {
     public static final String WINE_LIST_ID = "WINE_LIST_ID";
     public static final String KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";
 
+
+    //Flavor Profiles
+    public static final String GRAPEFRUIT_TASTE = "mGrapefruit";
 
 
 

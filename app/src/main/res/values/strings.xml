@@ -13,6 +13,7 @@
         <item>Sign Out</item>
     </string-array>
 
+
     <!-- Base Error Strings-->
     <string name="log_error_updating_data">Error updating data: </string>
     <string name="log_error_the_read_failed">The read failed: </string>
@@ -40,6 +41,12 @@
     <string name="hint_enter_username">Enter your name</string>
     <string name="hint_enter_password">Enter password</string>
     <string name="image_view_logo_image">Logo Image</string>
+    <string name="hint_update_user_name">Name</string>
+    <string name="hint_update_email">email</string>
+    <string name="hint_date_of_birth">Date of Birth</string>
+    <string name="hint_enter_address">Address</string>
+    <string name="hint_enter_mobile_number">Mobile</string>
+    <string name="update_details">Update</string>
 
 
 </resources>
