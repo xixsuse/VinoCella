@@ -6,6 +6,8 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="app_not_available">Oops! Looks like we\'ve had a bit too much</string>
+    <string name="retrieving_flavors">Retrieving your flavours</string>
+    <string name="progress_dialog_loading">Loading...</string>
     <string-array name="navigation_drawer_options">
         <item>AddWine</item>
         <item>CreateNewWine</item>

@@ -163,6 +163,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:id="@+id/aa_grapefruit_container"
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginTop="6dp"
@@ -184,17 +185,1087 @@
                                 android:layout_height="wrap_content"
                                 android:minWidth="250dp" />
 
-                            <TextView
-                                android:id="@+id/grapfruit_text_value"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                tools:text="grapefruit text value" />
-
                         </LinearLayout>
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ab_lemon_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ab_lemon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ab_lemon" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_lemon"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ac_lime_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ac_lime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ac_lime" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_lime"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ad_orange_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ad_orange"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ad_orange" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_orange"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ae_pear_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ae_pear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ae_pear" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_pear"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/af_apple_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/af_apple"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/af_apple" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_apple"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ag_grannysmith_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ag_grannysmith"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ag_greenapple" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_grannysmith"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ah_apricot_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ah_apricot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ah_apricot" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_apricot"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ai_melon_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ai_melon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ai_melon" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_melon"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/aj_guava_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/aj_guava"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/aj_guava" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_guava"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ak_pineapple_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ak_pineapple"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ak_pinapple" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_pineapple"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/al_passionfruit_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/al_passionfruit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/al_passionfruit" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_passionfruit"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/am_lychee_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/am_lychee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/am_lychee" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_am_lychee"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/an_redcurrant_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/an_redcurrant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/an_redcurrant" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_an_redcurrant"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ao_blackcurrant_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ao_blackcurrant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ao_blackcurrant" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ao_blackcurrant"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ap_strawberry_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ap_strawberry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ap_strawberry" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ap_strawberry"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/aq_blackberry_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/aq_blackberry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/aq_blackberry" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_aq_blackberry"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ab_ar_cherry_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ab_ar_cherry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ar_cherry" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ar_cherry"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ab_as_plum_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ab_as_plum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/as_plum" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_as_plum"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ab_bb_greenpepper_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ab_bb_greenpepper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bb_greenpepper" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bb_greenpepper"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bc_tomato_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bc_tomato"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bc_tomato" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bc_tomato"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bg_mint_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bg_mint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bg_mint" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bg_mint"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bh_tobacco_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bh_tobacco"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bh_tobacco" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bh_tobacco"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bi_hay_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bi_hay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bi_hay" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bi_hay"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bm_kerosene_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bm_kerosene"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bm_kerosene" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bm_kerosene"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bq_butter_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bq_butter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bq_butter" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bq_butter"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/br_toastedbread_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/br_toastedbread"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/br_toastedbread" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_br_toastedbread"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bs_coffee_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bs_coffee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bs_coffee" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bs_coffee"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bu_vanilla_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/bu_vanilla"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bu_vanilla" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bu_vanilla"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bv_pepper_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bv_pepper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bv_pepper" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bv_pepper"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bw_cinnamon_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bw_cinnamon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bw_cinnamon" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bw_cinnamon"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bx_licorice_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bx_licorice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bx_licorice" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bx_licorice"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bz_clove_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bz_clove"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bz_clove" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_bz_clove"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ca_coconut_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ca_coconut"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ca_coconut" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ca_coconut"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cb_hazelnut_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cb_hazelnut"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cb_hazelnut" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cb_hazelnut"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cc_almond_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cc_almond"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cc_almond" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cc_almond"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cd_oak_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cd_oak"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cd_oak" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cd_oak"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ch_orangepeel_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ch_orangepeel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ch_orangepeel" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ch_orangepeel"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ci_driedapricot_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ci_driedapricot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ci_driedapricot" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ci_driedapricot"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cj_prune_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cj_prune"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cj_prune" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cj_prune"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ck_honey_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ck_honey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ck_honey" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_ck_honey"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cl_chocolate_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cl_chocolate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cl_chocolate" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cl_chocolate"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cn_leather_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cn_leather"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cn_leather" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cn_leather"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/co_mushroom_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/co_mushroom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/co_mushroom" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_co_mushroom"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cp_truffle_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cp_truffle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cp_truffle" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cp_truffle"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cq_cork_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cq_cork"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cq_cork" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cq_cork"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cv_rubberband_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/cv_rubberband"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cv_rubberband" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cv_rubberband"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cw_egg_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cw_egg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cw_egg" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cw_egg"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cx_onion_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cx_onion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cx_onion" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cx_onion"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cy_corn_container"
+                        android:layout_marginLeft="6dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/cy_corn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cy_corn" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar_cy_corn"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minWidth="250dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
