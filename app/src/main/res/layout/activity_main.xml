@@ -17,112 +17,205 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/wine_list_item_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/task_card_half_spacing"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:elevation="@dimen/task_card_elevation"
-            card_View:cardCornerRadius="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:orientation="vertical">
-
-
-                    <RelativeLayout
-                        android:id="@+id/header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/vintage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:textAllCaps="true"
-                            android:textColor="@color/textColorEarthquakeLocation"
-                            android:textSize="20sp"
-                            android:text="Photo" />
-
-                        <TextView
-                            android:id="@+id/user_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_alignParentRight="true"
-                            android:fontFamily="sans-serif-medium"
-                            android:textAllCaps="true"
-                            android:textColor="@color/textColorEarthquakeLocation"
-                            android:textSize="20sp"
-                            tools:text="User" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/sub_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/header"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/winery_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:fontFamily="sans-serif-light"
-                            android:textColor="@color/textColorEarthquakeLocation"
-                            android:textSize="20sp"
-                            tools:text="Description of things to go in" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/buttons"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/view_my_wines"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:textSize="16dp"
-                            android:textColor="@color/authui_colorPrimaryDark"
-                            style="@style/Widget.AppCompat.Button.Borderless"
-                            android:text="View My Wines" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/home_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/wine_list_item_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/task_card_half_spacing"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/vintage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textAllCaps="true"
+                                android:textColor="@color/textColorEarthquakeLocation"
+                                android:textSize="20sp"
+                                android:text="Photo" />
+
+                            <TextView
+                                android:id="@+id/user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_alignParentRight="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:textAllCaps="true"
+                                android:textColor="@color/textColorEarthquakeLocation"
+                                android:textSize="20sp"
+                                tools:text="User" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/sub_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/header"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/winery_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="sans-serif-light"
+                                android:textColor="@color/textColorEarthquakeLocation"
+                                android:textSize="20sp"
+                                tools:text="Description of things to go in" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/buttons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/view_my_wines"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:textSize="16dp"
+                                android:textColor="@color/authui_colorPrimaryDark"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                android:text="View My Wines" />
+
+                            <Button
+                                android:id="@+id/edit_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="16dp"
+                                android:textColor="@color/authui_colorPrimaryDark"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                android:text="Edit Profile" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/wine_tasting_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/task_card_half_spacing"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/header"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/wine_tastings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:textAllCaps="true"
+                                android:fontFamily="sans-serif-medium"
+                                android:textColor="@color/textColorEarthquakeLocation"
+                                android:textSize="20sp"
+                                tools:text="Wine Tastings" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/tasting_buttons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/join_tasting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:textSize="16dp"
+                                android:textColor="@color/authui_colorPrimaryDark"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                android:text="Join Tasting" />
+
+                            <Button
+                                android:id="@+id/create_tasting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="16dp"
+                                android:textColor="@color/authui_colorPrimaryDark"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                android:text="Create Tasting" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+
 
 
 

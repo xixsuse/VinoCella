@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -217,6 +221,23 @@ public class EditWine extends MainActivity {
                         getString(R.string.app_not_available) + firebaseError.getMessage());
             }
         });
+
+
+        //TODO: need to work
+        /*
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        // Specify the layout to use when the list of choices appears
+        // Apply the adapter to the spinner
+        ArrayList<String> years = new ArrayList<String>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = thisYear; i >= 1900; i--) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> vintageAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
+        Spinner spinVintage = (Spinner)findViewById(R.id.create_wine_vintage_spinner);
+        spinVintage.setAdapter(vintageAdapter);
+        spinVintage.setSelection();
+        */
 
 
         mUpdateWineFlavorInformation = mWineFlavorRef.addValueEventListener(new ValueEventListener() {

@@ -15,6 +15,20 @@
         <item>Sign Out</item>
     </string-array>
 
+       
+    <string-array name="wine_type_array">
+               
+        <item>Red</item>
+               
+        <item>Rose</item>
+               
+        <item>White</item>
+               
+        <item>Fortified</item>
+               
+        <item>Dessert</item>
+            
+    </string-array>
 
     <!-- Base Error Strings-->
     <string name="log_error_updating_data">Error updating data: </string>

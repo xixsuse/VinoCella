@@ -5,9 +5,11 @@ import android.media.Rating;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ import com.firebase.client.ServerValue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_LOCATION_USERS;
@@ -34,6 +38,7 @@ public class CreateNewWine extends AppCompatActivity {
     public TextView mCreateWineName;
     public TextView mCreateWineWinery;
     public TextView mCreateWineVintage;
+    public String mCreateWineVintageYear;
     public TextView mCreateWineVariety;
     public TextView mCreateWineTastingDate;
     public TextView mCreateWineDescription;
@@ -152,13 +157,36 @@ public class CreateNewWine extends AppCompatActivity {
         mCorn = (SeekBar) findViewById(R.id.seekBar_cy_corn);
 
 
-        mCreateWineVintage = (TextView) findViewById(R.id.create_wine_year);
         mCreateWineName = (TextView) findViewById(R.id.create_wine_name);
         mCreateWineWinery = (TextView) findViewById(R.id.create_wine_winery);
         mCreateWineVariety = (TextView) findViewById(R.id.create_wine_variety);
         mCreateWineTastingDate = (TextView) findViewById(R.id.create_wine_tasting_date);
         mCreateWineDescription = (TextView) findViewById(R.id.create_wine_description);
         mCreateNewWine = (Button) findViewById(R.id.create_new_wine_button);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        // Specify the layout to use when the list of choices appears
+        // Apply the adapter to the spinner
+        Spinner spinner = (Spinner) findViewById(R.id.create_wine_type);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.wine_type_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        // Specify the layout to use when the list of choices appears
+        // Apply the adapter to the spinner
+        ArrayList<String> years = new ArrayList<String>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = thisYear; i >= 1900; i--) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> vintageAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
+        Spinner spinVintage = (Spinner) findViewById(R.id.create_wine_vintage_spinner);
+        spinVintage.setAdapter(vintageAdapter);
+        mCreateWineVintageYear = spinVintage.getSelectedItem().toString();
+
+        mCreateWineVintage = (TextView) findViewById(R.id.create_wine_year);
+
 
         //set the click listener on the button that  pushes wine into the database
         mCreateNewWine.setOnClickListener(new View.OnClickListener() {
@@ -1130,7 +1158,9 @@ public class CreateNewWine extends AppCompatActivity {
         // Get the dtails that the user has entered and pass them into a string.
         String newWineToAdd = mCreateWineName.getText().toString();
         String newWineToAddWinery = mCreateWineWinery.getText().toString();
-        String newWineToAddVintage = mCreateWineVintage.getText().toString();
+        //String newWineToAddVintage = mCreateWineVintage.getText().toString();
+        //TODO fix up this wineVintage code
+        String newWineToAddVintage = mCreateWineVintageYear;
         String newWineToAddVariety = mCreateWineVariety.getText().toString();
         String newWineToAddTastingDate = mCreateWineTastingDate.getText().toString();
         String newWineToAddDescription = mCreateWineDescription.getText().toString();
