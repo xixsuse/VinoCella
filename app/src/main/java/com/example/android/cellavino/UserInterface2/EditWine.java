@@ -1281,7 +1281,6 @@ public class EditWine extends MainActivity {
         String updatedWineDescription = mUpdateWineDescription.getText().toString();
 
         int ratingGrapefruitTaste = mGrapefuit.getProgress();
-
         int ratingLemonTaste = mLemon.getProgress();
         int ratingLimeTaste = mLime.getProgress();
         int ratingOrangeTaste = mOrange.getProgress();

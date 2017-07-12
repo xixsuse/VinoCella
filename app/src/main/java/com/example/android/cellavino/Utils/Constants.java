@@ -12,12 +12,14 @@ public class Constants {
     //Constants related to locations in Firebase, such as the name of the node
 
     public static final String FIREBASE_LOCATION_WINE_DETAILS = "New_Wine_Details";
+    public static final String FIREBASE_LOCATION_ARCHIVED_WINE_DETAILS = "archivedWineDetails";
     public static final String FIREBASE_LOCATION_THIS_WINE_DETAILS = "Specific_Wine_Details";
     public static final String FIREBASE_LOCATION_WINERY_DETAILS = "Winery_Details";
     public static final String FIREBASE_WINE_SUMMARY_DETAILS = "summaryDetails";
     public static final String FIREBASE_WINE_FLAVOR_DETAILS = "flavorDetails";
     public static final String FIREBASE_LOCATION_USERS = "CellaVino_Users";
     public static final String FIREBASE_MY_WINES = "myWines";
+    public static final String FIREBASE_MY_ARCHIVED_WINES = "myArchivedWines";
 
 
 
@@ -38,6 +40,7 @@ public class Constants {
     public static final String FIREBASE_LOCATION_USERS_WINE_URL = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
 
 
+
     /**
      * Constants for Firebase URL
      */
@@ -46,6 +49,7 @@ public class Constants {
     public static final String FIREBASE_URL_LOCATION_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINE_DETAILS;
     public static final String FIREBASE_URL_LOCATION_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
     public static final String FIREBASE_URL_LOCATION_WINERY_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_WINERY_DETAILS;
+    public static final String FIREBASE_URL_LOCATION_ARCHIVED_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_ARCHIVED_WINE_DETAILS;
 
     /**
      * Constants for bundles, extras and shared preferences keys
