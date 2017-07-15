@@ -26,6 +26,8 @@ import com.example.android.cellavino.PojoDirectory.UI2.UserDetailsPojo;
 import com.example.android.cellavino.UserInterface.AddWine;
 import com.example.android.cellavino.UserInterface.WineAdapter;
 import com.example.android.cellavino.UserInterface2.CreateNewWine;
+import com.example.android.cellavino.UserInterface2.CreateTasting;
+import com.example.android.cellavino.UserInterface2.EditProfile;
 import com.example.android.cellavino.UserInterface2.MyWinesList;
 import com.example.android.cellavino.UserInterface2.MyWinesListFragment;
 import com.example.android.cellavino.Utils.Constants;
@@ -176,14 +178,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //Add a View My Wines button
-
-
+        //initialise view_my_wines button click listener
         Button viewMyWinesButton = (Button) findViewById(R.id.view_my_wines);
         viewMyWinesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MyWinesList.class);
+                startActivity(intent);
+
+            }
+        });
+
+        //initialise edit_profile button click listener
+        Button editProfileButton = (Button) findViewById(R.id.edit_profile);
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EditProfile.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+        //initialise edit_profile button click listener
+        Button createTastingButton = (Button) findViewById(R.id.create_tasting);
+        createTastingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CreateTasting.class);
                 startActivity(intent);
 
             }

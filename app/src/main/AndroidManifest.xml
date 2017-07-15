@@ -27,6 +27,8 @@
         <activity android:name=".UserInterface2.ArchiveWine" />
         <activity android:name=".UserInterface2.WineInformation" />
         <activity android:name=".UserInterface2.MyWinesList" />
+        <activity android:name=".UserInterface2.EditProfile" />
+        <activity android:name=".UserInterface2.CreateTasting" />
 
     </application>
     <uses-feature

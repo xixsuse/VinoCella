@@ -272,7 +272,7 @@ public class EditWine extends MainActivity {
                 mCherry.setProgress(wineTastePojo.getmCherryTaste());
                 mPlum.setProgress(wineTastePojo.getmPlumTaste());
                 mGreenpepper.setProgress(wineTastePojo.getmGreenpepperTaste());
-                mTomato.setProgress(wineTastePojo.getmGreenpepperTaste());
+                mTomato.setProgress(wineTastePojo.getmTomatoTaste());
                 mMint.setProgress(wineTastePojo.getmMintTaste());
                 mTobacco.setProgress(wineTastePojo.getmTobaccoTaste());
                 mHay.setProgress(wineTastePojo.getmHayTaste());

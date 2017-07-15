@@ -18,6 +18,7 @@ public class Constants {
     public static final String FIREBASE_WINE_SUMMARY_DETAILS = "summaryDetails";
     public static final String FIREBASE_WINE_FLAVOR_DETAILS = "flavorDetails";
     public static final String FIREBASE_LOCATION_USERS = "CellaVino_Users";
+    public static final String FIREBASE_MY_TASTINGS = "myTastings";
     public static final String FIREBASE_MY_WINES = "myWines";
     public static final String FIREBASE_MY_ARCHIVED_WINES = "myArchivedWines";
 
@@ -59,6 +60,7 @@ public class Constants {
 
 
     public static final String WINE_LIST_ID = "WINE_LIST_ID";
+    public static final String FIREBASE_MY_TASTING_NAME = "MY_TASTING_NAME";
     public static final String KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";
 
 
