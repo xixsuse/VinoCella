@@ -29,6 +29,7 @@
         <activity android:name=".UserInterface2.MyWinesList" />
         <activity android:name=".UserInterface2.EditProfile" />
         <activity android:name=".UserInterface2.CreateTasting" />
+        <activity android:name=".UserInterface2.NewTasting" />
 
     </application>
     <uses-feature

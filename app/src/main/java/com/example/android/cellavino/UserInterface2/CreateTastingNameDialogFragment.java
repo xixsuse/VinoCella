@@ -34,6 +34,7 @@ public class CreateTastingNameDialogFragment extends CreateTastingFragment {
         super.onCreate(savedInstanceState);
         mTastingName = getArguments().getString(Constants.FIREBASE_MY_TASTING_NAME);
 
+
     }
 
 

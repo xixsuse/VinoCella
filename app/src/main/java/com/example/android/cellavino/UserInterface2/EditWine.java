@@ -62,6 +62,7 @@ public class EditWine extends MainActivity {
     public SeekBar mApricot;
     public SeekBar mMelon;
     public SeekBar mGuava;
+    public SeekBar mBanana;
     public SeekBar mPineapple;
     public SeekBar mPassionfruit;
     public SeekBar mLychee;
@@ -102,6 +103,39 @@ public class EditWine extends MainActivity {
     public SeekBar mEgg;
     public SeekBar mOnion;
     public SeekBar mCorn;
+    public SeekBar mHoneysuckle;
+    public SeekBar mGeranium;
+    public SeekBar mOrangeblossum;
+    public SeekBar mViolet;
+    public SeekBar mLavender;
+    public SeekBar mRose;
+    public SeekBar mCutgrass;
+    public SeekBar mRosemary;
+    public SeekBar mThyme;
+    public SeekBar mEucalyptus;
+    public SeekBar mFlint;
+    public SeekBar mBread;
+    public SeekBar mCream;
+    public SeekBar mSmoke;
+    public SeekBar mNutmeg;
+    public SeekBar mPine;
+    public SeekBar mCedar;
+    public SeekBar mFig;
+    public SeekBar mFloral;
+    public SeekBar mRaspberry;
+    public SeekBar mJam;
+    public SeekBar mKiwifruit;
+    public SeekBar mMango;
+    public SeekBar mChili;
+    public SeekBar mPomegranate;
+    public SeekBar mWatermelon;
+    public SeekBar mSaffron;
+    public SeekBar mWalnut;
+    public SeekBar mPeach;
+    public SeekBar mCantelope;
+    public SeekBar mBlueberry;
+    public SeekBar mCaramel;
+    public SeekBar mBlueCheese;
 
 
     @Override
@@ -135,6 +169,7 @@ public class EditWine extends MainActivity {
         mApricot = (SeekBar) findViewById(R.id.seekBar_apricot);
         mMelon = (SeekBar) findViewById(R.id.seekBar_melon);
         mGuava = (SeekBar) findViewById(R.id.seekBar_guava);
+        mBanana = (SeekBar) findViewById(R.id.seekBar_banana);
         mPineapple = (SeekBar) findViewById(R.id.seekBar_pineapple);
         mPassionfruit = (SeekBar) findViewById(R.id.seekBar_passionfruit);
         mLychee = (SeekBar) findViewById(R.id.seekBar_am_lychee);
@@ -175,6 +210,39 @@ public class EditWine extends MainActivity {
         mEgg = (SeekBar) findViewById(R.id.seekBar_cw_egg);
         mOnion = (SeekBar) findViewById(R.id.seekBar_cx_onion);
         mCorn = (SeekBar) findViewById(R.id.seekBar_cy_corn);
+        mHoneysuckle = (SeekBar) findViewById(R.id.seekBar_as_honeysuckle_20);
+        mGeranium = (SeekBar) findViewById(R.id.seekBar_at_geranium_21);
+        mOrangeblossum = (SeekBar) findViewById(R.id.seekBar_au_orange_blossum_22);
+        mViolet = (SeekBar) findViewById(R.id.seekBar_ay_violet_26);
+        mLavender = (SeekBar) findViewById(R.id.seekBar_az_lavendar_27);
+        mRose = (SeekBar) findViewById(R.id.seekBar_ba_rose_28);
+        mCutgrass = (SeekBar) findViewById(R.id.seekBar_bd_cut_grass_31);
+        mRosemary = (SeekBar) findViewById(R.id.seekBar_be_rosemary_32);
+        mThyme = (SeekBar) findViewById(R.id.seekBar_bf_thyme_33);
+        mEucalyptus = (SeekBar) findViewById(R.id.seekBar_bk_eucalyptus_38);
+        mFlint = (SeekBar) findViewById(R.id.seekBar_bl_flint_39);
+        mBread = (SeekBar) findViewById(R.id.seekBar_bo_bread_42);
+        mCream = (SeekBar) findViewById(R.id.seekBar_bp_cream_44);
+        mSmoke = (SeekBar) findViewById(R.id.seekBar_bt_smoke_47);
+        mNutmeg = (SeekBar) findViewById(R.id.seekBar_by_nutmeg_52);
+        mPine = (SeekBar) findViewById(R.id.seekBar_cf_pine_59);
+        mCedar = (SeekBar) findViewById(R.id.seekBar_cg_cedar_60);
+        mFig = (SeekBar) findViewById(R.id.seekBar_db_fig);
+        mFloral = (SeekBar) findViewById(R.id.seekBar_dc_floral);
+        mRaspberry = (SeekBar) findViewById(R.id.seekBar_dd_raspberry);
+        mJam = (SeekBar) findViewById(R.id.seekBar_de_jam);
+        mKiwifruit = (SeekBar) findViewById(R.id.seekBar_df_kiwifruit);
+        mMango = (SeekBar) findViewById(R.id.seekBar_dg_mango);
+        mChili = (SeekBar) findViewById(R.id.seekBar_dh_chili);
+        mPomegranate = (SeekBar) findViewById(R.id.seekBar_di_pomegranate);
+        mWatermelon = (SeekBar) findViewById(R.id.seekBar_dj_watermelon);
+        mSaffron = (SeekBar) findViewById(R.id.seekBar_dk_saffron);
+        mWalnut = (SeekBar) findViewById(R.id.seekBar_dl_walnut);
+        mPeach = (SeekBar) findViewById(R.id.seekBar_dm_peach);
+        mCantelope = (SeekBar) findViewById(R.id.seekBar_dn_cantelope);
+        mBlueberry = (SeekBar) findViewById(R.id.seekBar_dp_blueberry);
+        mCaramel = (SeekBar) findViewById(R.id.seekBar_dq_caramel);
+        mBlueCheese = (SeekBar) findViewById(R.id.seekBar_dr_blue_cheese);
 
         //initialise the fields
         mUpdateWineVintage = (TextView) findViewById(R.id.create_wine_year);
@@ -262,6 +330,7 @@ public class EditWine extends MainActivity {
                 mApricot.setProgress(wineTastePojo.getmApricotTaste());
                 mMelon.setProgress(wineTastePojo.getmMelonTaste());
                 mGuava.setProgress(wineTastePojo.getmGuavaTaste());
+                mBanana.setProgress(wineTastePojo.getmBananaTaste());
                 mPineapple.setProgress(wineTastePojo.getmPineappleTaste());
                 mPassionfruit.setProgress(wineTastePojo.getmPineappleTaste());
                 mLychee.setProgress(wineTastePojo.getmLycheeTaste());
@@ -302,6 +371,39 @@ public class EditWine extends MainActivity {
                 mEgg.setProgress(wineTastePojo.getmEggTaste());
                 mOnion.setProgress(wineTastePojo.getmOnionTaste());
                 mCorn.setProgress(wineTastePojo.getmCornTaste());
+                mHoneysuckle.setProgress(wineTastePojo.getmHoneysuckleTaste());
+                mGeranium.setProgress(wineTastePojo.getmGeraniumTaste());
+                mOrangeblossum.setProgress(wineTastePojo.getmOrangeblossumTaste());
+                mViolet.setProgress(wineTastePojo.getmVioletTaste());
+                mLavender.setProgress(wineTastePojo.getmLavenderTaste());
+                mRose.setProgress(wineTastePojo.getmRoseTaste());
+                mCutgrass.setProgress(wineTastePojo.getmCutgrassTaste());
+                mRosemary.setProgress(wineTastePojo.getmRosemaryTaste());
+                mThyme.setProgress(wineTastePojo.getmThymeTaste());
+                mEucalyptus.setProgress(wineTastePojo.getmEucalyptusTaste());
+                mFlint.setProgress(wineTastePojo.getmFlintTaste());
+                mBread.setProgress(wineTastePojo.getmBreadTaste());
+                mCream.setProgress(wineTastePojo.getmCreamTaste());
+                mSmoke.setProgress(wineTastePojo.getmSmokeTaste());
+                mNutmeg.setProgress(wineTastePojo.getmNutmegTaste());
+                mPine.setProgress(wineTastePojo.getmPineTaste());
+                mCedar.setProgress(wineTastePojo.getmCedarTaste());
+                mFig.setProgress(wineTastePojo.getmFigTaste());
+                mFloral.setProgress(wineTastePojo.getmFloralTaste());
+                mRaspberry.setProgress(wineTastePojo.getmRaspberryTaste());
+                mJam.setProgress(wineTastePojo.getmJamTaste());
+                mKiwifruit.setProgress(wineTastePojo.getmKiwifruitTaste());
+                mMango.setProgress(wineTastePojo.getmMangoTaste());
+                mChili.setProgress(wineTastePojo.getmChiliTaste());
+                mPomegranate.setProgress(wineTastePojo.getmPomegranateTaste());
+                mWatermelon.setProgress(wineTastePojo.getmWatermelonTaste());
+                mSaffron.setProgress(wineTastePojo.getmSaffronTaste());
+                mWalnut.setProgress(wineTastePojo.getmWalnutTaste());
+                mPeach.setProgress(wineTastePojo.getmPeachTaste());
+                mCantelope.setProgress(wineTastePojo.getmCantelopeTaste());
+                mBlueberry.setProgress(wineTastePojo.getmBlueberryTaste());
+                mCaramel.setProgress(wineTastePojo.getmCaramelTaste());
+                mBlueCheese.setProgress(wineTastePojo.getmBlueCheeseTaste());
 
 
                 // You need to add the value event listener on the right brandh of the Firebase DAtabase.
@@ -494,6 +596,25 @@ public class EditWine extends MainActivity {
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         Toast.makeText(EditWine.this, "Guava: " + guavaValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mBanana.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int bananaValue = 0;
+
+                    public void onProgressChanged(SeekBar mBanana, int progress, boolean fromUser) {
+                        bananaValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Banana: " + bananaValue,
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1258,6 +1379,706 @@ public class EditWine extends MainActivity {
                     }
                 });
 
+                mHoneysuckle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int honeysuckleValue = 0;
+
+                    public void onProgressChanged(SeekBar mHoneysuckle, int progress, boolean fromUser) {
+                        honeysuckleValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Honeysuckle: " + honeysuckleValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                /*
+
+                mGeranium
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mOrangeblossum
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mViolet
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mLavender
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mRose
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCutgrass
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mRosemary
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mThyme
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mEucalyptus
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mFlint
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mBread
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCream
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mSmoke
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mNutmeg
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mPine
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCedar
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mFig
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mFloral
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mRaspberry
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mJam
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mKiwifruit
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mMango
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mChili
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mPomegranate
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mWatermelon
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mSaffron
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mWalnut
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mPeach
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCantelope
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mBlueberry
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mCaramel
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mBlueCheese
+                mCork.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    int corkValue = 0;
+
+                    public void onProgressChanged(SeekBar mCork, int progress, boolean fromUser) {
+                        corkValue = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        Toast.makeText(EditWine.this, "Cork: " + corkValue,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                */
+
 
             }
 
@@ -1290,6 +2111,7 @@ public class EditWine extends MainActivity {
         int ratingApricotTaste = mApricot.getProgress();
         int ratingMelonTaste = mMelon.getProgress();
         int ratingGuavaTaste = mGuava.getProgress();
+        int ratingBananaTaste = mBanana.getProgress();
         int ratingPineappleTaste = mPineapple.getProgress();
         int ratingPassionfruitTaste = mPassionfruit.getProgress();
         int ratingLycheeTaste = mLychee.getProgress();
@@ -1330,7 +2152,39 @@ public class EditWine extends MainActivity {
         int ratingEggTaste = mEgg.getProgress();
         int ratingOnionTaste = mOnion.getProgress();
         int ratingCornTaste = mCorn.getProgress();
-
+        int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
+        int ratingGeranium = mGeranium.getProgress();
+        int ratingOrangeblossum = mOrangeblossum.getProgress();
+        int ratingViolet = mViolet.getProgress();
+        int ratingLavender = mLavender.getProgress();
+        int ratingRose = mRose.getProgress();
+        int ratingCutgrass = mCutgrass.getProgress();
+        int ratingRosemary = mRosemary.getProgress();
+        int ratingThyme = mThyme.getProgress();
+        int ratingEucalyptus = mEucalyptus.getProgress();
+        int ratingFlint = mFlint.getProgress();
+        int ratingBread = mBread.getProgress();
+        int ratingCream = mCream.getProgress();
+        int ratingSmoke = mSmoke.getProgress();
+        int ratingNutmeg = mNutmeg.getProgress();
+        int ratingPine = mPine.getProgress();
+        int ratingCedar = mCedar.getProgress();
+        int ratingFig = mFig.getProgress();
+        int ratingFloral = mFloral.getProgress();
+        int ratingRaspberry = mRaspberry.getProgress();
+        int ratingJam = mJam.getProgress();
+        int ratingKiwifruit = mKiwifruit.getProgress();
+        int ratingMango = mMango.getProgress();
+        int ratingChili = mChili.getProgress();
+        int ratingPomegranate = mPomegranate.getProgress();
+        int ratingWatermelon = mWatermelon.getProgress();
+        int ratingSaffron = mSaffron.getProgress();
+        int ratingWalnut = mWalnut.getProgress();
+        int ratingPeach = mPeach.getProgress();
+        int ratingCantelope = mCantelope.getProgress();
+        int ratingBlueberry = mBlueberry.getProgress();
+        int ratingCaramel = mCaramel.getProgress();
+        int ratingBlueCheese = mBlueCheese.getProgress();
 
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -1388,14 +2242,19 @@ public class EditWine extends MainActivity {
             //this will attempt to write the tasting profile to the database
             WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
                     ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
-                    ratingGuavaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
+                    ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
                     ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
                     ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
                     ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
                     ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
                     ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
                     ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
-                    ratingOnionTaste, ratingCornTaste);
+                    ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeranium, ratingOrangeblossum, ratingViolet, ratingLavender, ratingRose,
+                    ratingCutgrass, ratingRosemary, ratingThyme, ratingEucalyptus, ratingFlint, ratingBread, ratingCream,
+                    ratingSmoke, ratingNutmeg, ratingPine, ratingCedar, ratingFig, ratingFloral,
+                    ratingRaspberry, ratingJam, ratingKiwifruit, ratingMango, ratingChili, ratingPomegranate, ratingWatermelon,
+                    ratingSaffron, ratingWalnut, ratingPeach, ratingCantelope, ratingBlueberry, ratingCaramel, ratingBlueCheese
+            );
             Firebase myWineTasteLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID).child(Constants.FIREBASE_WINE_FLAVOR_DETAILS);
             myWineTasteLocation.setValue(wineTastePojo);
 

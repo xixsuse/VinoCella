@@ -1,10 +1,12 @@
 package com.example.android.cellavino.UserInterface2;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -144,7 +146,6 @@ public class WineInformation extends MainActivity {
         buttonDeleteWine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(WineInformation.this, "Wine Deleted", Toast.LENGTH_SHORT).show();
                 //TODO: Remove the Toast Message and replace with a "Are your sure" pop up.
                 //TODO: Ensure the user has permission to delete.
     /*
@@ -156,10 +157,32 @@ public class WineInformation extends MainActivity {
                 mMyArchivedWines = new Firebase(Constants.FIREBASE_LOCATION_USERS_WINE_URL).child(mUid).child(FIREBASE_MY_ARCHIVED_WINES).child(mWinePushID);
                 //archiveUserWine(mArchiveMyWines, mMyArchivedWines);
     */
-                Intent ArchiveWine = new Intent(WineInformation.this, ArchiveWine.class);
-                ArchiveWine.putExtra("thisWinePushID", mWinePushID);
-                ArchiveWine.putExtra("thisUserID", mUid);
-                startActivity(ArchiveWine);
+                AlertDialog.Builder mDeleteWineAlert = new AlertDialog.Builder(WineInformation.this);
+                //this sets the icon for the pop up.
+                //mDeleteWineAlert.setIcon(android.R.drawable.sym_def_app_icon);
+                mDeleteWineAlert.setTitle("Delete Wine");
+                mDeleteWineAlert.setMessage("Are you sure you want to delete this wine?");
+                mDeleteWineAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent ArchiveWine = new Intent(WineInformation.this, ArchiveWine.class);
+                        ArchiveWine.putExtra("thisWinePushID", mWinePushID);
+                        ArchiveWine.putExtra("thisUserID", mUid);
+                        dialog.dismiss();
+                        startActivity(ArchiveWine);
+                    }
+                });
+                mDeleteWineAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+
+                AlertDialog alertDialog = mDeleteWineAlert.create();
+                alertDialog.show();
+
             }
         });
 
@@ -278,6 +301,16 @@ public class WineInformation extends MainActivity {
                     if ((wineTastePojo.getmGuavaTaste()) != 0) {
                         int mGuavaValue = (wineTastePojo.getmGuavaTaste());
                         mGuavaSeekBar.setProgress(mGuavaValue);
+                    }
+
+                    LinearLayout mBananaContainer = (LinearLayout) findViewById(R.id.ds_banana_container);
+                    SeekBar mBananaSeekBar = (SeekBar) findViewById(R.id.seekBar_banana);
+                    if ((wineTastePojo.getmBananaTaste()) == 0) {
+                        mBananaContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmBananaTaste()) != 0) {
+                        int mBananaValue = (wineTastePojo.getmBananaTaste());
+                        mBananaSeekBar.setProgress(mBananaValue);
                     }
 
                     LinearLayout mPineappleContainer = (LinearLayout) findViewById(R.id.ak_pineapple_container);
@@ -684,13 +717,367 @@ public class WineInformation extends MainActivity {
                         int mCornValue = (wineTastePojo.getmCornTaste());
                         mCornSeekBar.setProgress(mCornValue);
                     }
+
+                    LinearLayout mGeraniumContainer = (LinearLayout) findViewById(R.id.at_geranium_21_container);
+                    SeekBar mGeraniumSeekBar = (SeekBar) findViewById(R.id.seekBar_at_geranium_21);
+                    //this.mGeraniumTaste = mGeraniumTaste;
+                    if ((wineTastePojo.getmGeraniumTaste()) == 0) {
+                        mGeraniumContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmGeraniumTaste()) != 0) {
+                        int mGeraniumValue = (wineTastePojo.getmGeraniumTaste());
+                        mGeraniumSeekBar.setProgress(mGeraniumValue);
+                    }
+
+                    LinearLayout mOrangeblossumContainer = (LinearLayout) findViewById(R.id.au_orange_blossum_22_container);
+                    SeekBar mOrangeblossumSeekBar = (SeekBar) findViewById(R.id.seekBar_au_orange_blossum_22);
+                    //this.mOrangeblossumTaste = mOrangeblossumTaste;
+                    if ((wineTastePojo.getmOrangeblossumTaste()) == 0) {
+                        mOrangeblossumContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmOrangeblossumTaste()) != 0) {
+                        int mOrangeblossumValue = (wineTastePojo.getmOrangeblossumTaste());
+                        mOrangeblossumSeekBar.setProgress(mOrangeblossumValue);
+                    }
+
+                    LinearLayout mVioletContainer = (LinearLayout) findViewById(R.id.ay_violet_26_container);
+                    SeekBar mVioletSeekBar = (SeekBar) findViewById(R.id.seekBar_ay_violet_26);
+                    //this.mCornTaste = mCornTaste;
+                    if ((wineTastePojo.getmVioletTaste()) == 0) {
+                        mVioletContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmVioletTaste()) != 0) {
+                        int mVioletValue = (wineTastePojo.getmVioletTaste());
+                        mVioletSeekBar.setProgress(mVioletValue);
+                    }
+
+
+                    LinearLayout mLavenderContainer = (LinearLayout) findViewById(R.id.az_lavendar_27_container);
+                    SeekBar mLavenderSeekBar = (SeekBar) findViewById(R.id.seekBar_az_lavendar_27);
+                    //this.mLavenderTaste = mLavenderTaste;
+                    if ((wineTastePojo.getmLavenderTaste()) == 0) {
+                        mLavenderContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmCornTaste()) != 0) {
+                        int mLavenderValue = (wineTastePojo.getmLavenderTaste());
+                        mLavenderSeekBar.setProgress(mLavenderValue);
+                    }
+
+                    LinearLayout mRoseContainer = (LinearLayout) findViewById(R.id.ba_rose_28_container);
+                    SeekBar mRoseSeekBar = (SeekBar) findViewById(R.id.seekBar_ba_rose_28);
+                    //this.mRoseTaste = mRoseTaste;
+                    if ((wineTastePojo.getmRoseTaste()) == 0) {
+                        mRoseContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmRoseTaste()) != 0) {
+                        int mRoseValue = (wineTastePojo.getmRoseTaste());
+                        mRoseSeekBar.setProgress(mRoseValue);
+                    }
+
+                    LinearLayout mCutgrassContainer = (LinearLayout) findViewById(R.id.bd_cut_grass_31_container);
+                    SeekBar mCutgrassSeekBar = (SeekBar) findViewById(R.id.seekBar_bd_cut_grass_31);
+                    //this.mCutgrassTaste = mCutgrassTaste;
+                    if ((wineTastePojo.getmCutgrassTaste()) == 0) {
+                        mCutgrassContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmCutgrassTaste()) != 0) {
+                        int mCutgrassValue = (wineTastePojo.getmCutgrassTaste());
+                        mCutgrassSeekBar.setProgress(mCutgrassValue);
+                    }
+
+                    LinearLayout mRosemaryContainer = (LinearLayout) findViewById(R.id.be_rosemary_32_container);
+                    SeekBar mRosemarySeekBar = (SeekBar) findViewById(R.id.seekBar_be_rosemary_32);
+                    //this.mRosemaryTaste = mRosemaryTaste;
+                    if ((wineTastePojo.getmRosemaryTaste()) == 0) {
+                        mRosemaryContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmRosemaryTaste()) != 0) {
+                        int mRosemaryValue = (wineTastePojo.getmRosemaryTaste());
+                        mRosemarySeekBar.setProgress(mRosemaryValue);
+                    }
+
+                    LinearLayout mThymeContainer = (LinearLayout) findViewById(R.id.bf_thyme_33_container);
+                    SeekBar mThymeSeekBar = (SeekBar) findViewById(R.id.seekBar_bf_thyme_33);
+                    //this.mThymeTaste = mThymeTaste;
+                    if ((wineTastePojo.getmThymeTaste()) == 0) {
+                        mThymeContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmThymeTaste()) != 0) {
+                        int mThymeValue = (wineTastePojo.getmThymeTaste());
+                        mThymeSeekBar.setProgress(mThymeValue);
+                    }
+
+                    LinearLayout mEucalyptusContainer = (LinearLayout) findViewById(R.id.bk_eucalyptus_38_container);
+                    SeekBar mEucalyptusSeekBar = (SeekBar) findViewById(R.id.seekBar_bk_eucalyptus_38);
+                    //this.mEucalyptusTaste = mEucalyptusTaste;
+                    if ((wineTastePojo.getmEucalyptusTaste()) == 0) {
+                        mEucalyptusContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmEucalyptusTaste()) != 0) {
+                        int mEucalyptusValue = (wineTastePojo.getmEucalyptusTaste());
+                        mEucalyptusSeekBar.setProgress(mEucalyptusValue);
+                    }
+
+                    LinearLayout mFlintContainer = (LinearLayout) findViewById(R.id.bl_flint_39_container);
+                    SeekBar mFlintSeekBar = (SeekBar) findViewById(R.id.seekBar_bl_flint_39);
+                    //this.mFlintTaste = mFlintTaste;
+                    if ((wineTastePojo.getmFlintTaste()) == 0) {
+                        mFlintContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmFlintTaste()) != 0) {
+                        int mFlintValue = (wineTastePojo.getmFlintTaste());
+                        mFlintSeekBar.setProgress(mFlintValue);
+                    }
+
+                    LinearLayout mBreadContainer = (LinearLayout) findViewById(R.id.bo_bread_42_container);
+                    SeekBar mBreadSeekBar = (SeekBar) findViewById(R.id.seekBar_bo_bread_42);
+                    //this.mBreadTaste = mBreadTaste;
+                    if ((wineTastePojo.getmBreadTaste()) == 0) {
+                        mBreadContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmBreadTaste()) != 0) {
+                        int mBreadValue = (wineTastePojo.getmBreadTaste());
+                        mBreadSeekBar.setProgress(mBreadValue);
+                    }
+
+
+                    LinearLayout mCreamContainer = (LinearLayout) findViewById(R.id.bp_cream_44_container);
+                    SeekBar mCreamSeekBar = (SeekBar) findViewById(R.id.seekBar_bp_cream_44);
+                    //this.mCreamTaste = mCreamTaste;
+                    if ((wineTastePojo.getmCreamTaste()) == 0) {
+                        mCreamContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmCornTaste()) != 0) {
+                        int mCreamValue = (wineTastePojo.getmCreamTaste());
+                        mCreamSeekBar.setProgress(mCreamValue);
+                    }
+
+                    LinearLayout mSmokeContainer = (LinearLayout) findViewById(R.id.bt_smoke_47_container);
+                    SeekBar mSmokeSeekBar = (SeekBar) findViewById(R.id.seekBar_bt_smoke_47);
+                    //this.mSmokeTaste = mSmokeTaste;
+                    if ((wineTastePojo.getmSmokeTaste()) == 0) {
+                        mSmokeContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmSmokeTaste()) != 0) {
+                        int mSmokeValue = (wineTastePojo.getmSmokeTaste());
+                        mSmokeSeekBar.setProgress(mSmokeValue);
+                    }
+
+                    LinearLayout mNutmegContainer = (LinearLayout) findViewById(R.id.by_nutmeg_52_container);
+                    SeekBar mNutmegSeekBar = (SeekBar) findViewById(R.id.seekBar_by_nutmeg_52);
+                    //this.mNutmegTaste = mNutmegTaste;
+                    if ((wineTastePojo.getmNutmegTaste()) == 0) {
+                        mNutmegContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmNutmegTaste()) != 0) {
+                        int mNutmegValue = (wineTastePojo.getmNutmegTaste());
+                        mNutmegSeekBar.setProgress(mNutmegValue);
+                    }
+
+                    LinearLayout mPineContainer = (LinearLayout) findViewById(R.id.cf_pine_59_container);
+                    SeekBar mPineSeekBar = (SeekBar) findViewById(R.id.seekBar_cf_pine_59);
+                    //this.mPineTaste = mPineTaste;
+                    if ((wineTastePojo.getmPineTaste()) == 0) {
+                        mPineContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmPineTaste()) != 0) {
+                        int mPineValue = (wineTastePojo.getmPineTaste());
+                        mPineSeekBar.setProgress(mPineValue);
+                    }
+
+                    LinearLayout mCedarContainer = (LinearLayout) findViewById(R.id.cg_cedar_60_container);
+                    SeekBar mCedarSeekBar = (SeekBar) findViewById(R.id.seekBar_cg_cedar_60);
+                    //this.mCedarTaste = mCedarTaste;
+                    if ((wineTastePojo.getmCedarTaste()) == 0) {
+                        mCedarContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmCedarTaste()) != 0) {
+                        int mCedarValue = (wineTastePojo.getmCedarTaste());
+                        mCedarSeekBar.setProgress(mCedarValue);
+                    }
+
+                    LinearLayout mFigContainer = (LinearLayout) findViewById(R.id.db_fig_container);
+                    SeekBar mFigSeekBar = (SeekBar) findViewById(R.id.seekBar_db_fig);
+                    //this.mFigTaste = mFigTaste;
+                    if ((wineTastePojo.getmFigTaste()) == 0) {
+                        mFigContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmFigTaste()) != 0) {
+                        int mFigValue = (wineTastePojo.getmFigTaste());
+                        mFigSeekBar.setProgress(mFigValue);
+                    }
+
+
+                    LinearLayout mFloralContainer = (LinearLayout) findViewById(R.id.dc_floral_container);
+                    SeekBar mFloralSeekBar = (SeekBar) findViewById(R.id.seekBar_dc_floral);
+                    //this.mFloralTaste = mFloralTaste;
+                    if ((wineTastePojo.getmFloralTaste()) == 0) {
+                        mFloralContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmFloralTaste()) != 0) {
+                        int mFloralValue = (wineTastePojo.getmFloralTaste());
+                        mFloralSeekBar.setProgress(mFloralValue);
+                    }
+
+                    LinearLayout mRaspberryContainer = (LinearLayout) findViewById(R.id.dd_raspberry_container);
+                    SeekBar mRaspberrySeekBar = (SeekBar) findViewById(R.id.seekBar_dd_raspberry);
+                    //this.mRaspberryTaste = mRaspberryTaste;
+                    if ((wineTastePojo.getmRaspberryTaste()) == 0) {
+                        mRaspberryContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmRaspberryTaste()) != 0) {
+                        int mRaspberryValue = (wineTastePojo.getmRaspberryTaste());
+                        mRaspberrySeekBar.setProgress(mRaspberryValue);
+                    }
+
+                    LinearLayout mJamContainer = (LinearLayout) findViewById(R.id.de_jam_container);
+                    SeekBar mJamSeekBar = (SeekBar) findViewById(R.id.seekBar_de_jam);
+                    //this.mJamTaste = mJamTaste;
+                    if ((wineTastePojo.getmJamTaste()) == 0) {
+                        mJamContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmJamTaste()) != 0) {
+                        int mJamValue = (wineTastePojo.getmJamTaste());
+                        mJamSeekBar.setProgress(mJamValue);
+                    }
+
+                    LinearLayout mKiwifruitContainer = (LinearLayout) findViewById(R.id.df_kiwifruit_container);
+                    SeekBar mKiwifruitSeekBar = (SeekBar) findViewById(R.id.seekBar_df_kiwifruit);
+                    //this.mKiwifruitTaste = mKiwifruitTaste;
+                    if ((wineTastePojo.getmKiwifruitTaste()) == 0) {
+                        mKiwifruitContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmKiwifruitTaste()) != 0) {
+                        int mKiwifruitValue = (wineTastePojo.getmKiwifruitTaste());
+                        mKiwifruitSeekBar.setProgress(mKiwifruitValue);
+                    }
+
+                    LinearLayout mMangoContainer = (LinearLayout) findViewById(R.id.dg_mango_container);
+                    SeekBar mMangoSeekBar = (SeekBar) findViewById(R.id.seekBar_dg_mango);
+                    //this.mMangoTaste = mMangoTaste;
+                    if ((wineTastePojo.getmMangoTaste()) == 0) {
+                        mMangoContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmMangoTaste()) != 0) {
+                        int mMangoValue = (wineTastePojo.getmMangoTaste());
+                        mMangoSeekBar.setProgress(mMangoValue);
+                    }
+
+                    LinearLayout mChiliContainer = (LinearLayout) findViewById(R.id.dh_chili_container);
+                    SeekBar mChiliSeekBar = (SeekBar) findViewById(R.id.seekBar_dh_chili);
+                    //this.mChiliTaste = mChiliTaste;
+                    if ((wineTastePojo.getmChiliTaste()) == 0) {
+                        mChiliContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmChiliTaste()) != 0) {
+                        int mChiliValue = (wineTastePojo.getmChiliTaste());
+                        mChiliSeekBar.setProgress(mChiliValue);
+                    }
+
+                    LinearLayout mPomegranateContainer = (LinearLayout) findViewById(R.id.di_pomegranate_container);
+                    SeekBar mPomegranateSeekBar = (SeekBar) findViewById(R.id.seekBar_di_pomegranate);
+                    //this.mPomegranateTaste = mPomegranateTaste;
+                    if ((wineTastePojo.getmPomegranateTaste()) == 0) {
+                        mPomegranateContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmPomegranateTaste()) != 0) {
+                        int mPomegranateValue = (wineTastePojo.getmPomegranateTaste());
+                        mPomegranateSeekBar.setProgress(mPomegranateValue);
+                    }
+
+                    LinearLayout mWatermelonContainer = (LinearLayout) findViewById(R.id.dj_watermelon_container);
+                    SeekBar mWatermelonSeekBar = (SeekBar) findViewById(R.id.seekBar_dj_watermelon);
+                    //this.mWatermelonTaste = mWatermelonTaste;
+                    if ((wineTastePojo.getmWatermelonTaste()) == 0) {
+                        mWatermelonContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmWatermelonTaste()) != 0) {
+                        int mWatermelonValue = (wineTastePojo.getmWatermelonTaste());
+                        mWatermelonSeekBar.setProgress(mWatermelonValue);
+                    }
+
+                    LinearLayout mSaffronContainer = (LinearLayout) findViewById(R.id.dk_saffron_container);
+                    SeekBar mSaffronSeekBar = (SeekBar) findViewById(R.id.seekBar_dk_saffron);
+                    //this.mSaffronTaste = mSaffronTaste;
+                    if ((wineTastePojo.getmSaffronTaste()) == 0) {
+                        mSaffronContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmSaffronTaste()) != 0) {
+                        int mSaffronValue = (wineTastePojo.getmSaffronTaste());
+                        mSaffronSeekBar.setProgress(mSaffronValue);
+                    }
+
+                    LinearLayout mWalnutContainer = (LinearLayout) findViewById(R.id.dl_walnut_container);
+                    SeekBar mWalnutSeekBar = (SeekBar) findViewById(R.id.seekBar_dl_walnut);
+                    //this.mCornTaste = mCornTaste;
+                    if ((wineTastePojo.getmWalnutTaste()) == 0) {
+                        mWalnutContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmWalnutTaste()) != 0) {
+                        int mWalnutValue = (wineTastePojo.getmWalnutTaste());
+                        mWalnutSeekBar.setProgress(mWalnutValue);
+                    }
+
+                    LinearLayout mPeachContainer = (LinearLayout) findViewById(R.id.dm_peach_container);
+                    SeekBar mPeachSeekBar = (SeekBar) findViewById(R.id.seekBar_dm_peach);
+                    //this.mPeachTaste = mPeachTaste;
+                    if ((wineTastePojo.getmPeachTaste()) == 0) {
+                        mPeachContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmPeachTaste()) != 0) {
+                        int mPeachValue = (wineTastePojo.getmPeachTaste());
+                        mPeachSeekBar.setProgress(mPeachValue);
+                    }
+
+                    LinearLayout mCantelopeContainer = (LinearLayout) findViewById(R.id.dn_cantelope_container);
+                    SeekBar mCantelopeSeekBar = (SeekBar) findViewById(R.id.seekBar_dn_cantelope);
+                    //this.mCantelopeTaste = mCantelopeTaste;
+                    if ((wineTastePojo.getmCantelopeTaste()) == 0) {
+                        mCantelopeContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmCantelopeTaste()) != 0) {
+                        int mCantelopeValue = (wineTastePojo.getmCantelopeTaste());
+                        mCantelopeSeekBar.setProgress(mCantelopeValue);
+                    }
+
+                    LinearLayout mBlueberryContainer = (LinearLayout) findViewById(R.id.dp_blueberry_container);
+                    SeekBar mBlueberrySeekBar = (SeekBar) findViewById(R.id.seekBar_dp_blueberry);
+                    //this.mBlueberryTaste = mBlueberryTaste;
+                    if ((wineTastePojo.getmBlueberryTaste()) == 0) {
+                        mBlueberryContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmBlueberryTaste()) != 0) {
+                        int mBlueberryValue = (wineTastePojo.getmBlueberryTaste());
+                        mBlueberrySeekBar.setProgress(mBlueberryValue);
+                    }
+
+                    LinearLayout mCaramelContainer = (LinearLayout) findViewById(R.id.dq_caramel_container);
+                    SeekBar mCaramelSeekBar = (SeekBar) findViewById(R.id.seekBar_dq_caramel);
+                    //this.mCaramelTaste = mCaramelTaste;
+                    if ((wineTastePojo.getmCaramelTaste()) == 0) {
+                        mCaramelContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmCaramelTaste()) != 0) {
+                        int mCaramelValue = (wineTastePojo.getmCaramelTaste());
+                        mCaramelSeekBar.setProgress(mCaramelValue);
+                    }
+
+                    LinearLayout mBlueCheeseContainer = (LinearLayout) findViewById(R.id.dr_blue_cheese_container);
+                    SeekBar mBlueCheeseSeekBar = (SeekBar) findViewById(R.id.seekBar_dr_blue_cheese);
+                    //this.mBlueCheeseTaste = mBlueCheeseTaste;
+                    if ((wineTastePojo.getmBlueCheeseTaste()) == 0) {
+                        mBlueCheeseContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmBlueCheeseTaste()) != 0) {
+                        int mBlueCheeseValue = (wineTastePojo.getmBlueCheeseTaste());
+                        mBlueCheeseSeekBar.setProgress(mBlueCheeseValue);
+                    }
+
                 } else {
                     finish();
                 }
 
-
                 mLoadingTasteDialog.dismiss();
-
 
             }
 
