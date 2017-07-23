@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="First let's name your tasting"
+        android:id="@+id/dialog_create_tasting" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/dialog_create_tasting_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/HintText">
+
+        <EditText
+            android:id="@+id/dialog_create_tasting_name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:hint="Set Title" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/create_tasting_name_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:text="Create!" />
+
+</LinearLayout>
