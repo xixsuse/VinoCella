@@ -1,16 +1,14 @@
 package com.example.android.cellavino.UserInterface2;
 
-import android.app.Dialog;
 import android.os.Bundle;
 
-import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
 
 /**
  * Created by Andrew on 15/07/2017.
  */
 
-public class CreateTastingNameDialogFragment extends CreateTastingFragment {
+public class CreateTastingNameDialogFragment extends MyTastingsFragment {
 
     private static final String LOG_TAG = CreateTasting.class.getSimpleName();
     String mTastingName;

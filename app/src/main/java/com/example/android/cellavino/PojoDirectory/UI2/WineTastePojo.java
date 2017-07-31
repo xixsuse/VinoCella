@@ -59,6 +59,7 @@ public class WineTastePojo {
     private int mCornTaste;
     private int mHoneysuckleTaste;
     private int mGeraniumTaste;
+    private int mAppleblossumTaste;
     private int mOrangeblossumTaste;
     private int mVioletTaste;
     private int mLavenderTaste;
@@ -103,7 +104,7 @@ public class WineTastePojo {
                          int mCinnamonTaste, int mLicoriceTaste, int mCloveTaste, int mCoconutTaste, int mHazelnutTaste, int mAlmondTaste,
                          int mOakTaste, int mOrangepeelTaste, int mDriedapricotTaste, int mPruneTaste, int mHoneyTaste, int mChocolateTaste,
                          int mLeatherTaste, int mMushroomTaste, int mTruffleTaste, int mCorkTaste, int mHoneysuckleTaste, int mRubberbandTaste, int mEggTaste, int mOnionTaste,
-                         int mCornTaste, int mGeraniumTaste, int mOrangeblossumTaste, int mVioletTaste, int mLavenderTaste,
+                         int mCornTaste, int mGeraniumTaste, int mAppleblossumTaste, int mOrangeblossumTaste, int mVioletTaste, int mLavenderTaste,
                          int mRoseTaste, int mCutgrassTaste, int mRosemaryTaste, int mThymeTaste, int mEucalyptusTaste, int mFlintTaste,
                          int mBreadTaste, int mCreamTaste, int mSmokeTaste, int mNutmegTaste, int mPineTaste, int mCedarTaste, int mFigTaste,
                          int mFloralTaste, int mRaspberryTaste, int mJamTaste, int mKiwifruitTaste, int mMangoTaste, int mChiliTaste, int mPomegranateTaste,
@@ -163,6 +164,7 @@ public class WineTastePojo {
         this.mHoneysuckleTaste = mHoneysuckleTaste;
         this.mGeraniumTaste = mGeraniumTaste;
         this.mOrangeblossumTaste = mOrangeblossumTaste;
+        this.mAppleblossumTaste = mAppleblossumTaste;
         this.mVioletTaste = mVioletTaste;
         this.mLavenderTaste = mLavenderTaste;
         this.mRoseTaste = mRoseTaste;
@@ -618,6 +620,14 @@ public class WineTastePojo {
 
     private void setmGeraniumTaste() {
         this.mGeraniumTaste = mGeraniumTaste;
+    }
+
+    public int getmAppleblossumTaste() {
+        return mAppleblossumTaste;
+    }
+
+    private void setmAppleblossumTaste() {
+        this.mAppleblossumTaste = mAppleblossumTaste;
     }
 
     public int getmOrangeblossumTaste() {

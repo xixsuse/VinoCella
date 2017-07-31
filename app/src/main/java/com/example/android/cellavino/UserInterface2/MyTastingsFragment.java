@@ -1,8 +1,6 @@
 package com.example.android.cellavino.UserInterface2;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +14,17 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by Andrew on 15/07/2017.
  */
 
-public class CreateTastingFragment extends Fragment {
+
+//I've copied this straight from the MyWinesListFragment and need to adjust it appropriately.
+
+public class MyTastingsFragment extends Fragment {
 
     private ListView mListView;
     private WineInformationAdapter mWineInformationAdapter;
     private String mWineId;
     public FirebaseAuth mFirebaseAuth;
 
-    public CreateTastingFragment() {
+    public MyTastingsFragment() {
         //This is the required empty class
     }
 
@@ -31,8 +32,8 @@ public class CreateTastingFragment extends Fragment {
      * Create fragment and pass bundle with data as it's arguments
      * Right now there are not arguments...but eventually there will be.
      */
-    public static CreateTastingFragment newInstance() {
-        CreateTastingFragment fragment = new CreateTastingFragment();
+    public static MyTastingsFragment newInstance() {
+        MyTastingsFragment fragment = new MyTastingsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

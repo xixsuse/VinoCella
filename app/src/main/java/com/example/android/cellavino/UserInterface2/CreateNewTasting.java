@@ -1,54 +1,35 @@
 package com.example.android.cellavino.UserInterface2;
 
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.cellavino.PojoDirectory.UI2.WinePojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastePojo;
 import com.example.android.cellavino.R;
-import com.example.android.cellavino.UserInterface.AddWine;
-import com.example.android.cellavino.UserInterface2.AromaPager.AromaFragmentPagerAdapter;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
-import com.firebase.client.ServerValue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import static com.example.android.cellavino.Utils.Constants.FIREBASE_LOCATION_USERS;
+import static com.example.android.cellavino.Utils.Constants.FIREBASE_MY_TASTINGS;
 
 /**
- * Created by Andrew on 25/04/2017.
+ * Created by Andrew on 30/07/2017.
  */
 
-public class CreateNewWine extends AppCompatActivity {
-
-    public TextView mCreateWineName;
-    public TextView mCreateWineWinery;
-    public TextView mCreateWineVintage;
-    public String mCreateWineVintageYear;
-    public TextView mCreateWineVariety;
-    public TextView mCreateWineTastingDate;
-    public TextView mCreateWineDescription;
-    public Button mCreateNewWine;
-    public Toast mToastMessage;
+public class CreateNewTasting extends AppCompatActivity {
 
     public FirebaseAuth mFirebaseAuth;
+
+
+    private String mTastingName;
+    private String tastingPushID;
+    private TextView mWineName;
 
     public SeekBar mGrapefuit;
     public SeekBar mLemon;
@@ -136,26 +117,24 @@ public class CreateNewWine extends AppCompatActivity {
     public SeekBar mCaramel;
     public SeekBar mBlueCheese;
 
+    public Button mSaveAddNext;
+    public Button mSaveFinish;
+
+    public Toast mToastMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_new_wine);
+        Bundle bundle = getIntent().getExtras();
+        mTastingName = bundle.getString("thisTastingName");
+        tastingPushID = bundle.getString("thisTastingPushID");
+        setContentView(R.layout.create_new_tasting);
+
+        setTitle(mTastingName);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        /*
-        // Find the view pager that will allow the user to swipe between fragments
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        // Create an adapter that knows which fragment should be shown on each page
-        AromaFragmentPagerAdapter aromaAdapter = new AromaFragmentPagerAdapter(getSupportFragmentManager());
-        // Set the adapter onto the view pager
-        viewPager.setAdapter(aromaAdapter);
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        */
-
+        mWineName = (TextView) findViewById(R.id.create_wine_name);
         mGrapefuit = (SeekBar) findViewById(R.id.seekBar_grapefruit);
         mLemon = (SeekBar) findViewById(R.id.seekBar_lemon);
         mLime = (SeekBar) findViewById(R.id.seekBar_lime);
@@ -242,44 +221,25 @@ public class CreateNewWine extends AppCompatActivity {
         mCaramel = (SeekBar) findViewById(R.id.seekBar_dq_caramel);
         mBlueCheese = (SeekBar) findViewById(R.id.seekBar_dr_blue_cheese);
 
-        mCreateWineName = (TextView) findViewById(R.id.create_wine_name);
-        mCreateWineWinery = (TextView) findViewById(R.id.create_wine_winery);
-        mCreateWineVariety = (TextView) findViewById(R.id.create_wine_variety);
-        mCreateWineTastingDate = (TextView) findViewById(R.id.create_wine_tasting_date);
-        mCreateWineDescription = (TextView) findViewById(R.id.create_wine_description);
-        mCreateNewWine = (Button) findViewById(R.id.create_new_wine_button);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        // Specify the layout to use when the list of choices appears
-        // Apply the adapter to the spinner
-        Spinner spinner = (Spinner) findViewById(R.id.create_wine_type);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.wine_type_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        // Specify the layout to use when the list of choices appears
-        // Apply the adapter to the spinner
-        ArrayList<String> years = new ArrayList<String>();
-        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = thisYear; i >= 1900; i--) {
-            years.add(Integer.toString(i));
-        }
-        ArrayAdapter<String> vintageAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
-        Spinner spinVintage = (Spinner) findViewById(R.id.create_wine_vintage_spinner);
-        spinVintage.setAdapter(vintageAdapter);
-        mCreateWineVintageYear = spinVintage.getSelectedItem().toString();
-
-        mCreateWineVintage = (TextView) findViewById(R.id.create_wine_year);
-
+        mSaveFinish = (Button) findViewById(R.id.save_finish);
+        mSaveAddNext = (Button) findViewById(R.id.save_add_next);
 
         //set the click listener on the button that  pushes wine into the database
-        mCreateNewWine.setOnClickListener(new View.OnClickListener() {
+        mSaveFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addWineToDatabase();
+                addWineToTastingDatabaseAndFinish();
             }
         });
+
+        //set the click listener on the button that  pushes wine into the database
+        mSaveAddNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addWineToTastingDatabaseAndMore();
+            }
+        });
+
 
         mGrapefuit.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int grapefruitValue = 0;
@@ -297,7 +257,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Grapefruit: " + grapefruitValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Grapefruit: " + grapefruitValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -318,7 +278,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Lemon: " + lemonValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Lemon: " + lemonValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -339,7 +299,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Lime: " + limeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Lime: " + limeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -360,7 +320,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Orange: " + orangeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Orange: " + orangeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -381,7 +341,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Pear: " + pearValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Pear: " + pearValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -402,7 +362,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Apple: " + appleValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Apple: " + appleValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -423,7 +383,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Grannysmith: " + grannysmithValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Grannysmith: " + grannysmithValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -444,7 +404,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Apricot: " + apricotValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Apricot: " + apricotValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -465,7 +425,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Melon: " + melonValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Melon: " + melonValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -486,7 +446,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Guava: " + guavaValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Guava: " + guavaValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -507,7 +467,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Banana: " + bananaValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Banana: " + bananaValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -528,7 +488,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Pineapple: " + pineappleValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Pineapple: " + pineappleValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -549,7 +509,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Passionfruit: " + passionfruitValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Passionfruit: " + passionfruitValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -570,7 +530,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Lychee: " + lycheeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Lychee: " + lycheeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -591,7 +551,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Redcurrant: " + redcurrantValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Redcurrant: " + redcurrantValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -612,7 +572,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Blackcurrant: " + blackcurrantValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Blackcurrant: " + blackcurrantValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -633,7 +593,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Strawberry: " + strawberryValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Strawberry: " + strawberryValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -654,7 +614,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Blackberry: " + blackberryValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Blackberry: " + blackberryValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -675,7 +635,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cherry: " + cherryValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cherry: " + cherryValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -696,7 +656,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Plum: " + plumValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Plum: " + plumValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -717,7 +677,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Green Pepper: " + greenpepperValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Green Pepper: " + greenpepperValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -738,7 +698,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Tomato: " + tomatoValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Tomato: " + tomatoValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -759,7 +719,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Mint: " + mintValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Mint: " + mintValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -780,7 +740,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Tobacco: " + tobaccoValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Tobacco: " + tobaccoValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -801,7 +761,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Hay: " + hayValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Hay: " + hayValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -822,7 +782,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Kerosene: " + keroseneValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Kerosene: " + keroseneValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -843,7 +803,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Butter: " + butterValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Butter: " + butterValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -864,7 +824,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Toasted Bread: " + toastedbreadValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Toasted Bread: " + toastedbreadValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -885,7 +845,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Blackberry: " + coffeeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Blackberry: " + coffeeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -906,7 +866,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Vanila: " + vanilaValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Vanila: " + vanilaValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -927,7 +887,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Pepper: " + pepperValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Pepper: " + pepperValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -948,7 +908,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cinnamon: " + cinnanmonValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cinnamon: " + cinnanmonValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -969,7 +929,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Licorice: " + licoriceValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Licorice: " + licoriceValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -990,7 +950,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Clove: " + cloveValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Clove: " + cloveValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1011,7 +971,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Coconut: " + coconutValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Coconut: " + coconutValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1032,7 +992,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Hazelnut: " + hazelnutValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Hazelnut: " + hazelnutValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1053,7 +1013,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Almond: " + almondValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Almond: " + almondValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1074,7 +1034,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Oak: " + oakValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Oak: " + oakValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1095,7 +1055,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Orange peel: " + orangepeelValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Orange peel: " + orangepeelValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1116,7 +1076,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Dried Apricot: " + driedapricotValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Dried Apricot: " + driedapricotValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1137,7 +1097,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Prune: " + pruneValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Prune: " + pruneValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1158,7 +1118,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Honey: " + honeyValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Honey: " + honeyValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1179,7 +1139,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Chocolate: " + chocolateValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Chocolate: " + chocolateValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1200,7 +1160,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Leather: " + leatherValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Leather: " + leatherValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1221,7 +1181,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Mushroom: " + mushroomValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Mushroom: " + mushroomValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1242,7 +1202,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Truffle: " + truffleValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Truffle: " + truffleValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1263,7 +1223,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cork: " + corkValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cork: " + corkValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1284,7 +1244,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Rubberband: " + rubberbandValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Rubberband: " + rubberbandValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1305,7 +1265,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Egg: " + eggValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Egg: " + eggValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1326,7 +1286,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Onion: " + onionValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Onion: " + onionValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1347,7 +1307,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Corn: " + cornValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Corn: " + cornValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1368,7 +1328,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Honeysuckle: " + honeysuckleValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Honeysuckle: " + honeysuckleValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1389,7 +1349,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Geranium: " + geraniumValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Geranium: " + geraniumValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1410,7 +1370,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Appleblossum: " + appleblossumValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Appleblossum: " + appleblossumValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1431,7 +1391,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Orangeblossum: " + orangeblossumValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Orangeblossum: " + orangeblossumValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1452,7 +1412,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Violet: " + violetValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Violet: " + violetValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1473,7 +1433,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Lavender: " + lavenderValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Lavender: " + lavenderValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1494,7 +1454,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Rose: " + roseValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Rose: " + roseValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1515,7 +1475,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cutgrass: " + cutgrassValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cutgrass: " + cutgrassValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1536,7 +1496,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Rosemary: " + rosemaryValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Rosemary: " + rosemaryValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1557,7 +1517,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Thyme: " + thymeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Thyme: " + thymeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1578,7 +1538,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Eucalyptus: " + eucalyptusValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Eucalyptus: " + eucalyptusValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1599,7 +1559,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Flint: " + flintValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Flint: " + flintValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1620,7 +1580,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Bread: " + breadValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Bread: " + breadValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1641,7 +1601,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cream: " + creamValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cream: " + creamValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1662,7 +1622,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Smoke: " + smokeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Smoke: " + smokeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1683,7 +1643,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Nutmeg: " + nutmegValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Nutmeg: " + nutmegValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1704,7 +1664,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Pine: " + pineValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Pine: " + pineValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1725,7 +1685,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cedar: " + cedarValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cedar: " + cedarValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1746,7 +1706,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Fig: " + figValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Fig: " + figValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1767,7 +1727,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Floral: " + floralValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Floral: " + floralValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1788,7 +1748,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Raspberry: " + raspberryValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Raspberry: " + raspberryValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1809,7 +1769,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Jam: " + jamValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Jam: " + jamValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1830,7 +1790,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Kiwifruit: " + kiwifruitValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Kiwifruit: " + kiwifruitValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1851,7 +1811,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Mango: " + mangoValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Mango: " + mangoValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1872,7 +1832,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Chili: " + chiliValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Chili: " + chiliValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1893,7 +1853,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Pomegranate: " + pomegranateValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Pomegranate: " + pomegranateValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1914,7 +1874,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Watermelon: " + watermelonValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Watermelon: " + watermelonValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1935,7 +1895,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Saffron: " + saffronValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Saffron: " + saffronValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1956,7 +1916,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Walnut: " + walnutValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Walnut: " + walnutValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1977,7 +1937,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Peach: " + peachValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Peach: " + peachValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -1998,7 +1958,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Cantelope: " + cantelopeValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Cantelope: " + cantelopeValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -2019,7 +1979,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Blueberry: " + blueberryValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Blueberry: " + blueberryValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -2040,7 +2000,7 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "Caramel: " + caramelValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Caramel: " + caramelValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -2061,29 +2021,20 @@ public class CreateNewWine extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewWine.this, "BlueCheese: " + bluecheeseValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "BlueCheese: " + bluecheeseValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
 
+
     }
 
+    public void addWineToTastingDatabaseAndMore() {
 
-    //This part here adds a wine to the wineName details part of the Firebase database.
-    //First by taking the Firebase URL from CONSTANTS, then by taking the details the user has entered and passing them into a String.
-    //These details are passed into a POJO, along with the time created TIMESTAMP.
-
-    public void addWineToDatabase() {
-        //get the reference to the Firebase URL, then get the string that user has entered and push that into the Database.
-        // Get the dtails that the user has entered and pass them into a string.
-        String newWineToAdd = mCreateWineName.getText().toString();
-        String newWineToAddWinery = mCreateWineWinery.getText().toString();
-        //String newWineToAddVintage = mCreateWineVintage.getText().toString();
-        //TODO fix up this wineVintage code
-        String newWineToAddVintage = mCreateWineVintageYear;
-        String newWineToAddVariety = mCreateWineVariety.getText().toString();
-        String newWineToAddTastingDate = mCreateWineTastingDate.getText().toString();
-        String newWineToAddDescription = mCreateWineDescription.getText().toString();
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        String uid = user.getUid().toString();
+        String userName = user.getDisplayName().toString();
+        String taster = user.getDisplayName().toString();
 
         int ratingGrapefruitTaste = mGrapefuit.getProgress();
         int ratingLemonTaste = mLemon.getProgress();
@@ -2171,72 +2122,273 @@ public class CreateNewWine extends AppCompatActivity {
         int ratingCaramelTaste = mCaramel.getProgress();
         int ratingBlueCheeseTaste = mBlueCheese.getProgress();
 
+        String mWineNameText = mWineName.getText().toString();
+
+
+        //this will attempt to write the tasting profile to the database
+        WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
+                ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
+                ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
+                ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
+                ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
+                ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
+                ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
+                ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
+                ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
+                ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste, ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
+                ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
+                ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
+                ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
+                ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
+                ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
+
+        if (mWineNameText.isEmpty()) {
+            Toast.makeText(CreateNewTasting.this, "Wine Name Required", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Firebase tastingsLocation = new Firebase(Constants.FIREBASE_URL_TASTINGS).child(tastingPushID).child(mWineNameText);
+            tastingsLocation.setValue(wineTastePojo);
+
+            //TODO: update where in the database the information is updated.
+            Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(mWineNameText);
+            myTastingsLocation.setValue(wineTastePojo);
+
+            mWineName.setText("");
+
+            mGrapefuit.setProgress(0);
+            mLemon.setProgress(0);
+            mLime.setProgress(0);
+            mOrange.setProgress(0);
+            mPear.setProgress(0);
+            mApple.setProgress(0);
+            mGrannysmith.setProgress(0);
+            mApricot.setProgress(0);
+            mMelon.setProgress(0);
+            mGuava.setProgress(0);
+            mBanana.setProgress(0);
+            mPineapple.setProgress(0);
+            mPassionfruit.setProgress(0);
+            mLychee.setProgress(0);
+            mRedcurrant.setProgress(0);
+            mBlackcurrant.setProgress(0);
+            mStrawberry.setProgress(0);
+            mBlackberry.setProgress(0);
+            mCherry.setProgress(0);
+            mPlum.setProgress(0);
+            mGreenpepper.setProgress(0);
+            mTomato.setProgress(0);
+            mMint.setProgress(0);
+            mTobacco.setProgress(0);
+            mHay.setProgress(0);
+            mKerosene.setProgress(0);
+            mButter.setProgress(0);
+            mToastedbread.setProgress(0);
+            mCoffee.setProgress(0);
+            mVanila.setProgress(0);
+            mPepper.setProgress(0);
+            mCinnamon.setProgress(0);
+            mLicorice.setProgress(0);
+            mClove.setProgress(0);
+            mCoconut.setProgress(0);
+            mHazelnut.setProgress(0);
+            mAlmond.setProgress(0);
+            mOak.setProgress(0);
+            mOrangepeel.setProgress(0);
+            mDriedapricot.setProgress(0);
+            mPrune.setProgress(0);
+            mHoney.setProgress(0);
+            mChocolate.setProgress(0);
+            mLeather.setProgress(0);
+            mMushroom.setProgress(0);
+            mTruffle.setProgress(0);
+            mCork.setProgress(0);
+            mRubberband.setProgress(0);
+            mEgg.setProgress(0);
+            mOnion.setProgress(0);
+            mCorn.setProgress(0);
+            mHoneysuckle.setProgress(0);
+            mGeranium.setProgress(0);
+            mAppleblossum.setProgress(0);
+            mOrangeblossum.setProgress(0);
+            mViolet.setProgress(0);
+            mLavender.setProgress(0);
+            mRose.setProgress(0);
+            mCutgrass.setProgress(0);
+            mRosemary.setProgress(0);
+            mThyme.setProgress(0);
+            mEucalyptus.setProgress(0);
+            mFlint.setProgress(0);
+            mBread.setProgress(0);
+            mCream.setProgress(0);
+            mSmoke.setProgress(0);
+            mNutmeg.setProgress(0);
+            mPine.setProgress(0);
+            mCedar.setProgress(0);
+            mFig.setProgress(0);
+            mFloral.setProgress(0);
+            mRaspberry.setProgress(0);
+            mJam.setProgress(0);
+            mKiwifruit.setProgress(0);
+            mMango.setProgress(0);
+            mChili.setProgress(0);
+            mPomegranate.setProgress(0);
+            mWatermelon.setProgress(0);
+            mSaffron.setProgress(0);
+            mWalnut.setProgress(0);
+            mPeach.setProgress(0);
+            mCantelope.setProgress(0);
+            mBlueberry.setProgress(0);
+            mCaramel.setProgress(0);
+            mBlueCheese.setProgress(0);
+
+        }
+
+        return;
+
+    }
+
+    ;
+
+    public void addWineToTastingDatabaseAndFinish() {
+        Toast.makeText(CreateNewTasting.this, "Save Finish", Toast.LENGTH_SHORT).show();
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         String uid = user.getUid().toString();
         String userName = user.getDisplayName().toString();
         String taster = user.getDisplayName().toString();
-        //String taster = "Andrew Marshall".toString();
 
-        if (!mCreateWineName.equals("")) {
-            //Write the wine details to the main wine database.
-            Firebase wineNameRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS);
-            Firebase wineNameFirebaseRef = wineNameRef.push();
-            final String winePushID = wineNameFirebaseRef.getKey();
-            HashMap<String, Object> timestampCreated = new HashMap<>();
-            timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP_CREATED, ServerValue.TIMESTAMP);
+        int ratingGrapefruitTaste = mGrapefuit.getProgress();
+        int ratingLemonTaste = mLemon.getProgress();
+        int ratingLimeTaste = mLime.getProgress();
+        int ratingOrangeTaste = mOrange.getProgress();
+        int ratingPearTaste = mPear.getProgress();
+        int ratingAppleTaste = mApple.getProgress();
+        int ratingGrannysmithTaste = mGrannysmith.getProgress();
+        int ratingApricotTaste = mApricot.getProgress();
+        int ratingMelonTaste = mMelon.getProgress();
+        int ratingGuavaTaste = mGuava.getProgress();
+        int ratingBananaTaste = mBanana.getProgress();
+        int ratingPineappleTaste = mPineapple.getProgress();
+        int ratingPassionfruitTaste = mPassionfruit.getProgress();
+        int ratingLycheeTaste = mLychee.getProgress();
+        int ratingRedcurrantTaste = mRedcurrant.getProgress();
+        int ratingBlackcurrantTaste = mBlackcurrant.getProgress();
+        int ratingStrawberryTaste = mStrawberry.getProgress();
+        int ratingBlackberryTaste = mBlackberry.getProgress();
+        int ratingCherryTaste = mCherry.getProgress();
+        int ratingPlumTaste = mPlum.getProgress();
+        int ratingGreenpepperTaste = mGreenpepper.getProgress();
+        int ratingTomatoTaste = mTomato.getProgress();
+        int ratingMintTaste = mMint.getProgress();
+        int ratingTobaccoTaste = mTobacco.getProgress();
+        int ratingHayTaste = mHay.getProgress();
+        int ratingKeroseneTaste = mKerosene.getProgress();
+        int ratingButterTaste = mButter.getProgress();
+        int ratingToastedbreadTaste = mToastedbread.getProgress();
+        int ratingCoffeeTaste = mCoffee.getProgress();
+        int ratingVanilaTaste = mVanila.getProgress();
+        int ratingPepperTaste = mPepper.getProgress();
+        int ratingCinnamonTaste = mCinnamon.getProgress();
+        int ratingLicoriceTaste = mLicorice.getProgress();
+        int ratingCloveTaste = mClove.getProgress();
+        int ratingCoconutTaste = mCoconut.getProgress();
+        int ratingHazelnutTaste = mHazelnut.getProgress();
+        int ratingAlmondTaste = mAlmond.getProgress();
+        int ratingOakTaste = mOak.getProgress();
+        int ratingOrangepeelTaste = mOrangepeel.getProgress();
+        int ratingDriedapricotTaste = mDriedapricot.getProgress();
+        int ratingPruneTaste = mPrune.getProgress();
+        int ratingHoneyTaste = mHoney.getProgress();
+        int ratingChocolateTaste = mChocolate.getProgress();
+        int ratingLeatherTaste = mLeather.getProgress();
+        int ratingMushroomTaste = mMushroom.getProgress();
+        int ratingTruffleTaste = mTruffle.getProgress();
+        int ratingCorkTaste = mCork.getProgress();
+        int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
+        int ratingRubberbandTaste = mRubberband.getProgress();
+        int ratingEggTaste = mEgg.getProgress();
+        int ratingOnionTaste = mOnion.getProgress();
+        int ratingCornTaste = mCorn.getProgress();
+        int ratingGeraniumTaste = mGeranium.getProgress();
+        int ratingAppleblossumTaste = mAppleblossum.getProgress();
+        int ratingOrangeblossumTaste = mOrangeblossum.getProgress();
+        int ratingVioletTaste = mViolet.getProgress();
+        int ratingLavenderTaste = mLavender.getProgress();
+        int ratingRoseTaste = mRose.getProgress();
+        int ratingCutgrassTaste = mCutgrass.getProgress();
+        int ratingRosemaryTaste = mRosemary.getProgress();
+        int ratingThymeTaste = mThyme.getProgress();
+        int ratingEucalyptusTaste = mEucalyptus.getProgress();
+        int ratingFlintTaste = mFlint.getProgress();
+        int ratingBreadTaste = mBread.getProgress();
+        int ratingCreamTaste = mCream.getProgress();
+        int ratingSmokeTaste = mSmoke.getProgress();
+        int ratingNutmegTaste = mNutmeg.getProgress();
+        int ratingPineTaste = mPine.getProgress();
+        int ratingCedarTaste = mCedar.getProgress();
+        int ratingFigTaste = mFig.getProgress();
+        int ratingFloralTaste = mFloral.getProgress();
+        int ratingRaspberryTaste = mRaspberry.getProgress();
+        int ratingJamTaste = mJam.getProgress();
+        int ratingKiwifruitTaste = mKiwifruit.getProgress();
+        int ratingMangoTaste = mMango.getProgress();
+        int ratingChiliTaste = mChili.getProgress();
+        int ratingPomegranateTaste = mPomegranate.getProgress();
+        int ratingWatermelonTaste = mWatermelon.getProgress();
+        int ratingSaffronTaste = mSaffron.getProgress();
+        int ratingWalnutTaste = mWalnut.getProgress();
+        int ratingPeachTaste = mPeach.getProgress();
+        int ratingCantelopeTaste = mCantelope.getProgress();
+        int ratingBlueberryTaste = mBlueberry.getProgress();
+        int ratingCaramelTaste = mCaramel.getProgress();
+        int ratingBlueCheeseTaste = mBlueCheese.getProgress();
 
-            //Building the wine POJO so that it can be added to Firebase.
-            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddWinery, newWineToAddVintage, newWineToAddVariety, taster, userName, uid, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
-            // Go to the "WineListName" child node of the root node.  This will create the node for you if it doesn't already exist.
-            // Then using the setValue menu it will set value the node to WineName.
-            //wineNameFirebaseRef.setValue(winePojo);
-
-            Firebase wineSummaryFirebaseRef = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(winePushID).child(Constants.FIREBASE_WINE_SUMMARY_DETAILS);
-            wineSummaryFirebaseRef.setValue(winePojo);
+        String mWineNameText = mWineName.getText().toString();
 
 
-            //this will attempt to write the tasting profile to the database
-            WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
-                    ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
-                    ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
-                    ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
-                    ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
-                    ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
-                    ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
-                    ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
-                    ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
-                    ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste, ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
-                    ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
-                    ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
-                    ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
-                    ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
-                    ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
+        //this will attempt to write the tasting profile to the database
+        WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
+                ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
+                ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
+                ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
+                ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
+                ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
+                ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
+                ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
+                ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
+                ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste, ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
+                ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
+                ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
+                ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
+                ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
+                ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
 
 
-            Firebase myWineTasteLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(winePushID).child(Constants.FIREBASE_WINE_FLAVOR_DETAILS);
-            myWineTasteLocation.setValue(wineTastePojo);
+        if (mWineNameText.isEmpty()) {
+            Toast.makeText(CreateNewTasting.this, "Wine Name Required", Toast.LENGTH_SHORT).show();
 
+        } else {
 
-            // then this part of the code will write the details that are needed to be put into the card under the uid.
-            //myWineSummary
+            Firebase tastingsLocation = new Firebase(Constants.FIREBASE_URL_TASTINGS).child(tastingPushID).child(mWineNameText);
+            tastingsLocation.setValue(wineTastePojo);
 
-            Firebase myWinesRefLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.FIREBASE_MY_WINES).child(winePushID);
-            myWinesRefLocation.setValue(winePojo);
+            //TODO: update where in the database the information is updated.
+            Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(mWineNameText);
+            myTastingsLocation.setValue(wineTastePojo);
 
-
-            //This then resets the text to lank.
-            mCreateWineName.setText("");
-            mCreateWineWinery.setText("");
-            mCreateWineVintage.setText("");
-            mCreateWineVariety.setText("");
-            mCreateWineTastingDate.setText("");
-            mCreateWineDescription.setText("");
+            mWineName.setText("");
 
             //Send the user back the the wine list.  They'll be able to see all the wines they're recently added.
-            Intent MyWinesList = new Intent(CreateNewWine.this, MyWinesList.class);
+            Intent MyTastings = new Intent(CreateNewTasting.this, CreateTasting.class);
             // Start the new activity
-            startActivity(MyWinesList);
-        }
+            startActivity(MyTastings);
 
+        }
+        return;
     }
+
+
 }

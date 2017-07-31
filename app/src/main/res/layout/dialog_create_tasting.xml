@@ -28,12 +28,4 @@
             android:hint="Set Title" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/create_tasting_name_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="8dp"
-        android:text="Create!" />
-
 </LinearLayout>

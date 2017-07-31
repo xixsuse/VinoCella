@@ -202,7 +202,7 @@
                                 android:textSize="16dp"
                                 android:textColor="@color/authui_colorPrimaryDark"
                                 style="@style/Widget.AppCompat.Button.Borderless"
-                                android:text="Create Tasting" />
+                                android:text="My Tastings" />
 
                         </RelativeLayout>
 

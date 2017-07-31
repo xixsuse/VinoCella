@@ -105,6 +105,7 @@ public class EditWine extends MainActivity {
     public SeekBar mCorn;
     public SeekBar mHoneysuckle;
     public SeekBar mGeranium;
+    public SeekBar mAppleblossum;
     public SeekBar mOrangeblossum;
     public SeekBar mViolet;
     public SeekBar mLavender;
@@ -212,6 +213,7 @@ public class EditWine extends MainActivity {
         mCorn = (SeekBar) findViewById(R.id.seekBar_cy_corn);
         mHoneysuckle = (SeekBar) findViewById(R.id.seekBar_as_honeysuckle_20);
         mGeranium = (SeekBar) findViewById(R.id.seekBar_at_geranium_21);
+        mAppleblossum = (SeekBar) findViewById(R.id.seekBar_aw_apple_blossum_24);
         mOrangeblossum = (SeekBar) findViewById(R.id.seekBar_au_orange_blossum_22);
         mViolet = (SeekBar) findViewById(R.id.seekBar_ay_violet_26);
         mLavender = (SeekBar) findViewById(R.id.seekBar_az_lavendar_27);
@@ -373,6 +375,7 @@ public class EditWine extends MainActivity {
                 mCorn.setProgress(wineTastePojo.getmCornTaste());
                 mHoneysuckle.setProgress(wineTastePojo.getmHoneysuckleTaste());
                 mGeranium.setProgress(wineTastePojo.getmGeraniumTaste());
+                mAppleblossum.setProgress(wineTastePojo.getmAppleblossumTaste());
                 mOrangeblossum.setProgress(wineTastePojo.getmOrangeblossumTaste());
                 mViolet.setProgress(wineTastePojo.getmVioletTaste());
                 mLavender.setProgress(wineTastePojo.getmLavenderTaste());
@@ -2154,6 +2157,7 @@ public class EditWine extends MainActivity {
         int ratingCornTaste = mCorn.getProgress();
         int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
         int ratingGeranium = mGeranium.getProgress();
+        int ratingAppleblossum = mAppleblossum.getProgress();
         int ratingOrangeblossum = mOrangeblossum.getProgress();
         int ratingViolet = mViolet.getProgress();
         int ratingLavender = mLavender.getProgress();
@@ -2249,7 +2253,7 @@ public class EditWine extends MainActivity {
                     ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
                     ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
                     ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
-                    ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeranium, ratingOrangeblossum, ratingViolet, ratingLavender, ratingRose,
+                    ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeranium, ratingAppleblossum, ratingOrangeblossum, ratingViolet, ratingLavender, ratingRose,
                     ratingCutgrass, ratingRosemary, ratingThyme, ratingEucalyptus, ratingFlint, ratingBread, ratingCream,
                     ratingSmoke, ratingNutmeg, ratingPine, ratingCedar, ratingFig, ratingFloral,
                     ratingRaspberry, ratingJam, ratingKiwifruit, ratingMango, ratingChili, ratingPomegranate, ratingWatermelon,

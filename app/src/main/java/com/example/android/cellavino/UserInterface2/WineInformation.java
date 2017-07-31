@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import com.firebase.client.ServerValue;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.twitter.sdk.android.core.models.Card;
 
 import java.util.HashMap;
 
@@ -146,7 +148,6 @@ public class WineInformation extends MainActivity {
         buttonDeleteWine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Remove the Toast Message and replace with a "Are your sure" pop up.
                 //TODO: Ensure the user has permission to delete.
     /*
                 mArchiveMasterWines = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(mWinePushID);
@@ -189,7 +190,6 @@ public class WineInformation extends MainActivity {
         buttonEditWine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Add in editability functionality.
                 editWine();
             }
         });
@@ -201,6 +201,245 @@ public class WineInformation extends MainActivity {
                 invalidateOptionsMenu();
 
                 if (wineTastePojo != null) {
+
+                    CardView mCitrusFruitContainer = (CardView) findViewById(R.id.citrus_fruit_container);
+                    int mGrapefruitAromaContainer = wineTastePojo.getmGrapefruitTaste();
+                    int mLemonAromaContainer = wineTastePojo.getmLemonTaste();
+                    int mLimeAromaContainer = wineTastePojo.getmLimeTaste();
+                    int mOrangeAromoaContainer = wineTastePojo.getmOrangeTaste();
+                    int mOrangepeelAromaContainer = wineTastePojo.getmOrangepeelTaste();
+                    if (mGrapefruitAromaContainer + mLemonAromaContainer + mLimeAromaContainer + mOrangeAromoaContainer + mOrangepeelAromaContainer == 0) {
+                        mCitrusFruitContainer.setVisibility(View.GONE);
+                    }
+                    if (mGrapefruitAromaContainer + mLemonAromaContainer + mLimeAromaContainer + mOrangeAromoaContainer + mOrangepeelAromaContainer != 0) {
+                        mCitrusFruitContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mTreeFruitContainer = (CardView) findViewById(R.id.tree_fruit_container);
+                    int mAppleAromaContainer = wineTastePojo.getmAppleTaste();
+                    int mGrannysmithAromaContainer = wineTastePojo.getmGrannysmithTaste();
+                    int mPearAromaContainer = wineTastePojo.getmPearTaste();
+                    int mApricotAromaContainer = wineTastePojo.getmApricotTaste();
+                    int mBananaAromaContainer = wineTastePojo.getmBananaTaste();
+                    int mFigAromaContainer = wineTastePojo.getmFigTaste();
+                    int mPomegranateAromaContainer = wineTastePojo.getmPomegranateTaste();
+                    if (mAppleAromaContainer + mGrannysmithAromaContainer + mPearAromaContainer + mApricotAromaContainer + mBananaAromaContainer + mFigAromaContainer + mPomegranateAromaContainer == 0) {
+                        mTreeFruitContainer.setVisibility(View.GONE);
+                    }
+                    if (mAppleAromaContainer + mGrannysmithAromaContainer + mPearAromaContainer + mApricotAromaContainer + mBananaAromaContainer + mFigAromaContainer + mPomegranateAromaContainer != 0) {
+                        mTreeFruitContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mTropicalFruitContainer = (CardView) findViewById(R.id.tropical_fruit_container);
+                    int mMelonAromaContainer = wineTastePojo.getmMelonTaste();
+                    int mCantelopeAromaContainer = wineTastePojo.getmCantelopeTaste();
+                    int mMangoAromaContainer = wineTastePojo.getmMangoTaste();
+                    int mGuavaAromaContainer = wineTastePojo.getmGuavaTaste();
+                    int mKiwifruitAromaContainer = wineTastePojo.getmKiwifruitTaste();
+                    int mLycheeAromaContainer = wineTastePojo.getmLycheeTaste();
+                    int mPassionruitAromaContainer = wineTastePojo.getmPassionfruitTaste();
+                    int mPineappleAromaContainer = wineTastePojo.getmPineappleTaste();
+                    int mWatermelonAromaContainer = wineTastePojo.getmWatermelonTaste();
+                    if (mMelonAromaContainer + mCantelopeAromaContainer + mMangoAromaContainer + mGuavaAromaContainer + mKiwifruitAromaContainer + mLycheeAromaContainer + mPassionruitAromaContainer + mPineappleAromaContainer + mWatermelonAromaContainer == 0) {
+                        mTropicalFruitContainer.setVisibility(View.GONE);
+                    }
+                    if (mMelonAromaContainer + mCantelopeAromaContainer + mMangoAromaContainer + mGuavaAromaContainer + mKiwifruitAromaContainer + mLycheeAromaContainer + mPassionruitAromaContainer + mPineappleAromaContainer + mWatermelonAromaContainer != 0) {
+                        mTropicalFruitContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mDriedFruitContainer = (CardView) findViewById(R.id.dried_fruit_container);
+                    int mDriedapricotAromaContainer = wineTastePojo.getmDriedapricotTaste();
+                    int mPruneAromaContainer = wineTastePojo.getmPruneTaste();
+                    if (mDriedapricotAromaContainer + mPruneAromaContainer == 0) {
+                        mDriedFruitContainer.setVisibility(View.GONE);
+                    }
+                    if (mDriedapricotAromaContainer + mPruneAromaContainer != 0) {
+                        mDriedFruitContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mStoneFruitContainer = (CardView) findViewById(R.id.stone_fruit_container);
+                    int mPeachAromaContainer = wineTastePojo.getmPeachTaste();
+                    int mCherryAromaContainer = wineTastePojo.getmCherryTaste();
+                    int mPlumAromaContainer = wineTastePojo.getmPlumTaste();
+                    if (mPeachAromaContainer + mCherryAromaContainer + mPlumAromaContainer == 0) {
+                        mStoneFruitContainer.setVisibility(View.GONE);
+                    }
+                    if (mPeachAromaContainer + mCherryAromaContainer + mPlumAromaContainer != 0) {
+                        mStoneFruitContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mBerryandJamContainer = (CardView) findViewById(R.id.berry_and_jam_container);
+                    int mJamAromaContainer = wineTastePojo.getmJamTaste();
+                    int mRedcurrantAromaContainer = wineTastePojo.getmRedcurrantTaste();
+                    int mBlackcurrantAromaContainer = wineTastePojo.getmBlackcurrantTaste();
+                    int mStrawberryAromaContainer = wineTastePojo.getmStrawberryTaste();
+                    int mBlackberryAromaContainer = wineTastePojo.getmBlackberryTaste();
+                    int mRaspberryAromaContainer = wineTastePojo.getmRaspberryTaste();
+                    int mBlueberryAromaContainer = wineTastePojo.getmBlueberryTaste();
+                    if (mJamAromaContainer + mRedcurrantAromaContainer + mBlackcurrantAromaContainer + mStrawberryAromaContainer + mBlackberryAromaContainer + mRaspberryAromaContainer + mBlueberryAromaContainer == 0) {
+                        mBerryandJamContainer.setVisibility(View.GONE);
+                    }
+                    if (mJamAromaContainer + mRedcurrantAromaContainer + mBlackcurrantAromaContainer + mStrawberryAromaContainer + mBlackberryAromaContainer + mRaspberryAromaContainer + mBlueberryAromaContainer != 0) {
+                        mBerryandJamContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mBlossomContainer = (CardView) findViewById(R.id.blossom_container);
+                    int mAppleBlossomAromaContainer = wineTastePojo.getmAppleblossumTaste();
+                    int mOrangeBlossomAromaContainer = wineTastePojo.getmOrangeblossumTaste();
+                    if (mAppleBlossomAromaContainer + mOrangeBlossomAromaContainer == 0) {
+                        mBlossomContainer.setVisibility(View.GONE);
+                    }
+                    if (mAppleBlossomAromaContainer + mOrangeBlossomAromaContainer != 0) {
+                        mBlossomContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mFloralContainer = (CardView) findViewById(R.id.floral_container);
+                    int mFloralAromaContainer = wineTastePojo.getmFloralTaste();
+                    int mHoneysuckleAromaContainer = wineTastePojo.getmHoneysuckleTaste();
+                    int mGeraniumAromaContainer = wineTastePojo.getmGeraniumTaste();
+                    int mVioletAromaContainer = wineTastePojo.getmVioletTaste();
+                    int mLavenderAromaContainer = wineTastePojo.getmLavenderTaste();
+                    int mRoseAromaContainer = wineTastePojo.getmRoseTaste();
+                    int mEucalyptusAromaContainer = wineTastePojo.getmEucalyptusTaste();
+                    if (mFloralAromaContainer + mHoneysuckleAromaContainer + mGeraniumAromaContainer + mVioletAromaContainer + mLavenderAromaContainer + mRoseAromaContainer + mEucalyptusAromaContainer == 0) {
+                        mFloralContainer.setVisibility(View.GONE);
+                    }
+                    if (mFloralAromaContainer + mHoneysuckleAromaContainer + mGeraniumAromaContainer + mVioletAromaContainer + mLavenderAromaContainer + mRoseAromaContainer + mEucalyptusAromaContainer != 0) {
+                        mFloralContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mHerbContainer = (CardView) findViewById(R.id.herb_container);
+                    int mCutgrassAromaContainer = wineTastePojo.getmCutgrassTaste();
+                    int mRosemaryAromaContainer = wineTastePojo.getmRosemaryTaste();
+                    int mThymeAromaContainer = wineTastePojo.getmThymeTaste();
+                    int mMintAromaContainer = wineTastePojo.getmMintTaste();
+                    if (mCutgrassAromaContainer + mRosemaryAromaContainer + mThymeAromaContainer + mMintAromaContainer == 0) {
+                        mHerbContainer.setVisibility(View.GONE);
+                    }
+                    if (mCutgrassAromaContainer + mRosemaryAromaContainer + mThymeAromaContainer + mMintAromaContainer != 0) {
+                        mHerbContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mEarthyContainer = (CardView) findViewById(R.id.earthy_container);
+                    int mHayAromaContainer = wineTastePojo.getmHayTaste();
+                    int mMushroomAromaContainer = wineTastePojo.getmMushroomTaste();
+                    int mTruffleAromaContainer = wineTastePojo.getmTruffleTaste();
+                    if (mHayAromaContainer + mMushroomAromaContainer + mTruffleAromaContainer == 0) {
+                        mEarthyContainer.setVisibility(View.GONE);
+                    }
+                    if (mHayAromaContainer + mMushroomAromaContainer + mTruffleAromaContainer != 0) {
+                        mEarthyContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mLeatheryContainer = (CardView) findViewById(R.id.leathery_container);
+                    int mLeatherAromaContainer = wineTastePojo.getmLeatherTaste();
+                    if (mLeatherAromaContainer == 0) {
+                        mLeatheryContainer.setVisibility(View.GONE);
+                    }
+                    if (mLeatherAromaContainer != 0) {
+                        mLeatheryContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mVegetableContainer = (CardView) findViewById(R.id.vegetable_container);
+                    int mGreenpepperAromaContainer = wineTastePojo.getmGreenpepperTaste();
+                    int mTomatoAromaContainer = wineTastePojo.getmTomatoTaste();
+                    int mCornAromaContainer = wineTastePojo.getmCornTaste();
+                    int mOnionAromaContainer = wineTastePojo.getmOnionTaste();
+                    if (mGreenpepperAromaContainer + mTomatoAromaContainer + mCornAromaContainer + mOnionAromaContainer == 0) {
+                        mVegetableContainer.setVisibility(View.GONE);
+                    }
+                    if (mGreenpepperAromaContainer + mTomatoAromaContainer + mCornAromaContainer + mOnionAromaContainer != 0) {
+                        mVegetableContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mWoodyContainer = (CardView) findViewById(R.id.woody_container);
+                    int mPineAromaContainer = wineTastePojo.getmPineTaste();
+                    int mCedarAromaContainer = wineTastePojo.getmCedarTaste();
+                    int mOakAromaContainer = wineTastePojo.getmOakTaste();
+                    if (mPineAromaContainer + mCedarAromaContainer + mOakAromaContainer == 0) {
+                        mWoodyContainer.setVisibility(View.GONE);
+                    }
+                    if (mPineAromaContainer + mCedarAromaContainer + mOakAromaContainer != 0) {
+                        mWoodyContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mNuttyContainer = (CardView) findViewById(R.id.nutty_container);
+                    int mHazelnutAromaContainer = wineTastePojo.getmHazelnutTaste();
+                    int mAlmondAromaContainer = wineTastePojo.getmAlmondTaste();
+                    int mNutmegAromaContainer = wineTastePojo.getmNutmegTaste();
+                    int mWalnutAromaContainer = wineTastePojo.getmWalnutTaste();
+                    if (mHazelnutAromaContainer + mAlmondAromaContainer + mNutmegAromaContainer + mWalnutAromaContainer == 0) {
+                        mNuttyContainer.setVisibility(View.GONE);
+                    }
+                    if (mHazelnutAromaContainer + mAlmondAromaContainer + mNutmegAromaContainer + mWalnutAromaContainer != 0) {
+                        mNuttyContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mSpicyContainer = (CardView) findViewById(R.id.spicy_container);
+                    int mPepperAromaContainer = wineTastePojo.getmPepperTaste();
+                    int mCinnamonAromaContainer = wineTastePojo.getmCinnamonTaste();
+                    int mVanilaAromaContainer = wineTastePojo.getmVanilaTaste();
+                    int mCloveAromaContainer = wineTastePojo.getmCloveTaste();
+                    int mChiliAromaContainer = wineTastePojo.getmChiliTaste();
+                    int mLicoriceAromaContainer = wineTastePojo.getmLicoriceTaste();
+                    int mSaffronAromaContainer = wineTastePojo.getmSaffronTaste();
+                    if (mPepperAromaContainer + mCinnamonAromaContainer + mVanilaAromaContainer + mCloveAromaContainer + mChiliAromaContainer + mLicoriceAromaContainer + mSaffronAromaContainer == 0) {
+                        mSpicyContainer.setVisibility(View.GONE);
+                    }
+                    if (mPepperAromaContainer + mCinnamonAromaContainer + mVanilaAromaContainer + mCloveAromaContainer + mChiliAromaContainer + mLicoriceAromaContainer + mSaffronAromaContainer != 0) {
+                        mSpicyContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mToastyContainer = (CardView) findViewById(R.id.toasty_container);
+                    int mTobaccoAromaContainer = wineTastePojo.getmTobaccoTaste();
+                    int mCoffeeAromaContainer = wineTastePojo.getmCoffeeTaste();
+                    if (mTobaccoAromaContainer + mCoffeeAromaContainer == 0) {
+                        mToastyContainer.setVisibility(View.GONE);
+                    }
+                    if (mTobaccoAromaContainer + mCoffeeAromaContainer != 0) {
+                        mToastyContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mBakeryContainer = (CardView) findViewById(R.id.bakery_container);
+                    int mBreadAromaContainer = wineTastePojo.getmBreadTaste();
+                    int mToastedBreadAroma = wineTastePojo.getmToastedbreadTaste();
+                    if (mBreadAromaContainer + mToastedBreadAroma == 0) {
+                        mBakeryContainer.setVisibility(View.GONE);
+                    }
+                    if (mBreadAromaContainer + mToastedBreadAroma != 0) {
+                        mBakeryContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mDairyContainer = (CardView) findViewById(R.id.dairy_container);
+                    int mButterAromaContainer = wineTastePojo.getmButterTaste();
+                    int mCreamAromaContainer = wineTastePojo.getmCreamTaste();
+                    int mBluecheeseAromaContainer = wineTastePojo.getmBlueCheeseTaste();
+                    if (mButterAromaContainer + mCreamAromaContainer + mBluecheeseAromaContainer == 0) {
+                        mDairyContainer.setVisibility(View.GONE);
+                    }
+                    if (mButterAromaContainer + mCreamAromaContainer + mBluecheeseAromaContainer != 0) {
+                        mDairyContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    CardView mOtherFlavourContainer = (CardView) findViewById(R.id.other_flavours_container);
+                    int mCoconutAromaContainer = wineTastePojo.getmCoconutTaste();
+                    int mKeroseneAromaContainer = wineTastePojo.getmKeroseneTaste();
+                    int mHoneyAromaContainer = wineTastePojo.getmHoneyTaste();
+                    int mChocolateAromaContainer = wineTastePojo.getmChocolateTaste();
+                    int mCorkAromaContainer = wineTastePojo.getmCorkTaste();
+                    int mRubberbandAromaContainer = wineTastePojo.getmRubberbandTaste();
+                    int mEggAromaContainer = wineTastePojo.getmEggTaste();
+                    int mFlintAromaContainer = wineTastePojo.getmFlintTaste();
+                    int mSmokeAromaContainer = wineTastePojo.getmSmokeTaste();
+                    int mCaramelAromaContainer = wineTastePojo.getmCaramelTaste();
+                    if (mCoconutAromaContainer + mKeroseneAromaContainer + mHoneyAromaContainer + mChocolateAromaContainer + mCorkAromaContainer + mRubberbandAromaContainer + mEggAromaContainer + mFlintAromaContainer + mSmokeAromaContainer + mCaramelAromaContainer == 0) {
+                        mOtherFlavourContainer.setVisibility(View.GONE);
+                    }
+                    if (mCoconutAromaContainer + mKeroseneAromaContainer + mHoneyAromaContainer + mChocolateAromaContainer + mCorkAromaContainer + mRubberbandAromaContainer + mEggAromaContainer + mFlintAromaContainer + mSmokeAromaContainer + mCaramelAromaContainer != 0) {
+                        mOtherFlavourContainer.setVisibility(View.VISIBLE);
+                    }
+
+
                     LinearLayout mGrapefruitContainer = (LinearLayout) findViewById(R.id.aa_grapefruit_container);
                     SeekBar mGrapefruitSeekBar = (SeekBar) findViewById(R.id.seekBar_grapefruit);
                     if ((wineTastePojo.getmGrapefruitTaste()) == 0) {
@@ -718,6 +957,17 @@ public class WineInformation extends MainActivity {
                         mCornSeekBar.setProgress(mCornValue);
                     }
 
+                    LinearLayout mHoneysuckleContainer = (LinearLayout) findViewById(R.id.as_honeysuckle_20_container);
+                    SeekBar mHoneysuckleSeekBar = (SeekBar) findViewById(R.id.seekBar_as_honeysuckle_20);
+                    //this.mHoneysuckleTaste = mHoneysuckleTaste;
+                    if ((wineTastePojo.getmHoneysuckleTaste()) == 0) {
+                        mHoneysuckleContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmHoneysuckleTaste()) != 0) {
+                        int mHoneysuckleValue = (wineTastePojo.getmHoneysuckleTaste());
+                        mHoneysuckleSeekBar.setProgress(mHoneysuckleValue);
+                    }
+
                     LinearLayout mGeraniumContainer = (LinearLayout) findViewById(R.id.at_geranium_21_container);
                     SeekBar mGeraniumSeekBar = (SeekBar) findViewById(R.id.seekBar_at_geranium_21);
                     //this.mGeraniumTaste = mGeraniumTaste;
@@ -738,6 +988,17 @@ public class WineInformation extends MainActivity {
                     if ((wineTastePojo.getmOrangeblossumTaste()) != 0) {
                         int mOrangeblossumValue = (wineTastePojo.getmOrangeblossumTaste());
                         mOrangeblossumSeekBar.setProgress(mOrangeblossumValue);
+                    }
+
+                    LinearLayout mAppleblossumContainer = (LinearLayout) findViewById(R.id.aw_apple_blossum_24_container);
+                    SeekBar mAppleblossumSeekBar = (SeekBar) findViewById(R.id.seekBar_aw_apple_blossum_24);
+                    //this.mAppleblossumTaste = mAppleblossumTaste;
+                    if ((wineTastePojo.getmAppleblossumTaste()) == 0) {
+                        mAppleblossumContainer.setVisibility(View.GONE);
+                    }
+                    if ((wineTastePojo.getmAppleblossumTaste()) != 0) {
+                        int mAppleblossumValue = (wineTastePojo.getmAppleblossumTaste());
+                        mAppleblossumSeekBar.setProgress(mAppleblossumValue);
                     }
 
                     LinearLayout mVioletContainer = (LinearLayout) findViewById(R.id.ay_violet_26_container);
@@ -908,11 +1169,11 @@ public class WineInformation extends MainActivity {
                     }
 
 
-                    LinearLayout mFloralContainer = (LinearLayout) findViewById(R.id.dc_floral_container);
+                    LinearLayout mFloralBoquetContainer = (LinearLayout) findViewById(R.id.dc_floral_container);
                     SeekBar mFloralSeekBar = (SeekBar) findViewById(R.id.seekBar_dc_floral);
                     //this.mFloralTaste = mFloralTaste;
                     if ((wineTastePojo.getmFloralTaste()) == 0) {
-                        mFloralContainer.setVisibility(View.GONE);
+                        mFloralBoquetContainer.setVisibility(View.GONE);
                     }
                     if ((wineTastePojo.getmFloralTaste()) != 0) {
                         int mFloralValue = (wineTastePojo.getmFloralTaste());

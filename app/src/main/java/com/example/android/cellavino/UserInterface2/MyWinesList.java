@@ -43,7 +43,6 @@ public class MyWinesList extends MainActivity {
         setContentView(R.layout.activity_container);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new MyWinesListFragment()).commit();
 
-
         //initialise the Floating Action Button in this fragment.
         FloatingActionButton addWineFab = (FloatingActionButton) findViewById(R.id.addWineFab);
         addWineFab.setOnClickListener(new View.OnClickListener() {
@@ -54,41 +53,5 @@ public class MyWinesList extends MainActivity {
             }
         });
 
-
-
-        //FirebaseUser user = mFirebaseAuth.getCurrentUser();
-        //String uid = user.getUid();
-        //mUserRef = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid);
-
-
-        /*
-
-        mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                UserDetailsPojo name = snapshot.getValue(UserDetailsPojo.class);
-                // Set the activity title to current user name if user is not null
-                if (name != null) {
-                    // Assumes that the first word in the user's name is the user's first name.
-                    String firstName = name.getName().split("\\s+")[0];
-                    String title = firstName + "'s Wines";
-                    setTitle(title);
-                } else {
-                    Toast.makeText(MyWinesList.this, "Hmm...that didn't work", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.e(LOG_TAG, getString(R.string.log_error_the_read_failed) + firebaseError.getMessage());
-
-            }
-        });
-
-        */
     }
-
-
 }
