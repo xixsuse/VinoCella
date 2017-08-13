@@ -10,7 +10,7 @@ import com.example.android.cellavino.Utils.Constants;
 
 public class CreateTastingNameDialogFragment extends MyTastingsFragment {
 
-    private static final String LOG_TAG = CreateTasting.class.getSimpleName();
+    private static final String LOG_TAG = MyTastings.class.getSimpleName();
     String mTastingName;
 
 

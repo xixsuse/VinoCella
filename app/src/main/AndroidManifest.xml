@@ -28,8 +28,8 @@
         <activity android:name=".UserInterface2.WineInformation" />
         <activity android:name=".UserInterface2.MyWinesList" />
         <activity android:name=".UserInterface2.EditProfile" />
-        <activity android:name=".UserInterface2.CreateTasting" />
-        <activity android:name=".UserInterface2.NewTasting" />
+        <activity android:name=".UserInterface2.MyTastings" />
+        <activity android:name=".UserInterface2.TastingWines" />
         <activity android:name=".UserInterface2.CreateNewTasting" />
 
     </application>

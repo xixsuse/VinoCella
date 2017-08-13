@@ -20,16 +20,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.cellavino.Accounts.Login;
-import com.example.android.cellavino.PojoDirectory.UI1.WineDetails;
 import com.example.android.cellavino.PojoDirectory.UI2.UserDetailsPojo;
-import com.example.android.cellavino.UserInterface.AddWine;
 import com.example.android.cellavino.UserInterface.WineAdapter;
 import com.example.android.cellavino.UserInterface2.CreateNewWine;
-import com.example.android.cellavino.UserInterface2.CreateTasting;
+import com.example.android.cellavino.UserInterface2.MyTastings;
 import com.example.android.cellavino.UserInterface2.EditProfile;
 import com.example.android.cellavino.UserInterface2.MyWinesList;
-import com.example.android.cellavino.UserInterface2.MyWinesListFragment;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -38,18 +34,14 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -119,28 +111,6 @@ public class MainActivity extends AppCompatActivity {
         //ListView mWineListView = (ListView) findViewById(R.id.wineListView);
 
 
-        //Navigation Drawer setup.  Temporarily disabling it until I've worked out how to do it properly.
-        /*
-        mDrawerList = (ListView) findViewById(R.id.navigation_drawer_menu);
-        mNavigationDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mNavigationDrawerLayout, R.string.Open, R.string.Close);
-
-        mNavigationDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        mActionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        */
-
-        //Removing the List View from the main page to get a Minimum Usable Subset out to production.
-        /*
-        //Initialise the ListView
-        List<WineDetails> wineDetails = new ArrayList<>();
-        mWineAdapter = new WineAdapter(this, R.layout.wine_list_item, (ArrayList<WineDetails>) wineDetails);
-        mWineListView.setAdapter(mWineAdapter);
-        */
-
-
-
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -206,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         createTastingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CreateTasting.class);
+                Intent intent = new Intent(MainActivity.this, MyTastings.class);
                 startActivity(intent);
 
             }
@@ -214,8 +184,13 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         String userName = user.getDisplayName();
-        mUsernameTextView = (TextView) findViewById(R.id.user_name);
-        mUsernameTextView.setText(userName);
+        if (user != null) {
+            TextView mUsernameTextView = (TextView) findViewById(R.id.user_name);
+            mUsernameTextView.setText(userName);
+        } else {
+            TextView mUsernameTextView = (TextView) findViewById(R.id.user_name);
+            mUsernameTextView.setVisibility(View.GONE);
+        }
 
     }
 
@@ -388,6 +363,8 @@ public class MainActivity extends AppCompatActivity {
     private void initializeScreen(View rootView) {
         mWineInformation = (ListView) rootView.findViewById(R.id.wine_list_item_details);
         mWineName = (TextView) rootView.findViewById(R.id.wine_name);
+
+
     }
 
 

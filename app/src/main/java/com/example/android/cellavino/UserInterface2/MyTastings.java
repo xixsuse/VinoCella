@@ -14,11 +14,8 @@ import com.example.android.cellavino.MainActivity;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
-import com.firebase.client.ServerValue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.HashMap;
 
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_MY_TASTINGS;
 
@@ -27,14 +24,14 @@ import static com.example.android.cellavino.Utils.Constants.FIREBASE_MY_TASTINGS
  */
 
 
-public class CreateTasting extends MainActivity {
+public class MyTastings extends MainActivity {
 
     private Button mCreateTastingButton;
     private String mTastingName;
 
     public FirebaseAuth mFirebaseAuth;
 
-    public CreateTasting() {
+    public MyTastings() {
     }
 
     @Override
@@ -45,8 +42,9 @@ public class CreateTasting extends MainActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        final FirebaseUser user = mFirebaseAuth.getCurrentUser();
         final String uid = user.getUid().toString();
+        final String userName = user.getDisplayName().toString();
 
 
         //TODO: Create a Firebase List Adapter to display the users tastings.
@@ -56,7 +54,7 @@ public class CreateTasting extends MainActivity {
         addWineFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CreateTasting.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyTastings.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_create_tasting, null);
                 final EditText mTastingNameInput = (EditText) mView.findViewById(R.id.dialog_create_tasting_name_input);
                 alertDialogBuilder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
@@ -64,10 +62,10 @@ public class CreateTasting extends MainActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if (!mTastingNameInput.getText().toString().isEmpty()) {
                             String mTastingName = mTastingNameInput.getText().toString();
-                            createTastingInFirebase(mTastingName, uid);
+                            createTastingInFirebase(mTastingName, uid, userName);
 
                         } if (mTastingNameInput.getText().toString().isEmpty()) {
-                            Toast.makeText(CreateTasting.this, "You've got to name a tasting first!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyTastings.this, "You've got to name a tasting first!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -87,24 +85,24 @@ public class CreateTasting extends MainActivity {
     }
 
 
-    private void createTastingInFirebase(String mTastingName, String uid) {
-
-
-        Toast.makeText(CreateTasting.this, "Tasting Name: " + mTastingName + "UserID" + uid, Toast.LENGTH_SHORT).show();
+    private void createTastingInFirebase(String mTastingName, String uid, String userName) {
 
         Firebase tastingRef = new Firebase(Constants.FIREBASE_URL_TASTINGS);
         Firebase tastingFirebaseRef = tastingRef.push();
         final String tastingPushID = tastingFirebaseRef.getKey();
 
 
-        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID);
+        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_TASTING_NAME);
         myTastingsLocation.setValue(mTastingName);
+        Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
+        myTastingsLocationOwner.setValue(userName);
+
 
         //TODO: Save details of when the tasting was created and who by etc.
         //HashMap<String, Object> myTastingName = new HashMap<>();
         //myTastingName.put(mTastingName, ServerValue.TIMESTAMP);
 
-        Intent CreateTasting = new Intent(CreateTasting.this, CreateNewTasting.class);
+        Intent CreateTasting = new Intent(MyTastings.this, CreateNewTasting.class);
         CreateTasting.putExtra("thisTastingName", mTastingName);
         CreateTasting.putExtra("thisTastingPushID", tastingPushID);
 

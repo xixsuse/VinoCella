@@ -36,7 +36,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <EditText
                             android:id="@+id/create_wine_name"
@@ -45,6 +45,22 @@
                             android:ems="10"
                             android:inputType="textAutoComplete"
                             android:hint="@string/hint_enter_wine_name" />
+
+                        <EditText
+                            android:id="@+id/create_wine_vintage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            android:hint="Vintage" />
+
+                        <EditText
+                            android:id="@+id/create_wine_variety"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textAutoComplete"
+                            android:hint="Variety" />
                     </LinearLayout>
 
                 </LinearLayout>
