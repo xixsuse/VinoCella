@@ -1,4 +1,4 @@
-package com.example.android.cellavino.UserInterface2;
+package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.content.DialogInterface;
 import android.content.Intent;

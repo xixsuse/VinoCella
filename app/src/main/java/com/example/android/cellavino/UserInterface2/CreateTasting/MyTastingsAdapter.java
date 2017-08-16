@@ -1,9 +1,10 @@
-package com.example.android.cellavino.UserInterface2;
+package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.android.cellavino.PojoDirectory.UI2.WinePojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastingListPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastingPojo;
 import com.example.android.cellavino.R;
@@ -11,23 +12,23 @@ import com.firebase.client.Query;
 import com.firebase.ui.FirebaseListAdapter;
 
 /**
- * Created by Andrew on 13/08/2017.
+ * Created by Andrew on 1/08/2017.
  */
 
-public class TastingWinesAdapter extends FirebaseListAdapter<WineTastingPojo> {
+public class MyTastingsAdapter extends FirebaseListAdapter<WineTastingListPojo> {
 
 
     private WineTastingPojo mWineTastingPojo;
-    private String mTastingWineList;
+    private String mTastingId;
     //final static String LOG_TAG = MyTastingsAdapter.class.getSimpleName();
 
 
 //   MyTastingsAdapter(this, WineTastingListPojo.class, R.layout.tasting_details, tastingReference, mTastingId);
 
-    public TastingWinesAdapter(Activity activity, Class<WineTastingPojo> modelClass, int modelLayout, Query ref, String tastingWineID) {
+    public MyTastingsAdapter(Activity activity, Class<WineTastingListPojo> modelClass, int modelLayout, Query ref, String tastingID) {
         super(activity, modelClass, modelLayout, ref);
         this.mActivity = activity;
-        this.mTastingWineList = tastingWineID;
+        this.mTastingId = tastingID;
 
     }
 
@@ -41,17 +42,18 @@ public class TastingWinesAdapter extends FirebaseListAdapter<WineTastingPojo> {
     //the protected method below will populate the view that is attached to the adapter (insert the view name here)
     // with  items inflated from the wine_details card
 
-    //TODO: Update thsi to populate the correct view.
 
-    protected void populateView(View view, final WineTastingPojo list, int position) {
+    protected void populateView(View view, final WineTastingListPojo list, int position) {
         // Find the textViews and save them in textView fields, enabling display.
         // then set the wineName and Vintage on the list - ready for a customer to click on and display the details of the wine they've tasted.
 
-        TextView textViewTastingWineName = (TextView) view.findViewById(R.id.tasting_wine_vintage);
-        textViewTastingWineName.setText(list.getWineVintage());
+        TextView textViewTastingName = (TextView) view.findViewById(R.id.tasting_tasting_name);
+        textViewTastingName.setText(list.getTastingName());
 
-        TextView textViewTastingOwner = (TextView) view.findViewById(R.id.tasting_wine_name);
-        textViewTastingOwner.setText(list.getWineName());
+        TextView textViewTastingOwner = (TextView) view.findViewById(R.id.tasting_owner);
+        textViewTastingOwner.setText(list.getOwner());
 
     }
 }
+
+

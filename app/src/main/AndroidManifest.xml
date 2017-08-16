@@ -22,15 +22,17 @@
         <activity android:name=".Accounts.Login" />
         <activity android:name=".Accounts.CreateAccount" />
         <activity android:name=".UserInterface.AddWine" />
-        <activity android:name=".UserInterface2.CreateNewWine" />
-        <activity android:name=".UserInterface2.EditWine" />
-        <activity android:name=".UserInterface2.ArchiveWine" />
-        <activity android:name=".UserInterface2.WineInformation" />
-        <activity android:name=".UserInterface2.MyWinesList" />
-        <activity android:name=".UserInterface2.EditProfile" />
-        <activity android:name=".UserInterface2.MyTastings" />
-        <activity android:name=".UserInterface2.TastingWines" />
-        <activity android:name=".UserInterface2.CreateNewTasting" />
+        <activity android:name=".UserInterface2.WineDetails.CreateNewWine" />
+        <activity android:name=".UserInterface2.WineDetails.EditWine" />
+        <activity android:name=".UserInterface2.WineDetails.ArchiveWine" />
+        <activity android:name=".UserInterface2.WineDetails.WineInformation" />
+        <activity android:name=".UserInterface2.WineDetails.MyWinesList" />
+        <activity android:name=".UserInterface2.EditProfile.EditProfile" />
+        <activity android:name=".UserInterface2.CreateTasting.MyTastings" />
+        <activity android:name=".UserInterface2.CreateTasting.TastingWines" />
+        <activity android:name=".UserInterface2.CreateTasting.CreateNewTasting" />
+        <activity android:name=".UserInterface2.JoinTasting.JoinTasting" />
+        <activity android:name=".UserInterface2.JoinTasting.JoinTastingWines" />
 
     </application>
     <uses-feature

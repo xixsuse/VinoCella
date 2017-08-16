@@ -1,7 +1,9 @@
-package com.example.android.cellavino.UserInterface2;
+package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.os.Bundle;
 
+import com.example.android.cellavino.UserInterface2.CreateTasting.MyTastings;
+import com.example.android.cellavino.UserInterface2.CreateTasting.MyTastingsFragment;
 import com.example.android.cellavino.Utils.Constants;
 
 /**

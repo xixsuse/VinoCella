@@ -22,10 +22,11 @@ import android.widget.Toast;
 
 import com.example.android.cellavino.PojoDirectory.UI2.UserDetailsPojo;
 import com.example.android.cellavino.UserInterface.WineAdapter;
-import com.example.android.cellavino.UserInterface2.CreateNewWine;
-import com.example.android.cellavino.UserInterface2.MyTastings;
-import com.example.android.cellavino.UserInterface2.EditProfile;
-import com.example.android.cellavino.UserInterface2.MyWinesList;
+import com.example.android.cellavino.UserInterface2.WineDetails.CreateNewWine;
+import com.example.android.cellavino.UserInterface2.CreateTasting.MyTastings;
+import com.example.android.cellavino.UserInterface2.EditProfile.EditProfile;
+import com.example.android.cellavino.UserInterface2.JoinTasting.JoinTasting;
+import com.example.android.cellavino.UserInterface2.WineDetails.MyWinesList;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -177,6 +178,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MyTastings.class);
+                startActivity(intent);
+
+            }
+        });
+
+        //initialise edit_profile button click listener
+        Button joinTastingButton = (Button) findViewById(R.id.join_tasting);
+        joinTastingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, JoinTasting.class);
                 startActivity(intent);
 
             }

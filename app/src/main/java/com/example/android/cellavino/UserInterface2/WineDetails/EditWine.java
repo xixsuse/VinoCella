@@ -1,14 +1,11 @@
-package com.example.android.cellavino.UserInterface2;
+package com.example.android.cellavino.UserInterface2.WineDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +22,6 @@ import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -2280,7 +2275,7 @@ public class EditWine extends MainActivity {
         //Send the user back the the wine list.  They'll be able to see all the wines they're recently added.
 
 
-        Intent MyWinesList = new Intent(EditWine.this, MyWinesList.class);
+        Intent MyWinesList = new Intent(EditWine.this, com.example.android.cellavino.UserInterface2.WineDetails.MyWinesList.class);
         // Start the new activity
         startActivity(MyWinesList);
 

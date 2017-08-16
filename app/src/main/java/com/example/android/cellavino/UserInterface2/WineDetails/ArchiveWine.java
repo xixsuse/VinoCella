@@ -1,4 +1,4 @@
-package com.example.android.cellavino.UserInterface2;
+package com.example.android.cellavino.UserInterface2.WineDetails;
 
 import android.os.Bundle;
 
