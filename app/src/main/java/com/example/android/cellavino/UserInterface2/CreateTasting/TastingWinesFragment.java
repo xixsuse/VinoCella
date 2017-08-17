@@ -79,13 +79,10 @@ public class TastingWinesFragment extends Fragment {
 
         myTastingWinesReference = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingID);
         final Firebase tastingWinesRef = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingID);
-        //TODO: add the adapter to show the wines in this tasting.
 
         mTastingWinesAdapter = new TastingWinesAdapter(getActivity(), WineTastingPojo.class, R.layout.tasting_wines_details, tastingWinesRef, mTastingWineList);
         mListView.setAdapter(mTastingWinesAdapter);
 
-
-        //TODO: Replace null with rootView
         return rootView;
     }
 

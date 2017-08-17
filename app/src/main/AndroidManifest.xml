@@ -33,6 +33,7 @@
         <activity android:name=".UserInterface2.CreateTasting.CreateNewTasting" />
         <activity android:name=".UserInterface2.JoinTasting.JoinTasting" />
         <activity android:name=".UserInterface2.JoinTasting.JoinTastingWines" />
+        <activity android:name=".UserInterface2.JoinTasting.TastingWineInput" />
 
     </application>
     <uses-feature
