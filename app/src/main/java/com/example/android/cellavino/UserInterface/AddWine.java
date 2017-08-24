@@ -152,7 +152,9 @@ public class AddWine extends AppCompatActivity {
             }
 
             public void addNewWineToDatabase() {
-                WineDetails wineDetails = new WineDetails(mWineName.getText().toString(), mWineryName.getText().toString(), mVintage.getText().toString(), mGrapeVariety.getText().toString(), mTastingDate.getText().toString(), mWineDescription.getText().toString(), mMyWineRating.getRating(), mWinePhotoUrl.toString());
+                WineDetails wineDetails = new WineDetails(mWineName.getText().toString(), mWineryName.getText().toString(),
+                        mVintage.getText().toString(), mGrapeVariety.getText().toString(), mTastingDate.getText().toString(),
+                        mWineDescription.getText().toString(), mMyWineRating.getRating(), mWinePhotoUrl.toString());
                 mWineDatabaseReference.push().setValue(wineDetails);
 
                 // Clear input box

@@ -38,6 +38,7 @@ public class Constants {
     public static final String FIREBASE_PROPERTY_WINE_DESCRIPTION = "wineDescription";
     public static final String FIREBASE_PROPERTY_WINE_VARIETY = "wineVariety";
     public static final String FIREBASE_PROPERTY_WINE_WINERY = "wineWinery";
+    public static final String FIREBASE_PROPERTY_WINE_RATING = "mCreateNewWineRating";
     public static final String FIREBASE_PROPERTY_WINE_TASTING_DATE = "wineTastingDate";
     public static final String FIREBASE_PROPERTY_TIMESTAMP_CREATED = "timestampCreated";
     public static final String FIREBASE_PROPERTY_TIMESTAMP_LAST_CHANGED = "timestampLastChanged";

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class CreateNewWine extends AppCompatActivity {
     public Toast mToastMessage;
 
     public FirebaseAuth mFirebaseAuth;
+
+    private RatingBar mCreateNewWineRating;
 
     public SeekBar mGrapefuit;
     public SeekBar mLemon;
@@ -147,6 +150,7 @@ public class CreateNewWine extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
         */
+        mCreateNewWineRating = (RatingBar) findViewById(R.id.create_new_wine_rating);
 
         mGrapefuit = (SeekBar) findViewById(R.id.seekBar_grapefruit);
         mLemon = (SeekBar) findViewById(R.id.seekBar_lemon);
@@ -240,6 +244,13 @@ public class CreateNewWine extends AppCompatActivity {
         mCreateWineTastingDate = (TextView) findViewById(R.id.create_wine_tasting_date);
         mCreateWineDescription = (TextView) findViewById(R.id.create_wine_description);
         mCreateNewWine = (Button) findViewById(R.id.create_new_wine_button);
+
+        mCreateNewWineRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar myWineRating, float wineRating, boolean fromUser) {
+
+            }
+        });
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         // Specify the layout to use when the list of choices appears
@@ -2178,7 +2189,7 @@ public class CreateNewWine extends AppCompatActivity {
             timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP_CREATED, ServerValue.TIMESTAMP);
 
             //Building the wine POJO so that it can be added to Firebase.
-            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddWinery, newWineToAddVintage, newWineToAddVariety, taster, userName, uid, newWineToAddTastingDate, newWineToAddDescription, timestampCreated);
+            WinePojo winePojo = new WinePojo(newWineToAdd, newWineToAddWinery, newWineToAddVintage, newWineToAddVariety, taster, userName, uid, newWineToAddTastingDate, newWineToAddDescription, mCreateNewWineRating.getRating(), timestampCreated);
             // Go to the "WineListName" child node of the root node.  This will create the node for you if it doesn't already exist.
             // Then using the setValue menu it will set value the node to WineName.
             //wineNameFirebaseRef.setValue(winePojo);

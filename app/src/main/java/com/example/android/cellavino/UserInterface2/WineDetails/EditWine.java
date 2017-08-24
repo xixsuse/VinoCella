@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,8 @@ public class EditWine extends MainActivity {
     public TextView mUpdateWineTastingDate;
     public TextView mUpdateWineDescription;
     public Button mUpdateWine;
+
+    public RatingBar mCreateNewWineRating;
 
     public SeekBar mGrapefuit;
     public SeekBar mLemon;
@@ -154,6 +157,8 @@ public class EditWine extends MainActivity {
         Firebase myWinesRefLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.FIREBASE_MY_WINES).child(mWinePushID);
 
 
+        mCreateNewWineRating = (RatingBar) findViewById(R.id.create_new_wine_rating);
+
         //initialise the seekbars
         mGrapefuit = (SeekBar) findViewById(R.id.seekBar_grapefruit);
         mLemon = (SeekBar) findViewById(R.id.seekBar_lemon);
@@ -249,6 +254,7 @@ public class EditWine extends MainActivity {
         mUpdateWineTastingDate = (TextView) findViewById(R.id.create_wine_tasting_date);
         mUpdateWineDescription = (TextView) findViewById(R.id.create_wine_description);
         mUpdateWine = (Button) findViewById(R.id.create_new_wine_button);
+
 
         //set the click listener on the button that  pushes wine into the database
         mUpdateWine.setOnClickListener(new View.OnClickListener() {
@@ -2099,6 +2105,7 @@ public class EditWine extends MainActivity {
         String updatedWineTastingDate = mUpdateWineTastingDate.getText().toString();
         String updatedWineDescription = mUpdateWineDescription.getText().toString();
 
+
         int ratingGrapefruitTaste = mGrapefuit.getProgress();
         int ratingLemonTaste = mLemon.getProgress();
         int ratingLimeTaste = mLime.getProgress();
@@ -2185,6 +2192,12 @@ public class EditWine extends MainActivity {
         int ratingCaramel = mCaramel.getProgress();
         int ratingBlueCheese = mBlueCheese.getProgress();
 
+        mCreateNewWineRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar myWineRating, float wineRating, boolean fromUser) {
+
+            }
+        });
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         String uid = user.getUid().toString();
@@ -2211,6 +2224,9 @@ public class EditWine extends MainActivity {
             updatedWineDetailsMap.put("/" + Constants.FIREBASE_PROPERTY_WINE_WINERY, updatedWineWinery);
             updatedWineDetailsMap.put("/" + Constants.FIREBASE_PROPERTY_WINE_TASTING_DATE, updatedWineTastingDate);
             updatedWineDetailsMap.put("/" + Constants.FIREBASE_PROPERTY_WINE_DESCRIPTION, updatedWineDescription);
+
+            //TODO: Work out how to add a rating to the edit functionality.
+            //updatedWineDetailsMap.put("/" + Constants.FIREBASE_PROPERTY_WINE_RATING, mCreateNewWineRating.getRating());
 
             //Add the time Changed to the map
             HashMap<String, Object> changedTimestampMap = new HashMap<>();
