@@ -59,7 +59,6 @@ public class JoinTastingWinesFragment extends Fragment {
             //return;
         }
         if (mTastingListId != null) {
-            Toast.makeText(getActivity(), "Tastings Found", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -72,8 +71,6 @@ public class JoinTastingWinesFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.my_tastings_list, container, false);
         initializeScreen(rootView);
-
-        Toast.makeText(getActivity(), "The list will be on this screen", Toast.LENGTH_SHORT).show();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mFirebaseAuth.getCurrentUser();

@@ -2,6 +2,8 @@ package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -28,12 +30,15 @@ public class CreateNewTasting extends AppCompatActivity {
 
     public FirebaseAuth mFirebaseAuth;
 
+    public static final int RC_PHOTO_PICKER = 1;
 
     private String mTastingName;
     private String tastingPushID;
     private TextView mWineName;
     private TextView mWineVintage;
     private TextView mWineVariety;
+
+    public FloatingActionButton mAddTastingWineBottlePictureFab;
 
     public SeekBar mGrapefuit;
     public SeekBar mLemon;
@@ -137,6 +142,8 @@ public class CreateNewTasting extends AppCompatActivity {
         setTitle(mTastingName);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+        mAddTastingWineBottlePictureFab = (FloatingActionButton) findViewById(R.id.addTastingWineBottlePictureFab);
 
         mWineName = (TextView) findViewById(R.id.create_wine_name);
         mWineVintage = (TextView) findViewById(R.id.create_wine_vintage);
@@ -245,6 +252,24 @@ public class CreateNewTasting extends AppCompatActivity {
                 addWineToTastingDatabaseAndMore();
             }
         });
+
+        //TODO this will add the picture of the botle to the tasting.
+        mAddTastingWineBottlePictureFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(CreateNewTasting.this, "Image Picker working", Toast.LENGTH_SHORT).show();
+                //this was the code that got the photopicker to work.
+
+                //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
+            }
+        });
+
+
 
 
         mGrapefuit.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -2034,6 +2059,23 @@ public class CreateNewTasting extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (
+            //this needs to be changed to the image picker
+                requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
+            Toast.makeText(CreateNewTasting.this, "Working!", Toast.LENGTH_SHORT).show();
+
+
+        } else {
+            Toast.makeText(CreateNewTasting.this, "Not working!", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    ;
 
     public void addWineToTastingDatabaseAndMore() {
 

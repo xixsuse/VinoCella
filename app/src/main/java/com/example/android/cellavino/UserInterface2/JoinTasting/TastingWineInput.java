@@ -37,6 +37,7 @@ public class TastingWineInput extends AppCompatActivity {
     private int mGrapefruitAnswer;
     public int mGrapefruitValueNo;
     public int mGrapefruitDifference;
+    public int mGrapefruitResult;
 
 
     private String mTastingWineInput;
@@ -176,9 +177,17 @@ public class TastingWineInput extends AppCompatActivity {
                 WineTastePojo wineTastePojo = dataSnapshot.getValue(WineTastePojo.class);
                 if (wineTastePojo != null) {
                     mGrapefruitAnswer = wineTastePojo.getmGrapefruitTaste();
-
                     mGrapefruitDifference = mGrapefruitAnswer - mGrapefruitValueNo;
-                    Toast.makeText(TastingWineInput.this, "Difference = " + mGrapefruitDifference, Toast.LENGTH_SHORT).show();
+                    if (mGrapefruitDifference <= 0) {
+                        mGrapefruitResult = mGrapefruitDifference * -1;
+                    }
+
+                    if (mGrapefruitDifference >= 0) {
+                        mGrapefruitResult = mGrapefruitDifference;
+                    }
+
+                    Toast.makeText(TastingWineInput.this, "Difference = " + mGrapefruitResult, Toast.LENGTH_SHORT).show();
+
 
                     //TODO: add code to change work out the score.
 
