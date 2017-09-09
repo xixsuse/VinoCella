@@ -206,6 +206,18 @@
 
                         </RelativeLayout>
 
+
+                        <Button
+                            android:id="@+id/search_nearby_tastings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:textSize="16dp"
+                            android:textColor="@color/authui_colorPrimaryDark"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:text="Search Nearby Tastings" />
+
+
                     </LinearLayout>
 
                 </LinearLayout>

@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.android.cellavino.MainActivity;
@@ -28,6 +29,7 @@ public class MyTastings extends MainActivity {
 
     private Button mCreateTastingButton;
     private String mTastingName;
+    public ImageView mTastingPicture;
 
     public FirebaseAuth mFirebaseAuth;
 
@@ -51,6 +53,33 @@ public class MyTastings extends MainActivity {
         addWineFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setContentView(R.layout.create_new_wine_tasting_summary);
+                mTastingPicture = (ImageView) findViewById(R.id.tasting_photo);
+                mTastingPicture.setVisibility(View.GONE);
+
+                Button mCreateTasting = (Button) findViewById(R.id.create_tasting);
+                mCreateTasting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final EditText mTastingNameInput = (EditText) findViewById(R.id.create_tasting_name);
+                        final EditText mTastingSummaryInput = (EditText) findViewById(R.id.create_tasting_summary);
+                        if (!mTastingNameInput.getText().toString().isEmpty() && !mTastingSummaryInput.getText().toString().isEmpty()) {
+                            String mTastingName = mTastingNameInput.getText().toString();
+                            createTastingInFirebase(mTastingName, uid, userName);
+
+                        }
+
+                        if (mTastingNameInput.getText().toString().isEmpty() && mTastingSummaryInput.getText().toString().isEmpty()) {
+                            Toast.makeText(MyTastings.this, "You've left something blank...!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+
+
+            }
+        });
+                /*
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyTastings.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_create_tasting, null);
                 final EditText mTastingNameInput = (EditText) mView.findViewById(R.id.dialog_create_tasting_name_input);
@@ -79,6 +108,10 @@ public class MyTastings extends MainActivity {
             }
 
         });
+        */
+
+
+
     }
 
 
@@ -114,17 +147,17 @@ public class MyTastings extends MainActivity {
     }
 
 
-    private void createTastingInFirebase(String mMTastingName, String mUid, String mUserName) {
+    private void createTastingInFirebase(String mTastingName, String uid, String userName) {
 
         Firebase tastingRef = new Firebase(Constants.FIREBASE_URL_TASTINGS);
         Firebase tastingFirebaseRef = tastingRef.push();
         final String tastingPushID = tastingFirebaseRef.getKey();
 
 
-        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(mUid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_TASTING_NAME);
-        myTastingsLocation.setValue(mMTastingName);
-        Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(mUid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
-        myTastingsLocationOwner.setValue(mUserName);
+        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_TASTING_NAME);
+        myTastingsLocation.setValue(mTastingName);
+        Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
+        myTastingsLocationOwner.setValue(userName);
 
 
         //TODO: Save details of when the tasting was created and who by etc.
@@ -135,7 +168,7 @@ public class MyTastings extends MainActivity {
         //TODO: cont.. to upload an image, a negative response will simply dismiss the dialog.
 
         Intent CreateTasting = new Intent(MyTastings.this, CreateNewTasting.class);
-        CreateTasting.putExtra("thisTastingName", mMTastingName);
+        CreateTasting.putExtra("thisTastingName", mTastingName);
         CreateTasting.putExtra("thisTastingPushID", tastingPushID);
 
         startActivity(CreateTasting);
