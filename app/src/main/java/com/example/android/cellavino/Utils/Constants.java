@@ -1,5 +1,8 @@
 package com.example.android.cellavino.Utils;
 
+import com.firebase.geofire.GeoFire;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by Andrew on 21/04/2017.
  */
@@ -19,6 +22,7 @@ public class Constants {
     public static final String FIREBASE_WINE_FLAVOR_DETAILS = "flavorDetails";
     public static final String FIREBASE_LOCATION_USERS = "CellaVino_Users";
     public static final String FIREBASE_MY_TASTINGS = "myTastings";
+    public static final String FIREBASE_EVERYONE_TASTING = "everyoneTasting";
     public static final String FIREBASE_MY_TASTING_SUMMARY = "tastingSummary";
     public static final String FIREBASE_TASTING_NAME = "tastingName";
     public static final String FIREBASE_TASTINGS = "tastings";
@@ -27,9 +31,12 @@ public class Constants {
     public static final String FIREBASE_WINES = "wines";
     public static final String FIREBASE_OWNER = "owner";
     public static final String FIREBASE_MY_ARCHIVED_WINES = "myArchivedWines";
+    public static final int GPS_PERMISSION = 201;
+    public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 202;
+    public static final int LOCATION_PICKER_REQUEST = 203;
 
 
-
+    public static final GeoFire TASTING_GEO = new GeoFire(FirebaseDatabase.getInstance().getReference("Tasting_geo"));
     /**
      * Constants for Firebase object properties
      */
@@ -48,7 +55,6 @@ public class Constants {
     public static final String FIREBASE_LOCATION_USERS_WINE_URL = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
 
 
-
     /**
      * Constants for Firebase URL
      */
@@ -60,11 +66,11 @@ public class Constants {
     public static final String FIREBASE_URL_LOCATION_ARCHIVED_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_LOCATION_ARCHIVED_WINE_DETAILS;
     public static final String FIREBASE_URL_TASTING_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_TASTING_WINE_DETAILS;
     public static final String FIREBASE_URL_TASTINGS = FIREBASE_URL + "/" + FIREBASE_TASTINGS;
+    public static final String FIREBASE_URL_EVERYONE_TASTING = FIREBASE_URL + "/" + FIREBASE_EVERYONE_TASTING;
     /**
      * Constants for bundles, extras and shared preferences keys
      */
     public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
-
 
 
     public static final String WINE_LIST_ID = "WINE_LIST_ID";
@@ -76,8 +82,6 @@ public class Constants {
 
     //Flavor Profiles
     public static final String GRAPEFRUIT_TASTE = "mGrapefruit";
-
-
 
 
 }
