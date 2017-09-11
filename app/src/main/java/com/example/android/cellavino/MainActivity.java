@@ -1,13 +1,23 @@
 package com.example.android.cellavino;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -20,37 +30,48 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.cellavino.PojoDirectory.UI2.LocationPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.UserDetailsPojo;
 import com.example.android.cellavino.UserInterface.WineAdapter;
-import com.example.android.cellavino.UserInterface2.WineDetails.CreateNewWine;
 import com.example.android.cellavino.UserInterface2.CreateTasting.MyTastings;
 import com.example.android.cellavino.UserInterface2.EditProfile.EditProfile;
 import com.example.android.cellavino.UserInterface2.JoinTasting.JoinTasting;
+import com.example.android.cellavino.UserInterface2.WineDetails.CreateNewWine;
 import com.example.android.cellavino.UserInterface2.WineDetails.MyWinesList;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+import static com.example.android.cellavino.Utils.Constants.GPS_PERMISSION;
+import static com.example.android.cellavino.Utils.Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
+import static com.example.android.cellavino.Utils.Constants.TASTING_GEO;
+
+public class MainActivity extends AppCompatActivity implements android.location.LocationListener {
 
     private static final String TAG = "MainActivity";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
     public String mUsername;
+
+    Button nearbyTasting;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -79,7 +100,10 @@ public class MainActivity extends AppCompatActivity {
     private String[] mMenuOptions;
     private Uri userProfilePic;
     private TextView mUsernameTextView;
-
+    LocationManager locationManager;
+    String provider;
+    Location mCurrentLocation;
+    ArrayList<String> tastingArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +112,13 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.my_wines_list);
         //setContentView(R.layout.activity_container);
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, new MyWinesListFragment()).commit();
+
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), false);
+        nearbyTasting = (Button) findViewById(R.id.search_nearby_tastings);
+        getLocation();
+
 
         //Initialise Firebase
         Firebase.setAndroidContext(this);
@@ -204,13 +235,68 @@ public class MainActivity extends AppCompatActivity {
             mUsernameTextView.setVisibility(View.GONE);
         }
 
+
+        nearbyTasting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mCurrentLocation = locationManager.getLastKnownLocation(provider);
+                } catch (Exception e) {
+                }
+
+                if (mCurrentLocation != null) {
+                    getNearTasting(mCurrentLocation);
+                } else {
+                    getLocation();
+                    Toast.makeText(MainActivity.this, "Get a move to get your location", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
+    public void getNearTasting(final Location location) {
+        final ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this, "Loading..", null, true, false);
+        tastingArrayList = new ArrayList<>();
+        TASTING_GEO.queryAtLocation(new GeoLocation(location.getLatitude(), location.getLongitude()), 10).addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                tastingArrayList.add(key);
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                progressDialog.dismiss();
+
+                if (tastingArrayList.size() >= 1) {
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    LocationPojo pojo = new LocationPojo(location.getLatitude(), location.getLongitude());
+                    intent.putExtra("Nearest", pojo);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Sorry Not found Tasting Near you ", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -224,6 +310,14 @@ public class MainActivity extends AppCompatActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(MainActivity.this, "Sign in cancelled", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        } else if (requestCode == GPS_PERMISSION) {
+
+            String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            if (provider != null) {
+                getLocation();
+            } else {
+                Toast.makeText(this, "You must enable Gps to get your location", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -377,6 +471,85 @@ public class MainActivity extends AppCompatActivity {
         mWineName = (TextView) rootView.findViewById(R.id.wine_name);
 
 
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mCurrentLocation = location;
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+
+    public boolean checkGPS() {
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean isenabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isenabled;
+    }
+
+    public void showGpsAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // set title
+        alertDialogBuilder.setTitle("Alert");
+        // set dialog message
+        alertDialogBuilder.setMessage("Enable GPS")
+                .setCancelable(false)
+                .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent, GPS_PERMISSION);
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationManager.removeUpdates(this);
+    }
+
+    public void getLocation() {
+
+        if (checkGPS()) {
+
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(locationManager.getBestProvider(new Criteria(), false), 1000, 1, this);
+
+            } else {
+                requestPermissions(
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+        } else {
+            showGpsAlert();
+        }
     }
 
 

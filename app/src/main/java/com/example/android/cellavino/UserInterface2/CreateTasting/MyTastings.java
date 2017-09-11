@@ -12,13 +12,24 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.android.cellavino.MainActivity;
+import com.example.android.cellavino.PojoDirectory.UI2.TastingDetailsPojo;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_MY_TASTINGS;
+import static com.example.android.cellavino.Utils.Constants.FIREBASE_TASTING_NAME;
+import static com.example.android.cellavino.Utils.Constants.FIREBASE_URL_EVERYONE_TASTING;
+import static com.example.android.cellavino.Utils.Constants.LOCATION_PICKER_REQUEST;
+import static com.example.android.cellavino.Utils.Constants.TASTING_GEO;
+
 
 /**
  * Created by Andrew on 15/07/2017.
@@ -30,8 +41,12 @@ public class MyTastings extends MainActivity {
     private Button mCreateTastingButton;
     private String mTastingName;
     public ImageView mTastingPicture;
-
+    private Button addLocation;
     public FirebaseAuth mFirebaseAuth;
+    EditText mTastingNameInput;
+    EditText mTastingSummaryInput;
+    Button mCreateTasting;
+    Place place = null;
 
     public MyTastings() {
     }
@@ -43,7 +58,6 @@ public class MyTastings extends MainActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new MyTastingsFragment()).commit();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-
         final FirebaseUser user = mFirebaseAuth.getCurrentUser();
         final String uid = user.getUid().toString();
         final String userName = user.getDisplayName().toString();
@@ -55,21 +69,38 @@ public class MyTastings extends MainActivity {
             public void onClick(View view) {
                 setContentView(R.layout.create_new_wine_tasting_summary);
                 mTastingPicture = (ImageView) findViewById(R.id.tasting_photo);
+                mTastingNameInput = (EditText) findViewById(R.id.create_tasting_name);
+                mTastingSummaryInput = (EditText) findViewById(R.id.create_tasting_summary);
+                mCreateTasting = (Button) findViewById(R.id.create_tasting);
+
                 mTastingPicture.setVisibility(View.GONE);
 
-                Button mCreateTasting = (Button) findViewById(R.id.create_tasting);
+                addLocation = (Button) findViewById(R.id.add_location);
+                addLocation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                        try {
+                            startActivityForResult(builder.build(MyTastings.this), LOCATION_PICKER_REQUEST);
+                        } catch (GooglePlayServicesRepairableException e) {
+                            e.printStackTrace();
+                        } catch (GooglePlayServicesNotAvailableException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
                 mCreateTasting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final EditText mTastingNameInput = (EditText) findViewById(R.id.create_tasting_name);
-                        final EditText mTastingSummaryInput = (EditText) findViewById(R.id.create_tasting_summary);
+
                         if (!mTastingNameInput.getText().toString().isEmpty() && !mTastingSummaryInput.getText().toString().isEmpty()) {
                             String mTastingName = mTastingNameInput.getText().toString();
                             createTastingInFirebase(mTastingName, uid, userName);
 
-                        }
-
-                        if (mTastingNameInput.getText().toString().isEmpty() && mTastingSummaryInput.getText().toString().isEmpty()) {
+                        } else {
                             Toast.makeText(MyTastings.this, "You've left something blank...!", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -111,9 +142,18 @@ public class MyTastings extends MainActivity {
         */
 
 
-
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOCATION_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                place = PlacePicker.getPlace(data, this);
+                mTastingSummaryInput.setText(place.getAddress().toString());
+            }
+        }
+    }
 
     //TODO: replace with with a create winetasting screen "create_new_wine_tasting_summary"
     //This will allow the user to add a picture of the set of wines they are about to taste
@@ -154,10 +194,26 @@ public class MyTastings extends MainActivity {
         final String tastingPushID = tastingFirebaseRef.getKey();
 
 
-        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_TASTING_NAME);
+        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS)
+                .child(tastingPushID).child(FIREBASE_TASTING_NAME);
         myTastingsLocation.setValue(mTastingName);
-        Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
+        Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS)
+                .child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
         myTastingsLocationOwner.setValue(userName);
+
+
+        // this is for everyone tasting so we can easily query them instead of going to every user
+        Firebase everyoneTasting = new Firebase(FIREBASE_URL_EVERYONE_TASTING);
+        TastingDetailsPojo tastingDetailsPojo =
+                new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid);
+        everyoneTasting.child(tastingPushID).setValue(tastingDetailsPojo);
+
+        // saving the tasting Location;
+        TASTING_GEO.setLocation(tastingPushID, new GeoLocation(place.getLatLng().latitude, place.getLatLng().longitude));
+
+
+
+
 
 
         //TODO: Save details of when the tasting was created and who by etc.
@@ -175,6 +231,8 @@ public class MyTastings extends MainActivity {
 
 
     }
+
+
 
 }
 
