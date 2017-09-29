@@ -63,10 +63,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getNearest(locationPojo);
     }
 
-
+    // TODO: update the 10 to a adjustable value radius.
     public void getNearest(LocationPojo mCurrentLoc) {
         TASTING_GEO.queryAtLocation(new GeoLocation(mCurrentLoc.getLatitude()
-                , mCurrentLoc.getLongitude()), 10).addGeoQueryEventListener(new GeoQueryEventListener() {
+                , mCurrentLoc.getLongitude()), 150).addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
                 Firebase tastingRef = new Firebase(Constants.FIREBASE_URL_EVERYONE_TASTING);
@@ -76,9 +76,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         TastingDetailsPojo detailsPojo = dataSnapshot.getValue(TastingDetailsPojo.class);
                         Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(detailsPojo
                                 .getLatitude(), detailsPojo.getLongitude())).icon(BitmapDescriptorFactory.
-                                defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                                defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         marker.setTag(detailsPojo);
                         marker.setTitle(detailsPojo.getName());
+                        //TODO: add a click listener to take people to the correct tasting
                         builder.include(marker.getPosition());
                         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 200));
                     }
