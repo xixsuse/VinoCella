@@ -50,18 +50,15 @@ public class JoinTastingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "This works", Toast.LENGTH_SHORT).show();
 
         Intent intent = getActivity().getIntent();
         mWineTastingId = intent.getStringExtra(Constants.TASTING_ID);
         if (mWineTastingId == null) {
             //finish();
-            Toast.makeText(getActivity(), "No Tasting Details", Toast.LENGTH_SHORT).show();
             //getActivity().finish();
             //return;
         }
         if (mWineTastingId != null) {
-            Toast.makeText(getActivity(), "Tastings Found", Toast.LENGTH_SHORT).show();
             return;
         }
 

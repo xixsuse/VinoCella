@@ -1806,10 +1806,10 @@ public class CreateNewTasting extends AppCompatActivity {
         });
 
         mCorn.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int kiwifruitValue = 0;
+            int cornValue = 0;
 
-            public void onProgressChanged(SeekBar mKiwifruit, int progress, boolean fromUser) {
-                kiwifruitValue = progress;
+            public void onProgressChanged(SeekBar mCorn, int progress, boolean fromUser) {
+                cornValue = progress;
             }
 
             @Override
@@ -1821,7 +1821,7 @@ public class CreateNewTasting extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(CreateNewTasting.this, "Kiwifruit: " + kiwifruitValue, Toast.LENGTH_SHORT);
+                mToastMessage = Toast.makeText(CreateNewTasting.this, "Corn: " + cornValue, Toast.LENGTH_SHORT);
                 mToastMessage.show();
             }
         });
@@ -2066,7 +2066,6 @@ public class CreateNewTasting extends AppCompatActivity {
         if (
             //this needs to be changed to the image picker
                 requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
-            Toast.makeText(CreateNewTasting.this, "Working!", Toast.LENGTH_SHORT).show();
 
 
         } else {

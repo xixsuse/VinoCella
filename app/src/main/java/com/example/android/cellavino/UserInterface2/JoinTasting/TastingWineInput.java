@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.app.AlertDialog;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastePojo;
+import com.example.android.cellavino.PojoDirectory.UI2.WineTastingPojo;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.UserInterface2.CreateTasting.CreateNewTasting;
 import com.example.android.cellavino.Utils.Constants;
@@ -26,6 +28,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by Andrew on 17/08/2017.
@@ -477,9 +480,13 @@ public class TastingWineInput extends AppCompatActivity {
 
 
     private String mTastingWineInput;
+    private String mTastingListID;
+    private String mTastingWineName;
+    private String mTastingWineVintage;
     private String winePushID;
     private Button mSaveFinish;
     private Button mSaveAddNext;
+    private CardView mWineItemSummaryCard;
     private TextView mWineName;
     private TextView mWineVintage;
     private TextView mWineVariety;
@@ -661,6 +668,7 @@ public class TastingWineInput extends AppCompatActivity {
     public int smokeDenominator;
     public int caramelDenominator;
 
+    public Firebase mTastingWineDetails;
 
 
     @Override
@@ -668,12 +676,38 @@ public class TastingWineInput extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         mTastingWineInput = bundle.getString(Constants.WINE_LIST_ID);
+        mTastingListID = bundle.getString(Constants.TASTING_LIST_ID);
+
         setContentView(R.layout.create_new_tasting);
-        //TODO: Set Title as Wine Name and vintage
-        // setTitle(mTastingName);
+
+        mTastingWineDetails = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(mTastingListID).child(mTastingWineInput);
+
+        mTastingWineDetails.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                WineTastingPojo wineTastingPojo = dataSnapshot.getValue(WineTastingPojo.class);
+
+                if (wineTastingPojo == null) {
+                    return;
+                }
+
+                mTastingWineName = wineTastingPojo.getWineName();
+                mTastingWineVintage = wineTastingPojo.getWineVintage();
+
+                setTitle(mTastingWineVintage + " " + mTastingWineName);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+
+        });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+        mWineItemSummaryCard = (CardView) findViewById(R.id.wine_list_item_details);
+        mWineItemSummaryCard.setVisibility(View.GONE);
         mWineName = (TextView) findViewById(R.id.create_wine_name);
         mWineVintage = (TextView) findViewById(R.id.create_wine_vintage);
         mWineVariety = (TextView) findViewById(R.id.create_wine_variety);
@@ -687,6 +721,7 @@ public class TastingWineInput extends AppCompatActivity {
 
         mFloatingActionButtonPicture = (FloatingActionButton) findViewById(R.id.addTastingWineBottlePictureFab);
         mFloatingActionButtonPicture.setVisibility(View.GONE);
+
 
         //initialise the points value for this tasting.
         tastingNegativePoints = 0;
@@ -1238,7 +1273,6 @@ public class TastingWineInput extends AppCompatActivity {
             }
         });
 
-
         mPineappleInput = (SeekBar) findViewById(R.id.seekBar_pineapple);
         mPineappleInput.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int pineappleValue = 0;
@@ -1492,7 +1526,6 @@ public class TastingWineInput extends AppCompatActivity {
             }
         });
 
-
         mBlackberryInput = (SeekBar) findViewById(R.id.seekBar_aq_blackberry);
         mBlackberryInput.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int blackberryValue = 0;
@@ -1631,7 +1664,6 @@ public class TastingWineInput extends AppCompatActivity {
             }
         });
 
-
         mHoneysuckleInput = (SeekBar) findViewById(R.id.seekBar_as_honeysuckle_20);
         mHoneysuckleInput.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int honeysuckleValue = 0;
@@ -1700,7 +1732,6 @@ public class TastingWineInput extends AppCompatActivity {
                 mToastMessage.show();
             }
         });
-
 
         mLavenderInput = (SeekBar) findViewById(R.id.seekBar_az_lavendar_27);
         mLavenderInput.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -2276,7 +2307,6 @@ public class TastingWineInput extends AppCompatActivity {
                 mToastMessage.show();
             }
         });
-
 
         mCloveInput = (SeekBar) findViewById(R.id.seekBar_bz_clove);
         mCloveInput.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -2914,6 +2944,8 @@ public class TastingWineInput extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TastingWineInput.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_create_tasting, null);
         final TextView mTastingResult = (TextView) mView.findViewById(R.id.dialog_points_scored);
+
+        final int tastingPoints = mScore;
         mTastingResult.setText("Your results: " + mScore + " points"
                 + "\n" +
                 "Points for:" +
@@ -3001,13 +3033,15 @@ public class TastingWineInput extends AppCompatActivity {
                 "\nEgg" + eggNegativePoints +
                 "\nFlint" + flintNegativePoints +
                 "\nSmoke" + smokeNegativePoints +
-                "\nCaramel" + caramelNegativePoints
+                "\nCaramel" + caramelNegativePoints +
+
+                "\n" + "\n Your total tasting points: " + mScore
         );
 
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                writeScoreToDatabase(tastingPoints);
             }
         });
 
@@ -3016,6 +3050,50 @@ public class TastingWineInput extends AppCompatActivity {
         AlertDialog dialog = alertDialogBuilder.create();
         dialog.show();
 
+    }
+
+    public void writeScoreToDatabase(int tastingPoints) {
+        //TODO: Write the points just earned to the total points their database and set their level of mastery
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        Toast.makeText(TastingWineInput.this, "Total Points: " + tastingPoints, Toast.LENGTH_SHORT).show();
+
+
+        Firebase mUserTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
+
+        /*
+        USE THIS TO TAKE A SNAPSHOT OF WHAT THE CURRENT USER POINTS AND USER LEVEL US - THEN UPDATE
+
+        mTastingWineDetails = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(mTastingListID).child(mTastingWineInput);
+
+        mTastingWineDetails.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                WineTastingPojo wineTastingPojo = dataSnapshot.getValue(WineTastingPojo.class);
+
+                if (wineTastingPojo == null){
+                    return;
+                }
+
+                mTastingWineName = wineTastingPojo.getWineName();
+                mTastingWineVintage = wineTastingPojo.getWineVintage();
+
+                setTitle(mTastingWineVintage + " " + mTastingWineName);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+
+        });
+        */
+
+
+        finish();
     }
 
     public void calculateScore(int mGrapefruitAnswer, int mLemonAnswer, int mLimeAnswer, int mOrangeAnswer,

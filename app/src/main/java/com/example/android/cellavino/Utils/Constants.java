@@ -78,6 +78,12 @@ public class Constants {
     public static final String TASTING_ID = "TASTING_ID";
     public static final String FIREBASE_MY_TASTING_NAME = "MY_TASTING_NAME";
     public static final String KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";
+    public static final String PUBLIC = "public";
+    public static final String TASTINGPOINTS = "tastingPoints";
+    public static final String WINE_NAME = "wineName";
+    public static final String WINE_VINTAGE = "wineVintage";
+    public static final String WINE_VARIETY = "wineVariety";
+
 
 
     //Flavor Profiles

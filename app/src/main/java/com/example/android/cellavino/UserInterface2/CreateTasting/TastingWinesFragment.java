@@ -52,13 +52,11 @@ public class TastingWinesFragment extends Fragment {
         mTastingWineList = intent.getStringExtra(Constants.TASTING_LIST_ID);
         if (mTastingWineList == null) {
             //finish();
-            Toast.makeText(getActivity(), "No Tasting Details", Toast.LENGTH_SHORT).show();
             //getActivity().finish();
             //return;
         }
 
         if (mTastingWineList != null) {
-            Toast.makeText(getActivity(), "Tastings Found", Toast.LENGTH_SHORT).show();
             return;
         }
     }
@@ -75,7 +73,6 @@ public class TastingWinesFragment extends Fragment {
         String userDisplayName = user.getDisplayName();
         String tastingID = mTastingWineList.toString();
 
-        Toast.makeText(getActivity(), "Welcome to your tasting " + userDisplayName, Toast.LENGTH_SHORT).show();
 
         myTastingWinesReference = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingID);
         final Firebase tastingWinesRef = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingID);
