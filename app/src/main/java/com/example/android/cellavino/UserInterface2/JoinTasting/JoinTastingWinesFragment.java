@@ -76,8 +76,6 @@ public class JoinTastingWinesFragment extends Fragment {
             return;
         }
 
-        //TODO: Add a message that says 'no wines found' if the list items equal zero.
-
 
     }
 
