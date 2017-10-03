@@ -73,15 +73,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 tastingRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        TastingDetailsPojo detailsPojo = dataSnapshot.getValue(TastingDetailsPojo.class);
+                        final TastingDetailsPojo detailsPojo = dataSnapshot.getValue(TastingDetailsPojo.class);
                         Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(detailsPojo
                                 .getLatitude(), detailsPojo.getLongitude())).icon(BitmapDescriptorFactory.
                                 defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         marker.setTag(detailsPojo);
                         marker.setTitle(detailsPojo.getName());
-                        //TODO: add a click listener to take people to the correct tasting
+
                         builder.include(marker.getPosition());
                         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 200));
+
+                        //TODO: add a click listener to take people to the correct tasting and fix the tastingName to show the correct location.
+
+                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker1) {
+
+                                final String tastingName = detailsPojo.getName();
+
+                                Toast.makeText(MapsActivity.this, "Wine Tasting Name: " + tastingName, Toast.LENGTH_SHORT).show();
+
+                                return false;
+                            }
+                        });
+
                     }
 
                     @Override
@@ -90,6 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
             }
+
 
             @Override
             public void onKeyExited(String key) {
@@ -111,5 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+
+
     }
 }
