@@ -30,6 +30,7 @@ public class Constants {
     public static final String FIREBASE_TASTING_WINE_DETAILS = "tastingWineDetails";
     public static final String FIREBASE_WINES = "wines";
     public static final String FIREBASE_OWNER = "owner";
+    public static final String FIREBASE_IMAGE_URL = "imageUrl";
     public static final String FIREBASE_MY_ARCHIVED_WINES = "myArchivedWines";
     public static final int GPS_PERMISSION = 201;
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 202;
@@ -67,6 +68,7 @@ public class Constants {
     public static final String FIREBASE_URL_TASTING_WINE_DETAILS = FIREBASE_URL + "/" + FIREBASE_TASTING_WINE_DETAILS;
     public static final String FIREBASE_URL_TASTINGS = FIREBASE_URL + "/" + FIREBASE_TASTINGS;
     public static final String FIREBASE_URL_EVERYONE_TASTING = FIREBASE_URL + "/" + FIREBASE_EVERYONE_TASTING;
+    public static final String STORAGE_URL = "gs://vinocella-ae4d9.appspot.com";
     /**
      * Constants for bundles, extras and shared preferences keys
      */
@@ -83,5 +85,5 @@ public class Constants {
     //Flavor Profiles
     public static final String GRAPEFRUIT_TASTE = "mGrapefruit";
 
-
+    public static final int TAKE_PICTURE = 1;
 }

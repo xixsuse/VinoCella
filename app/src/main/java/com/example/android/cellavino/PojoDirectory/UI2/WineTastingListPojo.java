@@ -8,16 +8,17 @@ public class WineTastingListPojo {
 
     String tastingName;
     String owner;
+    String imageUrl;
 
 
     public WineTastingListPojo() {
 
     }
 
-    public WineTastingListPojo(String tastingName, String owner) {
+    public WineTastingListPojo(String tastingName, String owner, String imageUrl) {
         this.tastingName = tastingName;
         this.owner = owner;
-
+        this.imageUrl = imageUrl;
     }
 
     public String getTastingName() {
@@ -26,6 +27,10 @@ public class WineTastingListPojo {
 
     public String getOwner() {
         return owner;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
 

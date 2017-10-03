@@ -1,5 +1,7 @@
 package com.example.android.cellavino;
 
+import android.*;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -240,6 +243,16 @@ public class MainActivity extends AppCompatActivity implements android.location.
             @Override
             public void onClick(View v) {
                 try {
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
                     mCurrentLocation = locationManager.getLastKnownLocation(provider);
                 } catch (Exception e) {
                 }
@@ -252,6 +265,12 @@ public class MainActivity extends AppCompatActivity implements android.location.
                 }
             }
         });
+
+        if ( ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA ) != PackageManager.PERMISSION_GRANTED ) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                    Constants.TAKE_PICTURE);
+        }
     }
 
     public void getNearTasting(final Location location) {
@@ -552,5 +571,16 @@ public class MainActivity extends AppCompatActivity implements android.location.
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if (requestCode == Constants.TAKE_PICTURE)
+        {
+            Toast.makeText(this, "Camera Permission Granted", Toast.LENGTH_SHORT);
+        } else
+        {
+            Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT);
+        }
+    }
 }

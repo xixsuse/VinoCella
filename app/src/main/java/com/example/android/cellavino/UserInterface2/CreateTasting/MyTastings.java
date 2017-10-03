@@ -1,28 +1,53 @@
 package com.example.android.cellavino.UserInterface2.CreateTasting;
 
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.android.cellavino.Interfaces.UploadImageInterface;
 import com.example.android.cellavino.MainActivity;
 import com.example.android.cellavino.PojoDirectory.UI2.TastingDetailsPojo;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
+import com.example.android.cellavino.Utils.Utils;
 import com.firebase.client.Firebase;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_MY_TASTINGS;
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_TASTING_NAME;
@@ -42,11 +67,14 @@ public class MyTastings extends MainActivity {
     private String mTastingName;
     public ImageView mTastingPicture;
     private Button addLocation;
+    private ImageView mImageButton;
     public FirebaseAuth mFirebaseAuth;
     EditText mTastingNameInput;
     EditText mTastingSummaryInput;
     Button mCreateTasting;
     Place place = null;
+
+    private Bitmap imageData;
 
     public MyTastings() {
     }
@@ -72,6 +100,7 @@ public class MyTastings extends MainActivity {
                 mTastingNameInput = (EditText) findViewById(R.id.create_tasting_name);
                 mTastingSummaryInput = (EditText) findViewById(R.id.create_tasting_summary);
                 mCreateTasting = (Button) findViewById(R.id.create_tasting);
+                mImageButton = (ImageView) findViewById(R.id.image_button);
 
                 mTastingPicture.setVisibility(View.GONE);
 
@@ -92,16 +121,31 @@ public class MyTastings extends MainActivity {
                     }
                 });
 
+                mImageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        File photo = new File(Environment.getExternalStorageDirectory(), "capture.jpg");
+//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(MyTastings.this,"com.example.android.fileprovider",photo));
+//                        imageUri = FileProvider.getUriForFile(MyTastings.this,"com.example.android.fileprovider",photo);
+                        startActivityForResult(intent, Constants.TAKE_PICTURE);
+                    }
+                });
+
                 mCreateTasting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        if (!mTastingNameInput.getText().toString().isEmpty() && !mTastingSummaryInput.getText().toString().isEmpty()) {
+                        if (mTastingNameInput.getText().toString().isEmpty() && mTastingSummaryInput.getText().toString().isEmpty())
+                        {
+                            showAlert("You've left something blank... ", "Error");
+                        } else if (imageData == null)
+                        {
+                            showAlert("Please Select an Image", "Error");
+                        } else{
                             String mTastingName = mTastingNameInput.getText().toString();
-                            createTastingInFirebase(mTastingName, uid, userName);
-
-                        } else {
-                            Toast.makeText(MyTastings.this, "You've left something blank...!", Toast.LENGTH_SHORT).show();
+                            createTastingInFirebase(mTastingName, uid, userName, imageData);
                         }
                     }
 
@@ -144,6 +188,26 @@ public class MyTastings extends MainActivity {
 
     }
 
+    public void showAlert(String message, String title)
+    {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(MyTastings.this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(MyTastings.this);
+        }
+        builder.setTitle("Title")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -152,7 +216,25 @@ public class MyTastings extends MainActivity {
                 place = PlacePicker.getPlace(data, this);
                 mTastingSummaryInput.setText(place.getAddress().toString());
             }
+        } else if (requestCode == Constants.TAKE_PICTURE)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                imageData = (Bitmap) data.getExtras().get("data");
+                mTastingPicture.setImageBitmap(imageData);
+                mTastingPicture.setVisibility(View.VISIBLE);
+
+            }
         }
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 
     //TODO: replace with with a create winetasting screen "create_new_wine_tasting_summary"
@@ -168,15 +250,14 @@ public class MyTastings extends MainActivity {
         alertDialogBuilder.setPositiveButton("Add Picture", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                createTastingInFirebase(mMTastingName, mUid, mUserName);
+//                createTastingInFirebase(mMTastingName, mUid, mUserName);
             }
         });
 
         alertDialogBuilder.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                createTastingInFirebase(mMTastingName, mUid, mUserName);
-
+//                createTastingInFirebase(mMTastingName, mUid, mUserName);
             }
         });
 
@@ -187,52 +268,94 @@ public class MyTastings extends MainActivity {
     }
 
 
-    private void createTastingInFirebase(String mTastingName, String uid, String userName) {
+    private void createTastingInFirebase(final String mTastingName, final String uid, final String userName, Bitmap bitmap) {
 
         Firebase tastingRef = new Firebase(Constants.FIREBASE_URL_TASTINGS);
         Firebase tastingFirebaseRef = tastingRef.push();
         final String tastingPushID = tastingFirebaseRef.getKey();
 
+        uploadFile(bitmap, tastingPushID, new UploadImageInterface() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot snapshot) {
 
-        Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS)
-                .child(tastingPushID).child(FIREBASE_TASTING_NAME);
-        myTastingsLocation.setValue(mTastingName);
-        Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS)
-                .child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
-        myTastingsLocationOwner.setValue(userName);
+                Uri downloadUrl = snapshot.getDownloadUrl();
+                Log.d("downloadUrl-->", "" + downloadUrl);
+                Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS)
+                        .child(tastingPushID).child(FIREBASE_TASTING_NAME);
+                myTastingsLocation.setValue(mTastingName);
+                Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS)
+                        .child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
+                myTastingsLocationOwner.setValue(userName);
+                Firebase myTastingsImageUrl = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS)
+                        .child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_IMAGE_URL);
+                myTastingsImageUrl.setValue(downloadUrl.toString());
+
+                // this is for everyone tasting so we can easily query them instead of going to every user
+                Firebase everyoneTasting = new Firebase(FIREBASE_URL_EVERYONE_TASTING);
+                TastingDetailsPojo tastingDetailsPojo =
+                        new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid);
+                everyoneTasting.child(tastingPushID).setValue(tastingDetailsPojo);
+
+                // saving the tasting Location;
+                TASTING_GEO.setLocation(tastingPushID, new GeoLocation(place.getLatLng().latitude, place.getLatLng().longitude));
 
 
-        // this is for everyone tasting so we can easily query them instead of going to every user
-        Firebase everyoneTasting = new Firebase(FIREBASE_URL_EVERYONE_TASTING);
-        TastingDetailsPojo tastingDetailsPojo =
-                new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid);
-        everyoneTasting.child(tastingPushID).setValue(tastingDetailsPojo);
-
-        // saving the tasting Location;
-        TASTING_GEO.setLocation(tastingPushID, new GeoLocation(place.getLatLng().latitude, place.getLatLng().longitude));
 
 
 
 
+                //TODO: Save details of when the tasting was created and who by etc.
+                //HashMap<String, Object> myTastingName = new HashMap<>();
+                //myTastingName.put(mTastingName, ServerValue.TIMESTAMP);
 
+                //TODO: This is where I should add the second AlertDialogBuilder, a positive response will direct people
+                //TODO: cont.. to upload an image, a negative response will simply dismiss the dialog.
 
-        //TODO: Save details of when the tasting was created and who by etc.
-        //HashMap<String, Object> myTastingName = new HashMap<>();
-        //myTastingName.put(mTastingName, ServerValue.TIMESTAMP);
+                Intent CreateTasting = new Intent(MyTastings.this, CreateNewTasting.class);
+                CreateTasting.putExtra("thisTastingName", mTastingName);
+                CreateTasting.putExtra("thisTastingPushID", tastingPushID);
 
-        //TODO: This is where I should add the second AlertDialogBuilder, a positive response will direct people
-        //TODO: cont.. to upload an image, a negative response will simply dismiss the dialog.
+                startActivity(CreateTasting);
 
-        Intent CreateTasting = new Intent(MyTastings.this, CreateNewTasting.class);
-        CreateTasting.putExtra("thisTastingName", mTastingName);
-        CreateTasting.putExtra("thisTastingPushID", tastingPushID);
+            }
 
-        startActivity(CreateTasting);
+            @Override
+            public void onFailure(@NonNull Exception exception) {
 
+            }
+        });
 
     }
 
+    private void uploadFile(Bitmap bitmap, String tastingPushId, final UploadImageInterface uploadImageInterface) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_URL);
+        StorageReference mountainImagesRef = null;
+        try {
+            mountainImagesRef = storageRef.child("Wine Photos/" + URLEncoder.encode(tastingPushId + ".jpg", "UTF-8"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = mountainImagesRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    uploadImageInterface.onFailure(exception);
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    uploadImageInterface.onSuccess(taskSnapshot);
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
+
+    }
 
 }
 
