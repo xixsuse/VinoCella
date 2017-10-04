@@ -29,28 +29,45 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Accounts.Login" />
-        <activity android:name=".Accounts.CreateAccount" />
-        <activity android:name=".UserInterface.AddWine" />
-        <activity android:name=".UserInterface2.WineDetails.CreateNewWine" />
-        <activity android:name=".UserInterface2.WineDetails.EditWine" />
-        <activity android:name=".UserInterface2.WineDetails.ArchiveWine" />
-        <activity android:name=".UserInterface2.WineDetails.WineInformation" />
-        <activity android:name=".UserInterface2.WineDetails.MyWinesList" />
-        <activity android:name=".UserInterface2.EditProfile.EditProfile" />
-        <activity android:name=".UserInterface2.CreateTasting.MyTastings" />
-        <activity android:name=".UserInterface2.CreateTasting.TastingWines" />
-        <activity android:name=".UserInterface2.CreateTasting.CreateNewTasting" />
-        <activity android:name=".UserInterface2.JoinTasting.JoinTasting" />
-        <activity android:name=".UserInterface2.JoinTasting.JoinTastingWines" />
-        <activity android:name=".UserInterface2.JoinTasting.TastingWineInput" />
+        <activity android:name=".Accounts.Login"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Accounts.CreateAccount"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface.AddWine"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.WineDetails.CreateNewWine"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.WineDetails.EditWine"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.WineDetails.ArchiveWine"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.WineDetails.WineInformation"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.WineDetails.MyWinesList"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.EditProfile.EditProfile"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.CreateTasting.MyTastings"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.CreateTasting.TastingWines"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.CreateTasting.CreateNewTasting"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.JoinTasting.JoinTasting"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.JoinTasting.JoinTastingWines"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".UserInterface2.JoinTasting.TastingWineInput"
+            android:configChanges="orientation|screenSize"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -58,7 +75,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -66,6 +83,7 @@
 
         <activity
             android:name=".MapsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_maps"></activity>
 
 
