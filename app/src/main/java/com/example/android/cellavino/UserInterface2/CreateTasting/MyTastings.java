@@ -216,15 +216,16 @@ public class MyTastings extends MainActivity {
                 place = PlacePicker.getPlace(data, this);
                 mTastingSummaryInput.setText(place.getAddress().toString());
             }
-        } else if (requestCode == Constants.TAKE_PICTURE)
-        {
-            if (resultCode == RESULT_OK)
-            {
+        }
+        if (requestCode == Constants.TAKE_PICTURE) {
+            if (resultCode == RESULT_OK) {
                 imageData = (Bitmap) data.getExtras().get("data");
                 mTastingPicture.setImageBitmap(imageData);
                 mTastingPicture.setVisibility(View.VISIBLE);
-
+                mImageButton.setVisibility(View.GONE);
             }
+        } else {
+            Toast.makeText(MyTastings.this, "Opps We've had an issue", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -286,6 +287,8 @@ public class MyTastings extends MainActivity {
                 Firebase myTastingsLocationOwner = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS)
                         .child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_OWNER);
                 myTastingsLocationOwner.setValue(userName);
+
+                //Sets the url of the photo into firebase
                 Firebase myTastingsImageUrl = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS)
                         .child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_IMAGE_URL);
                 myTastingsImageUrl.setValue(downloadUrl.toString());
@@ -327,6 +330,7 @@ public class MyTastings extends MainActivity {
 
     }
 
+    //This is the code that uploads the image into Firebase Storage.
     private void uploadFile(Bitmap bitmap, String tastingPushId, final UploadImageInterface uploadImageInterface) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_URL);

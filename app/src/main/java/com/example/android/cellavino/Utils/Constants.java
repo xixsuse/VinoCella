@@ -82,6 +82,9 @@ public class Constants {
     public static final String KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";
     public static final String PUBLIC = "public";
     public static final String TASTINGPOINTS = "tastingPoints";
+    public static final String MOSTRECENTTASTINGPOINTS = "mostRecentTastingPoints";
+    public static final String TOTALWINESTASTED = "totalWinesTasted";
+    public static final String WINETASTINGLEVELNUMBER = "wineTastingLevelNumber";
     public static final String WINE_NAME = "wineName";
     public static final String WINE_VINTAGE = "wineVintage";
     public static final String WINE_VARIETY = "wineVariety";

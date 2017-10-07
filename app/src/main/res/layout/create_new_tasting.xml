@@ -113,13 +113,16 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
                 <RelativeLayout
+                    android:id="@+id/expand_collapse_citrus_fruits"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="toggle_citrus_contents"
                     android:orientation="horizontal">
 
                     <TextView
@@ -134,14 +137,13 @@
                         android:textSize="20sp" />
 
                     <ImageView
-                        android:id="@+id/image_switcher_citrus_fruits"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginBottom="4dp"
-                        android:layout_marginRight="6dp"
+                        android:layout_marginEnd="6dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_expand_more_black_24dp"></ImageView>
+                        android:src="@drawable/ic_expand_more_black_24dp" />
 
                 </RelativeLayout>
 
@@ -280,19 +282,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/tree_fruit_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/expand_collapse_tree_fruits"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:clickable="true"
+                    android:onClick="toggle_treefruit_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tree_fruit_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -301,6 +306,31 @@
                         android:text="Tree Fruits"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/tree_fruit_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/af_apple_container"
@@ -467,19 +497,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/tropical_fruit_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/expand_collapse_tropical_fruits"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:clickable="true"
+                    android:onClick="toggle_tropicalfruit_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tropical_fruit_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -488,6 +521,30 @@
                         android:text="Tropical Fruits"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/tropical_fruit_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/ai_melon_container"
@@ -701,19 +758,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/dried_fruit_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_dried_fruits"
+                    android:clickable="true"
+                    android:onClick="toggle_driedfruit_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/dried_fruit_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -722,6 +782,33 @@
                         android:text="Dried Fruits"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/dried_fruit_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
 
                     <LinearLayout
                         android:id="@+id/ci_driedapricot_container"
@@ -773,20 +860,24 @@
 
             </android.support.v7.widget.CardView>
 
+
             <android.support.v7.widget.CardView
-                android:id="@+id/stone_fruit_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_stone_fruits"
+                    android:clickable="true"
+                    android:onClick="toggle_stonefruit_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/stone_fruit_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -795,6 +886,31 @@
                         android:text="Stone Fruits"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/stone_fruit_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/dm_peach_container"
@@ -870,11 +986,50 @@
 
             </android.support.v7.widget.CardView>
 
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expand_collapse_berry_and_jam"
+                    android:clickable="true"
+                    android:onClick="toggle_berry_and_jam_contents"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/berry_and_jam_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Berries and Jams"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/berry_and_jam_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
@@ -882,17 +1037,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Berries and Jam"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:id="@+id/de_jam_container"
@@ -1059,11 +1203,50 @@
 
             </android.support.v7.widget.CardView>
 
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expand_collapse_blossom"
+                    android:clickable="true"
+                    android:onClick="toggle_blossom_contents"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/blossom_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Blossoms"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/blossom_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
@@ -1071,16 +1254,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Blossom"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:id="@+id/aw_apple_blossum_24_container"
@@ -1132,20 +1305,24 @@
 
             </android.support.v7.widget.CardView>
 
+
             <android.support.v7.widget.CardView
-                android:id="@+id/floral_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_floral"
+                    android:clickable="true"
+                    android:onClick="toggle_floral_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/floral_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -1154,6 +1331,31 @@
                         android:text="Floral"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/floral_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
 
                     <LinearLayout
                         android:id="@+id/dc_floral_container"
@@ -1320,11 +1522,50 @@
 
             </android.support.v7.widget.CardView>
 
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expand_collapse_herbs"
+                    android:clickable="true"
+                    android:onClick="toggle_herb_contents"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/herb_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Herbs"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/herb_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
@@ -1332,16 +1573,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Herb"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:id="@+id/bd_cut_grass_31_container"
@@ -1439,20 +1670,24 @@
 
             </android.support.v7.widget.CardView>
 
+
             <android.support.v7.widget.CardView
-                android:id="@+id/earthy_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_earthy"
+                    android:clickable="true"
+                    android:onClick="toggle_earthy_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/earthy_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -1461,6 +1696,31 @@
                         android:text="Earthy"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/earthy_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/bi_hay_container"
@@ -1536,11 +1796,50 @@
 
             </android.support.v7.widget.CardView>
 
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expand_collapse_leathery"
+                    android:clickable="true"
+                    android:onClick="toggle_leathery_contents"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/leathery_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Leathery"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/leathery_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
@@ -1548,16 +1847,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Leather"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:id="@+id/cn_leather_container"
@@ -1587,19 +1876,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/vegetable_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_vegetable"
+                    android:clickable="true"
+                    android:onClick="toggle_vegetable_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/vegetable_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -1608,6 +1900,30 @@
                         android:text="Vegetable"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/vegetable_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/ab_bb_greenpepper_container"
@@ -1706,19 +2022,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/woody_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_woody"
+                    android:clickable="true"
+                    android:onClick="toggle_woody_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/woody_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -1727,6 +2046,31 @@
                         android:text="Woody"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/woody_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
 
                     <LinearLayout
                         android:id="@+id/cf_pine_59_container"
@@ -1802,19 +2146,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/nutty_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_nutty"
+                    android:clickable="true"
+                    android:onClick="toggle_nutty_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/nutty_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -1823,6 +2170,30 @@
                         android:text="Nutty"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/nutty_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/cb_hazelnut_container"
@@ -1921,19 +2292,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/spicy_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_spicy"
+                    android:clickable="true"
+                    android:onClick="toggle_spicy_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/spicy_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -1942,6 +2316,31 @@
                         android:text="Spicy"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/spicy_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/bv_pepper_container"
@@ -2108,19 +2507,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/toasty_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_toasty"
+                    android:clickable="true"
+                    android:onClick="toggle_toasty_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/toasty_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -2129,6 +2531,30 @@
                         android:text="Toasty"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/toasty_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/bh_tobacco_container"
@@ -2181,19 +2607,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/bakery_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_bakery"
+                    android:clickable="true"
+                    android:onClick="toggle_bakery_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/bakery_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -2202,6 +2631,30 @@
                         android:text="Bakery"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/bakery_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/bo_bread_42_container"
@@ -2254,19 +2707,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/dairy_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_dairy"
+                    android:clickable="true"
+                    android:onClick="toggle_dairy_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/dairy_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -2275,6 +2731,30 @@
                         android:text="Dairy"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/dairy_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/bq_butter_container"
@@ -2350,19 +2830,22 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/other_flavours_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
                 android:elevation="@dimen/task_card_elevation"
                 card_View:cardCornerRadius="0dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/expand_collapse_other"
+                    android:clickable="true"
+                    android:onClick="toggle_other_contents"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/other_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -2371,6 +2854,31 @@
                         android:text="Other Flavours"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_expand_more_black_24dp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/other_flavours_container"
+                android:layout_marginTop="@dimen/task_card_spacing_one_dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/ca_coconut_container"

@@ -12,12 +12,15 @@ import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.android.cellavino.PojoDirectory.UI2.PublicUserDetailsPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastePojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastingPojo;
 import com.example.android.cellavino.R;
@@ -668,7 +671,52 @@ public class TastingWineInput extends AppCompatActivity {
     public int smokeDenominator;
     public int caramelDenominator;
 
+    public int mUserTotalPoints;
+    public int mUserMostRecentTastingPoints;
+    public int mUserTotalWinesTasted;
+    public int mUserWineTastingLevelNumber;
+
+    public Firebase mUserPublicDetails;
     public Firebase mTastingWineDetails;
+
+    public RelativeLayout expandCollapseCitrusFruits;
+    public CardView citrusFruitContainer;
+    public RelativeLayout expandCollapseTropicalFruits;
+    public CardView tropicalFruitContainer;
+    public RelativeLayout expandCollapseTreeFruits;
+    public CardView treeFruitContainer;
+    public RelativeLayout expandCollapseDriedFruits;
+    public CardView driedFruitContainer;
+    public RelativeLayout expandCollapseStoneFruits;
+    public CardView stoneFruitContainer;
+    public RelativeLayout expandCollapseBerriesandJam;
+    public CardView berriesandjamContainer;
+    public RelativeLayout expandCollapseBlossom;
+    public CardView blossomContainer;
+    public RelativeLayout expandCollapseFloral;
+    public CardView floralContainer;
+    public RelativeLayout expandCollapseHerb;
+    public CardView herbContainer;
+    public RelativeLayout expandCollapseEarthy;
+    public CardView earthyContainer;
+    public RelativeLayout expandCollapseLeather;
+    public CardView leatheryContainer;
+    public RelativeLayout expandCollapseVegetable;
+    public CardView vegetableContainer;
+    public RelativeLayout expandCollapseWoody;
+    public CardView woodyContainer;
+    public RelativeLayout expandCollapseNutty;
+    public CardView nuttyContainer;
+    public RelativeLayout expandCollapseSpicy;
+    public CardView spicyContainer;
+    public RelativeLayout expandCollapseToasty;
+    public CardView toastyContainer;
+    public RelativeLayout expandCollapseBakery;
+    public CardView bakeryContainer;
+    public RelativeLayout expandCollapseDairy;
+    public CardView dairyContainer;
+    public RelativeLayout expandCollapseOther;
+    public CardView otherContainer;
 
 
     @Override
@@ -705,6 +753,82 @@ public class TastingWineInput extends AppCompatActivity {
         });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+        expandCollapseCitrusFruits = (RelativeLayout) findViewById(R.id.expand_collapse_citrus_fruits);
+        citrusFruitContainer = (CardView) findViewById(R.id.citrus_fruit_container);
+        citrusFruitContainer.setVisibility(View.GONE);
+
+        expandCollapseTreeFruits = (RelativeLayout) findViewById(R.id.expand_collapse_tree_fruits);
+        treeFruitContainer = (CardView) findViewById(R.id.tree_fruit_container);
+        treeFruitContainer.setVisibility(View.GONE);
+
+        expandCollapseTropicalFruits = (RelativeLayout) findViewById(R.id.expand_collapse_tropical_fruits);
+        tropicalFruitContainer = (CardView) findViewById(R.id.tropical_fruit_container);
+        tropicalFruitContainer.setVisibility(View.GONE);
+
+        expandCollapseDriedFruits = (RelativeLayout) findViewById(R.id.expand_collapse_dried_fruits);
+        driedFruitContainer = (CardView) findViewById(R.id.dried_fruit_container);
+        driedFruitContainer.setVisibility(View.GONE);
+
+        expandCollapseStoneFruits = (RelativeLayout) findViewById(R.id.expand_collapse_stone_fruits);
+        stoneFruitContainer = (CardView) findViewById(R.id.stone_fruit_container);
+        stoneFruitContainer.setVisibility(View.GONE);
+
+        expandCollapseBerriesandJam = (RelativeLayout) findViewById(R.id.expand_collapse_berry_and_jam);
+        berriesandjamContainer = (CardView) findViewById(R.id.berry_and_jam_container);
+        berriesandjamContainer.setVisibility(View.GONE);
+
+        expandCollapseBlossom = (RelativeLayout) findViewById(R.id.expand_collapse_blossom);
+        blossomContainer = (CardView) findViewById(R.id.blossom_container);
+        blossomContainer.setVisibility(View.GONE);
+
+        expandCollapseFloral = (RelativeLayout) findViewById(R.id.expand_collapse_floral);
+        floralContainer = (CardView) findViewById(R.id.floral_container);
+        floralContainer.setVisibility(View.GONE);
+
+        expandCollapseHerb = (RelativeLayout) findViewById(R.id.expand_collapse_herbs);
+        herbContainer = (CardView) findViewById(R.id.herb_container);
+        herbContainer.setVisibility(View.GONE);
+
+        expandCollapseEarthy = (RelativeLayout) findViewById(R.id.expand_collapse_earthy);
+        earthyContainer = (CardView) findViewById(R.id.earthy_container);
+        earthyContainer.setVisibility(View.GONE);
+
+        expandCollapseLeather = (RelativeLayout) findViewById(R.id.expand_collapse_leathery);
+        leatheryContainer = (CardView) findViewById(R.id.leathery_container);
+        leatheryContainer.setVisibility(View.GONE);
+
+        expandCollapseVegetable = (RelativeLayout) findViewById(R.id.expand_collapse_vegetable);
+        vegetableContainer = (CardView) findViewById(R.id.vegetable_container);
+        vegetableContainer.setVisibility(View.GONE);
+
+        expandCollapseWoody = (RelativeLayout) findViewById(R.id.expand_collapse_woody);
+        woodyContainer = (CardView) findViewById(R.id.woody_container);
+        woodyContainer.setVisibility(View.GONE);
+
+        expandCollapseNutty = (RelativeLayout) findViewById(R.id.expand_collapse_nutty);
+        nuttyContainer = (CardView) findViewById(R.id.nutty_container);
+        nuttyContainer.setVisibility(View.GONE);
+
+        expandCollapseSpicy = (RelativeLayout) findViewById(R.id.expand_collapse_spicy);
+        spicyContainer = (CardView) findViewById(R.id.spicy_container);
+        spicyContainer.setVisibility(View.GONE);
+
+        expandCollapseToasty = (RelativeLayout) findViewById(R.id.expand_collapse_toasty);
+        toastyContainer = (CardView) findViewById(R.id.toasty_container);
+        toastyContainer.setVisibility(View.GONE);
+
+        expandCollapseBakery = (RelativeLayout) findViewById(R.id.expand_collapse_bakery);
+        bakeryContainer = (CardView) findViewById(R.id.bakery_container);
+        bakeryContainer.setVisibility(View.GONE);
+
+        expandCollapseDairy = (RelativeLayout) findViewById(R.id.expand_collapse_dairy);
+        dairyContainer = (CardView) findViewById(R.id.dairy_container);
+        dairyContainer.setVisibility(View.GONE);
+
+        expandCollapseOther = (RelativeLayout) findViewById(R.id.expand_collapse_other);
+        otherContainer = (CardView) findViewById(R.id.other_flavours_container);
+        otherContainer.setVisibility(View.GONE);
 
         mWineItemSummaryCard = (CardView) findViewById(R.id.wine_list_item_details);
         mWineItemSummaryCard.setVisibility(View.GONE);
@@ -2653,7 +2777,6 @@ public class TastingWineInput extends AppCompatActivity {
             }
         });
 
-
         mCorkInput = (SeekBar) findViewById(R.id.seekBar_cq_cork);
         mCorkInput.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int corkValue = 0;
@@ -2792,6 +2915,139 @@ public class TastingWineInput extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void toggle_citrus_contents(View v) {
+        citrusFruitContainer.setVisibility(citrusFruitContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_treefruit_contents(View v) {
+
+        treeFruitContainer.setVisibility(treeFruitContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_tropicalfruit_contents(View v) {
+
+        tropicalFruitContainer.setVisibility(tropicalFruitContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+
+    }
+
+    public void toggle_driedfruit_contents(View v) {
+
+        driedFruitContainer.setVisibility(driedFruitContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_stonefruit_contents(View v) {
+
+        stoneFruitContainer.setVisibility(stoneFruitContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_berry_and_jam_contents(View v) {
+
+        berriesandjamContainer.setVisibility(berriesandjamContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_blossom_contents(View v) {
+
+        blossomContainer.setVisibility(blossomContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_floral_contents(View v) {
+
+        floralContainer.setVisibility(floralContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_herb_contents(View v) {
+
+        herbContainer.setVisibility(herbContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_earthy_contents(View v) {
+
+        earthyContainer.setVisibility(earthyContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_leathery_contents(View v) {
+
+        leatheryContainer.setVisibility(leatheryContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_vegetable_contents(View v) {
+
+        vegetableContainer.setVisibility(vegetableContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_woody_contents(View v) {
+
+        woodyContainer.setVisibility(woodyContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_nutty_contents(View v) {
+
+        nuttyContainer.setVisibility(nuttyContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_spicy_contents(View v) {
+
+        spicyContainer.setVisibility(spicyContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_toasty_contents(View v) {
+
+        toastyContainer.setVisibility(toastyContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_bakery_contents(View v) {
+
+        bakeryContainer.setVisibility(bakeryContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_dairy_contents(View v) {
+
+        dairyContainer.setVisibility(dairyContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
+    }
+
+    public void toggle_other_contents(View v) {
+
+        otherContainer.setVisibility(otherContainer.isShown()
+                ? View.GONE
+                : View.VISIBLE);
     }
 
     private void onSubnmitAnswer(final String winePushID) {
@@ -2946,96 +3202,120 @@ public class TastingWineInput extends AppCompatActivity {
         final TextView mTastingResult = (TextView) mView.findViewById(R.id.dialog_points_scored);
 
         final int tastingPoints = mScore;
-        mTastingResult.setText("Your results: " + mScore + " points"
+        mTastingResult.setText(
+
+                /*
+                "Your results: " + mScore + " points"
                 + "\n" +
-                "Points for:" +
+                "\nCitrus Negative Points:" + grapefruitNegativePoints + lemonNegativePoints + limeNegativePoints + orangeNegativePoints + orangepeelNegativePoints +
                 "\nGrapefruit: " + grapefruitNegativePoints +
-                "\nLemon: " + lemonNegativePoints +
-                "\nLime: " + limeNegativePoints +
-                "\nOrange: " + orangeNegativePoints +
-                "\nOrange Peel: " + orangepeelNegativePoints +
+                ", Lemon: " + lemonNegativePoints +
+                ", Lime: " + limeNegativePoints +
+                ", Orange: " + orangeNegativePoints +
+                ", Orange Peel: " + orangepeelNegativePoints +
+                "\nTree fruits: " +
                 "\nApple: " + appleNegativePoints +
-                "\nGrannysmith: " + grannysmithNegativePoints +
-                "\nPear: " + pearNegativePoints +
-                "\nApricot: " + apricotNegativePoints +
-                "\nBanana: " + bananaNegativePoints +
-                "\nFig: " + figNegativePoints +
-                "\nPomegranate: " + pomegranateNegativePoints +
+                ", Grannysmith: " + grannysmithNegativePoints +
+                ", Pear: " + pearNegativePoints +
+                ", Apricot: " + apricotNegativePoints +
+                ", Banana: " + bananaNegativePoints +
+                ", Fig: " + figNegativePoints +
+                ", Pomegranate: " + pomegranateNegativePoints +
+                "\nTropical fruits" +
                 "\nMelon: " + melonNegativePoints +
-                "\nCantelope: " + cantelopeNegativePoints +
-                "\nMango: " + mangoNegativePoints +
-                "\nGuava: " + guavaNegativePoints +
-                "\nKiwifruit: " + kiwifruitNegativePoints +
-                "\nLychee: " + lycheeNegativePoints +
-                "\nPassionfruit: " + passionfruitNegativePoints +
-                "\nPineapple: " + pineappleNegativePoints +
-                "\nWatermelon: " + watermelonNegativePoints +
+                ", Cantelope: " + cantelopeNegativePoints +
+                ", Mango: " + mangoNegativePoints +
+                ", Guava: " + guavaNegativePoints +
+                ", Kiwifruit: " + kiwifruitNegativePoints +
+                ", Lychee: " + lycheeNegativePoints +
+                ", Passionfruit: " + passionfruitNegativePoints +
+                ", Pineapple: " + pineappleNegativePoints +
+                ", Watermelon: " + watermelonNegativePoints +
+                "\nDried fruits" +
                 "\nDried Apricot: " + driedApricotNegativePoints +
-                "\nPrune: " + pruneNegativePoints +
+                ", Prune: " + pruneNegativePoints +
+                "\nStone fuits" +
                 "\nPeach: " + peachNegativePoints +
-                "\nCherry: " + cherryNegativePoints +
-                "\nPlum: " + plumNegativePoints +
+                ", Cherry: " + cherryNegativePoints +
+                ", Plum: " + plumNegativePoints +
+                "\nBerries and Jams" +
                 "\nJam: " + jamNegativePoints +
-                "\nRedcurrant: " + redcurrantNegativePoints +
-                "\nBlackcurrant: " + blackcurrantNegativePoints +
-                "\nStrawberry: " + strawberryNegativePoints +
-                "\nBlackberry: " + blackberryNegativePoints +
-                "\nRaspberry: " + raspberryNegativePoints +
-                "\nBlueberry:" + blueberryNegativePoints +
+                ", Redcurrant: " + redcurrantNegativePoints +
+                ", Blackcurrant: " + blackcurrantNegativePoints +
+                ", Strawberry: " + strawberryNegativePoints +
+                ", Blackberry: " + blackberryNegativePoints +
+                ", Raspberry: " + raspberryNegativePoints +
+                ", Blueberry:" + blueberryNegativePoints +
+                "\nBlossom" +
                 "\nAppleblossom: " + appleblossomNegativePoints +
-                "\nOrangeblossom: " + orangeblossomNegativePoints +
+                ", Orangeblossom: " + orangeblossomNegativePoints +
+                "\nFloral" +
                 "\nFloral: " + floralNegativePoints +
-                "\nHoneysuckle: " + honeysuckleNegativePoints +
-                "\nGeranium: " + geraniumNegativePoints +
-                "\nViolet: " + violetNegativePoints +
-                "\nLavender: " + lavenderNegativePoints +
-                "\nRose: " + roseNegativePoints +
-                "\nEucalyptus: " + eucalyptusNegativePoints +
+                ", Honeysuckle: " + honeysuckleNegativePoints +
+                ", Geranium: " + geraniumNegativePoints +
+                ", Violet: " + violetNegativePoints +
+                ", Lavender: " + lavenderNegativePoints +
+                ", Rose: " + roseNegativePoints +
+                ", Eucalyptus: " + eucalyptusNegativePoints +
+                "\nHerb" +
                 "\nCutgrass: " + cutgrassNegativePoints +
-                "\nRosemary: " + rosemaryNegativePoints +
-                "\nThyme: " + thymeNegativePoints +
-                "\nMint: " + mintNegativePoints +
+                ", Rosemary: " + rosemaryNegativePoints +
+                ", Thyme: " + thymeNegativePoints +
+                ", Mint: " + mintNegativePoints +
+                "\nEarthy" +
                 "\nHay: " + hayNegativePoints +
-                "\nMushroom: " + mushroomNegativePoints +
-                "\nTruffle: " + truffleNegativePoints +
+                ", Mushroom: " + mushroomNegativePoints +
+                ", Truffle: " + truffleNegativePoints +
+                "\nLeather" +
                 "\nLeather: " + leatherNegativePoints +
-                "\nGreen Pepper: " + greenpepperNegativePoints +
-                "\nTomato: " + tomatoNegativePoints +
-                "\nCorn: " + cornNegativePoints +
-                "\nOnion: " + onionNegativePoints +
+                ", Green Pepper: " + greenpepperNegativePoints +
+                ", Tomato: " + tomatoNegativePoints +
+                ", Corn: " + cornNegativePoints +
+                ", Onion: " + onionNegativePoints +
+                "\nWoody" +
                 "\nPine: " + pineNegativePoints +
-                "\nCedar: " + cedarNegativePoints +
-                "\nOak" + oakNegativePoints +
+                ", Cedar: " + cedarNegativePoints +
+                ", Oak" + oakNegativePoints +
+                "\nNutty" +
                 "\nHazelnut: " + hazelnutNegativePoints +
-                "\nAlmond" + almondNegativePoints +
-                "\nNutmeg" + nutmegNegativePoints +
-                "\nWalnut: " + walnutNegativePoints +
+                ", Almond" + almondNegativePoints +
+                ", Nutmeg" + nutmegNegativePoints +
+                ", Walnut: " + walnutNegativePoints +
+                "\nSpicy" +
                 "\nPepper: " + pepperNegativePoints +
-                "\nCinnamon: " + cinnamonNegativePoints +
-                "\nVanila: " + vanilaNegativePoints +
-                "\nClove: " + cloveNegativePoints +
-                "\nChili: " + chiliNegativePoints +
-                "\nLicorice: " + licoriceNegativePoints +
-                "\nSaffron: " + saffronNegativePoints +
+                ", Cinnamon: " + cinnamonNegativePoints +
+                ", Vanila: " + vanilaNegativePoints +
+                ", Clove: " + cloveNegativePoints +
+                ", Chili: " + chiliNegativePoints +
+                ", Licorice: " + licoriceNegativePoints +
+                ", Saffron: " + saffronNegativePoints +
+                "\nToasty" +
                 "\nTobacco" + tobaccoNegativePoints +
-                "\nCoffee: " + coffeeNegativePoints +
+                ", Coffee: " + coffeeNegativePoints +
+                "\nBakery" +
                 "\nBread: " + breadNegativePoints +
-                "\nToasted Bread: " + toastedBreadNegativePoints +
+                ", Toasted Bread: " + toastedBreadNegativePoints +
+                "\nDairy" +
                 "\nButter: " + butterNegativePoints +
-                "\nCream: " + creamNegativePoints +
-                "\nBlue Cheese" + blueCheeseNegativePoints +
+                ", Cream: " + creamNegativePoints +
+                ", Blue Cheese" + blueCheeseNegativePoints +
+                "\nOther" +
                 "\nCoconut" + coconutNegativePoints +
-                "\nKerosene" + keroseneNegativePoints +
-                "\nHoney" + honeyNegativePoints +
-                "\nChocolate" + chocolateNegativePoints +
-                "\nCork" + corkNegativePoints +
-                "\nRubber Band" + rubberbandNegativePoints +
-                "\nEgg" + eggNegativePoints +
-                "\nFlint" + flintNegativePoints +
-                "\nSmoke" + smokeNegativePoints +
-                "\nCaramel" + caramelNegativePoints +
+                ", Kerosene" + keroseneNegativePoints +
+                ", Honey" + honeyNegativePoints +
+                ", Chocolate" + chocolateNegativePoints +
+                ", Cork" + corkNegativePoints +
+                ", Rubber Band" + rubberbandNegativePoints +
+                ", Egg" + eggNegativePoints +
+                ", Flint" + flintNegativePoints +
+                ", Smoke" + smokeNegativePoints +
+                ", Caramel" + caramelNegativePoints +
 
                 "\n" + "\n Your total tasting points: " + mScore
+
+                */
+
+                "Congratulations your scored " + mScore + " points!"
         );
 
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -3052,7 +3332,7 @@ public class TastingWineInput extends AppCompatActivity {
 
     }
 
-    public void writeScoreToDatabase(int tastingPoints) {
+    public void writeScoreToDatabase(final int tastingPoints) {
         //TODO: Write the points just earned to the total points their database and set their level of mastery
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -3061,37 +3341,83 @@ public class TastingWineInput extends AppCompatActivity {
 
         Toast.makeText(TastingWineInput.this, "Total Points: " + tastingPoints, Toast.LENGTH_SHORT).show();
 
-
-        Firebase mUserTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
-
-        /*
-        USE THIS TO TAKE A SNAPSHOT OF WHAT THE CURRENT USER POINTS AND USER LEVEL US - THEN UPDATE
-
-        mTastingWineDetails = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(mTastingListID).child(mTastingWineInput);
-
-        mTastingWineDetails.addValueEventListener(new ValueEventListener() {
+        //Take a snapshot off what the users current public information is, and then work out what needs to be updated.
+        mUserPublicDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC);
+        mUserPublicDetails.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                WineTastingPojo wineTastingPojo = dataSnapshot.getValue(WineTastingPojo.class);
+                //TODO: work out how to ignore values that aren't used through JSONIgnore, or @Excempt or something like that.
 
-                if (wineTastingPojo == null){
-                    return;
+                PublicUserDetailsPojo publicUserDetailsPojo = dataSnapshot.getValue(PublicUserDetailsPojo.class);
+                if (publicUserDetailsPojo == null) {
+                    //TODO: Set the value of wine tastings to 0, set the value of the total points to 0, set the level to 0 and set anything else to 0
+                    mUserTotalPoints = 0;
+                    //mUserMostRecentTastingPoints = 0;
+                    //mUserTotalWinesTasted = 0;
+                    //mUserWineTastingLevelNumber = 0;
+
+                    Toast.makeText(TastingWineInput.this, "Null ", Toast.LENGTH_SHORT).show();
+
                 }
 
-                mTastingWineName = wineTastingPojo.getWineName();
-                mTastingWineVintage = wineTastingPojo.getWineVintage();
+                if (publicUserDetailsPojo != null) {
+                    mUserTotalPoints = publicUserDetailsPojo.getTastingPoints();
 
-                setTitle(mTastingWineVintage + " " + mTastingWineName);
+                    /*
+                    mUserMostRecentTastingPoints = publicUserDetailsPojo.getMostRecentTastingPoints();
+                    if (mUserMostRecentTastingPoints != 0){
+                        mUserMostRecentTastingPoints = tastingPoints;
+                    } else {
+                        mUserMostRecentTastingPoints = tastingPoints;
+
+                    }
+
+                    Toast.makeText(TastingWineInput.this, "mUserTotalPoints" + "\n" +  mUserTotalPoints +
+                                    "\nmUserMostRecentTastingPoints" + "\n" +  mUserMostRecentTastingPoints,
+                                    Toast.LENGTH_SHORT).show();
+                    mUserTotalWinesTasted = publicUserDetailsPojo.getTotalWinesTasted();
+                    if (mUserTotalWinesTasted == 0){
+                        Toast.makeText(TastingWineInput.this, "Congratulations on your first tasting!", Toast.LENGTH_SHORT).show();
+                    }
+                    mUserWineTastingLevelNumber = publicUserDetailsPojo.getWineTastingLevel();
+
+                    Toast.makeText(TastingWineInput.this, "mUserTotalPoints" + "\n" +  mUserTotalPoints +
+                            "\nmUserMostRecentTastingPoints" + "\n" +  mUserMostRecentTastingPoints +
+                            "\nmUserTotalWinesTasted" + "\n" +  mUserTotalWinesTasted +
+                            "\nmUserWineTastingLevelNumber" + "\n" +  mUserWineTastingLevelNumber, Toast.LENGTH_LONG).show();
+
+                    */
+                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+
             }
-
         });
-        */
 
+        //Update the Total tasting points into Firebase.
+        Firebase userTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
+        userTotalPoints.setValue(tastingPoints);
+
+        /*
+
+        //Update the details of this specific tasting into firebase
+        Firebase userMostRecentTastingPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.MOSTRECENTTASTINGPOINTS);
+        userMostRecentTastingPoints.setValue(mUserMostRecentTastingPoints);
+
+
+        //Add the total number of bottles (in tastings) the user has participated in
+        Firebase userTotalWinesTasted = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TOTALWINESTASTED);
+        userTotalWinesTasted.setValue(mUserTotalWinesTasted);
+
+
+        //Update the user level to enable flavours etc to be unlocked.
+        Firebase userWineTastingLevelNumber = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.WINETASTINGLEVELNUMBER);
+        userWineTastingLevelNumber.setValue(mUserWineTastingLevelNumber);
+
+         */
 
         finish();
     }
