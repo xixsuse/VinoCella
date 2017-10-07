@@ -205,7 +205,7 @@ public class MyTastings extends MainActivity {
         // this is for everyone tasting so we can easily query them instead of going to every user
         Firebase everyoneTasting = new Firebase(FIREBASE_URL_EVERYONE_TASTING);
         TastingDetailsPojo tastingDetailsPojo =
-                new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid);
+                new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid, tastingPushID);
         everyoneTasting.child(tastingPushID).setValue(tastingDetailsPojo);
 
         // saving the tasting Location;
