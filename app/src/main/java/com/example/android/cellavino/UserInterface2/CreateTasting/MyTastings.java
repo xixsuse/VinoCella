@@ -299,6 +299,7 @@ public class MyTastings extends MainActivity {
                         new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid);
                 everyoneTasting.child(tastingPushID).setValue(tastingDetailsPojo);
 
+
                 // saving the tasting Location;
                 TASTING_GEO.setLocation(tastingPushID, new GeoLocation(place.getLatLng().latitude, place.getLatLng().longitude));
 
