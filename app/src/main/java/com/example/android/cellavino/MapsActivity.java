@@ -2,11 +2,18 @@ package com.example.android.cellavino;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.android.cellavino.PojoDirectory.UI2.LocationPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.TastingDetailsPojo;
 import com.example.android.cellavino.Utils.Constants;
+import com.example.android.cellavino.adapter.RecyclerAdapter;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -23,19 +30,27 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseError;
+import com.google.maps.android.SphericalUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.example.android.cellavino.Utils.Constants.TASTING_GEO;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     LatLngBounds.Builder builder;
+    public static HashMap<String, TastingDetailsPojo> stringTastingDetailsPojoHashMap;
     private GoogleMap mMap;
     LocationPojo locationPojo;
+
+    HashMap<LatLng, TastingDetailsPojo> markerHashMap = new HashMap<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        stringTastingDetailsPojoHashMap = new HashMap<>();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -54,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -61,6 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(locationPojo.getLatitude(), locationPojo.getLongitude()), 15));
         getNearest(locationPojo);
+        mMap.setOnMarkerClickListener(this);
     }
 
     // TODO: update the 10 to a adjustable value radius.
@@ -73,29 +90,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 tastingRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+//                        ArrayList<TastingDetailsPojo> pojoArrayList = new ArrayList<>();
                         final TastingDetailsPojo detailsPojo = dataSnapshot.getValue(TastingDetailsPojo.class);
                         Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(detailsPojo
                                 .getLatitude(), detailsPojo.getLongitude())).icon(BitmapDescriptorFactory.
                                 defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         marker.setTag(detailsPojo);
-                        marker.setTitle(detailsPojo.getName());
 
+                        stringTastingDetailsPojoHashMap.put(detailsPojo.getTasteUid(), detailsPojo);
                         builder.include(marker.getPosition());
                         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 200));
-
-                        //TODO: add a click listener to take people to the correct tasting and fix the tastingName to show the correct location.
-
-                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker1) {
-
-                                final String tastingName = detailsPojo.getName();
-
-                                Toast.makeText(MapsActivity.this, "Wine Tasting Name: " + tastingName, Toast.LENGTH_SHORT).show();
-
-                                return false;
-                            }
-                        });
 
                     }
 
@@ -126,8 +130,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onGeoQueryError(DatabaseError error) {
 
             }
+
         });
+    }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        markerClick(marker);
+        return true;
+    }
 
+    public void markerClick(Marker marker) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+        View markerView = LayoutInflater.from(this).inflate(R.layout.recyclerview_windowtitle, null);
+        markerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        builder.setView(markerView);
+        TastingDetailsPojo myMarkerTaste = (TastingDetailsPojo) marker.getTag();
+        ArrayList<TastingDetailsPojo> detailsPojos = new ArrayList<>();
+        for (HashMap.Entry<String, TastingDetailsPojo> entry : MapsActivity.stringTastingDetailsPojoHashMap.entrySet()) {
+            double distance = SphericalUtil.computeDistanceBetween(new LatLng(entry.getValue().getLatitude(), entry.getValue().getLongitude()),
+                    new LatLng(myMarkerTaste.getLatitude(), myMarkerTaste.getLongitude()));
+            if (distance < 1) {
+                detailsPojos.add(entry.getValue());
+            }
+        }
+
+        RecyclerView recyclerView = (RecyclerView) markerView.findViewById(R.id.myRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, detailsPojos);
+        recyclerView.setAdapter(recyclerAdapter);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setLayout(1000, 900);
     }
 }

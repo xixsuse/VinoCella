@@ -12,12 +12,13 @@ public class TastingDetailsPojo implements Parcelable {
     public TastingDetailsPojo() {
     }
 
-    public TastingDetailsPojo(String name, String owner, double latitude, double longitude, String ownerUid) {
+    public TastingDetailsPojo(String name, String owner, double latitude, double longitude, String ownerUid, String tasteUid) {
         this.name = name;
         this.owner = owner;
         this.latitude = latitude;
         this.longitude = longitude;
         this.ownerUid = ownerUid;
+        this.tasteUid = tasteUid;
     }
 
     private String name;
@@ -25,6 +26,7 @@ public class TastingDetailsPojo implements Parcelable {
     private double latitude;
     private double longitude;
     private String ownerUid;
+    private String tasteUid;
 
 
     protected TastingDetailsPojo(Parcel in) {
@@ -33,6 +35,7 @@ public class TastingDetailsPojo implements Parcelable {
         latitude = in.readDouble();
         longitude = in.readDouble();
         ownerUid = in.readString();
+        tasteUid = in.readString();
     }
 
     public static final Creator<TastingDetailsPojo> CREATOR = new Creator<TastingDetailsPojo>() {
@@ -67,6 +70,10 @@ public class TastingDetailsPojo implements Parcelable {
         return ownerUid;
     }
 
+    public String getTasteUid() {
+        return tasteUid;
+    }
+
 
     /**
      * Describe the kinds of special objects contained in this Parcelable
@@ -98,5 +105,6 @@ public class TastingDetailsPojo implements Parcelable {
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         dest.writeString(ownerUid);
+        dest.writeString(tasteUid);
     }
 }
