@@ -671,12 +671,16 @@ public class TastingWineInput extends AppCompatActivity {
     public int smokeDenominator;
     public int caramelDenominator;
 
-    public int mUserTotalPoints;
-    public int mUserMostRecentTastingPoints;
-    public int mUserTotalWinesTasted;
+    public int mUserFirebaseTotalPoints;
+    public int mNewUserTotalPoints;
+    public int mUserFirebaseMostRecentTastingPoints;
+    public int mUserFirebaseTotalWinesTasted;
+    public int mNewUserTotalWinesTasted;
     public int mUserWineTastingLevelNumber;
 
+
     public Firebase mUserPublicDetails;
+    public Firebase mUserPublicDetailsTwo;
     public Firebase mTastingWineDetails;
 
     public RelativeLayout expandCollapseCitrusFruits;
@@ -975,7 +979,18 @@ public class TastingWineInput extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mToastMessage = Toast.makeText(TastingWineInput.this, "Grapefruit: " + grapefruitValue, Toast.LENGTH_SHORT);
+                if (grapefruitValue <= 25) {
+                    mToastMessage = Toast.makeText(TastingWineInput.this, "Hints of grapefruit", Toast.LENGTH_SHORT);
+                }
+                if (grapefruitValue >= 26 && grapefruitValue <= 50) {
+                    mToastMessage = Toast.makeText(TastingWineInput.this, "Subtle grapefruit flavours", Toast.LENGTH_SHORT);
+                }
+                if (grapefruitValue >= 51 && grapefruitValue <= 75) {
+                    mToastMessage = Toast.makeText(TastingWineInput.this, "Strong flavours of grapefruit", Toast.LENGTH_SHORT);
+                }
+                if (grapefruitValue >= 76) {
+                    mToastMessage = Toast.makeText(TastingWineInput.this, "Intense grapefruit flavours", Toast.LENGTH_SHORT);
+                }
                 mGrapefruitValueNo = grapefruitValue;
                 mToastMessage.show();
             }
@@ -3325,102 +3340,83 @@ public class TastingWineInput extends AppCompatActivity {
             }
         });
 
-
         alertDialogBuilder.setView(mView);
         AlertDialog dialog = alertDialogBuilder.create();
         dialog.show();
 
     }
 
+
     public void writeScoreToDatabase(final int tastingPoints) {
         //TODO: Write the points just earned to the total points their database and set their level of mastery
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
-        String uid = user.getUid();
+        final String uid = user.getUid();
 
-        Toast.makeText(TastingWineInput.this, "Total Points: " + tastingPoints, Toast.LENGTH_SHORT).show();
+        Toast.makeText(TastingWineInput.this, "This Tasting Points: " + tastingPoints, Toast.LENGTH_SHORT).show();
 
         //Take a snapshot off what the users current public information is, and then work out what needs to be updated.
         mUserPublicDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC);
-        mUserPublicDetails.addValueEventListener(new ValueEventListener() {
+        mUserPublicDetails.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //TODO: work out how to ignore values that aren't used through JSONIgnore, or @Excempt or something like that.
-
                 PublicUserDetailsPojo publicUserDetailsPojo = dataSnapshot.getValue(PublicUserDetailsPojo.class);
+
                 if (publicUserDetailsPojo == null) {
                     //TODO: Set the value of wine tastings to 0, set the value of the total points to 0, set the level to 0 and set anything else to 0
-                    mUserTotalPoints = 0;
-                    //mUserMostRecentTastingPoints = 0;
-                    //mUserTotalWinesTasted = 0;
-                    //mUserWineTastingLevelNumber = 0;
-
-                    Toast.makeText(TastingWineInput.this, "Null ", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(TastingWineInput.this, "publicUserDetailsPojo == null ", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
                 if (publicUserDetailsPojo != null) {
-                    mUserTotalPoints = publicUserDetailsPojo.getTastingPoints();
+                    int mUserFirebaseTotalPoints = publicUserDetailsPojo.getTastingPoints();
+                    int mUserFirebaseMostRecentTastingPoints = publicUserDetailsPojo.getMostRecentTastingPoints();
+                    int mUserFirebaseTotalWinesTasted = publicUserDetailsPojo.getTotalWinesTasted();
+                    int mUserFirebaseWineTastingLevel = publicUserDetailsPojo.getWineTastingLevel();
+
+                    //Update the Total tasting points into Firebase.
+                    Firebase userTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
+                    mNewUserTotalPoints = mUserFirebaseTotalPoints + tastingPoints;
+                    userTotalPoints.setValue(mNewUserTotalPoints);
+                    Toast.makeText(TastingWineInput.this, "New Total Points: " + mNewUserTotalPoints, Toast.LENGTH_SHORT).show();
+
+                    //Add the total number of bottles (in tastings) the user has participated in
+                    Firebase userTotalWinesTasted = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TOTALWINESTASTED);
+                    mNewUserTotalWinesTasted = mUserFirebaseTotalWinesTasted + 1;
+                    userTotalWinesTasted.setValue(mNewUserTotalWinesTasted);
+
+                    //Update the details of this specific tasting into firebase
+                    Firebase userMostRecentTastingPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.MOSTRECENTTASTINGPOINTS);
+                    userMostRecentTastingPoints.setValue(tastingPoints);
 
                     /*
-                    mUserMostRecentTastingPoints = publicUserDetailsPojo.getMostRecentTastingPoints();
-                    if (mUserMostRecentTastingPoints != 0){
-                        mUserMostRecentTastingPoints = tastingPoints;
-                    } else {
-                        mUserMostRecentTastingPoints = tastingPoints;
+                    //Update the details level of the user
+                    Firebase userWineTastingLevel = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.WINETASTINGLEVELNUMBER);
+                    //TODO: work out the new taster's level.
+                    mNewUserWineTastingLevel = mUserFirebaseWineTastingLevel + calucation to work out what percentage they've got right and how many points they've scored
+                    userWineTastingLevel.setValue(mNewUserWineTastingLevel);
 
-                    }
+                    TODO: Add time stamps for this tasting, and store the previous tastings.
 
-                    Toast.makeText(TastingWineInput.this, "mUserTotalPoints" + "\n" +  mUserTotalPoints +
-                                    "\nmUserMostRecentTastingPoints" + "\n" +  mUserMostRecentTastingPoints,
-                                    Toast.LENGTH_SHORT).show();
-                    mUserTotalWinesTasted = publicUserDetailsPojo.getTotalWinesTasted();
-                    if (mUserTotalWinesTasted == 0){
-                        Toast.makeText(TastingWineInput.this, "Congratulations on your first tasting!", Toast.LENGTH_SHORT).show();
-                    }
-                    mUserWineTastingLevelNumber = publicUserDetailsPojo.getWineTastingLevel();
+                     */
 
-                    Toast.makeText(TastingWineInput.this, "mUserTotalPoints" + "\n" +  mUserTotalPoints +
-                            "\nmUserMostRecentTastingPoints" + "\n" +  mUserMostRecentTastingPoints +
-                            "\nmUserTotalWinesTasted" + "\n" +  mUserTotalWinesTasted +
-                            "\nmUserWineTastingLevelNumber" + "\n" +  mUserWineTastingLevelNumber, Toast.LENGTH_LONG).show();
-
-                    */
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
 
-        //Update the Total tasting points into Firebase.
-        Firebase userTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
-        userTotalPoints.setValue(tastingPoints);
-
-        /*
-
-        //Update the details of this specific tasting into firebase
-        Firebase userMostRecentTastingPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.MOSTRECENTTASTINGPOINTS);
-        userMostRecentTastingPoints.setValue(mUserMostRecentTastingPoints);
-
-
-        //Add the total number of bottles (in tastings) the user has participated in
-        Firebase userTotalWinesTasted = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TOTALWINESTASTED);
-        userTotalWinesTasted.setValue(mUserTotalWinesTasted);
-
-
-        //Update the user level to enable flavours etc to be unlocked.
-        Firebase userWineTastingLevelNumber = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.WINETASTINGLEVELNUMBER);
-        userWineTastingLevelNumber.setValue(mUserWineTastingLevelNumber);
-
-         */
-
         finish();
     }
+
+    //calculate the score the person has achieved by taking all their inputs and running them through the flavour / aroma calculations
+    // to work out how many negative points a person has (difference between what they've input versus the correct answer,
+    // then using those negative points to work out how far off they were.  The closer they are the less negative points they'll have,
+    // which means their score will be closer to zero.  The closer they are to zero the higher the points (out of 100) they will get.
 
     public void calculateScore(int mGrapefruitAnswer, int mLemonAnswer, int mLimeAnswer, int mOrangeAnswer,
                                int mOrangepeelAnswer, int mAppleAnswer, int mGrannysmithAnswer, int mPearAnswer, int mApricotAnswer,

@@ -10,7 +10,6 @@ import com.google.firebase.database.Exclude;
 
 public class PublicUserDetailsPojo {
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
     private int tastingPoints;
     private int mostRecentTastingPoints;
     private int totalWinesTasted;
@@ -20,14 +19,14 @@ public class PublicUserDetailsPojo {
     }
 
 
-    public PublicUserDetailsPojo(int tastingPoints
+    public PublicUserDetailsPojo(int tastingPoints, int mostRecentTastingPoints, int totalWinesTasted
             /*
-            , int mostRecentTastingPoints, int totalWinesTasted, int wineTastingLevel
+            , , int wineTastingLevel
             */) {
 
         this.tastingPoints = tastingPoints;
-        //this.mostRecentTastingPoints = mostRecentTastingPoints;
-        //this.totalWinesTasted = totalWinesTasted;
+        this.mostRecentTastingPoints = mostRecentTastingPoints;
+        this.totalWinesTasted = totalWinesTasted;
         //this.wineTastingLevel = wineTastingLevel;
 
     }
@@ -36,23 +35,18 @@ public class PublicUserDetailsPojo {
         return tastingPoints;
     }
 
-  /*
-
-    @JsonIgnore
+    @Exclude
     public int getMostRecentTastingPoints(){
         return mostRecentTastingPoints;
     }
 
-    @JsonIgnore
     public int getTotalWinesTasted(){
         return totalWinesTasted;
     }
 
-    @JsonIgnore
     public int getWineTastingLevel(){
         return wineTastingLevel;
     }
 
-     */
 
 }

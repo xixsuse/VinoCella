@@ -407,6 +407,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
                 //sign out
                 AuthUI.getInstance().signOut(this);
                 return true;
+
             /*
             case R.id.menu_add_wine:
                 //add wine

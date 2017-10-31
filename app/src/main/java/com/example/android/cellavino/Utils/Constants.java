@@ -2,6 +2,7 @@ package com.example.android.cellavino.Utils;
 
 import com.firebase.geofire.GeoFire;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * Created by Andrew on 21/04/2017.

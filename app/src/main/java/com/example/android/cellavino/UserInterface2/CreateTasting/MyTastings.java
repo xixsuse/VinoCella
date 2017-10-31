@@ -16,6 +16,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +29,7 @@ import com.example.android.cellavino.Interfaces.UploadImageInterface;
 import com.example.android.cellavino.MainActivity;
 import com.example.android.cellavino.PojoDirectory.UI2.TastingDetailsPojo;
 import com.example.android.cellavino.R;
+import com.example.android.cellavino.UserInterface2.JoinTasting.TastingWineInput;
 import com.example.android.cellavino.Utils.Constants;
 import com.example.android.cellavino.Utils.Utils;
 import com.firebase.client.Firebase;
@@ -188,6 +192,7 @@ public class MyTastings extends MainActivity {
 
     }
 
+
     public void showAlert(String message, String title)
     {
         AlertDialog.Builder builder;
@@ -296,17 +301,12 @@ public class MyTastings extends MainActivity {
                 // this is for everyone tasting so we can easily query them instead of going to every user
                 Firebase everyoneTasting = new Firebase(FIREBASE_URL_EVERYONE_TASTING);
                 TastingDetailsPojo tastingDetailsPojo =
-                        new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid);
+                        new TastingDetailsPojo(mTastingName, userName, place.getLatLng().latitude, place.getLatLng().longitude, uid, tastingPushID);
                 everyoneTasting.child(tastingPushID).setValue(tastingDetailsPojo);
 
 
                 // saving the tasting Location;
                 TASTING_GEO.setLocation(tastingPushID, new GeoLocation(place.getLatLng().latitude, place.getLatLng().longitude));
-
-
-
-
-
 
                 //TODO: Save details of when the tasting was created and who by etc.
                 //HashMap<String, Object> myTastingName = new HashMap<>();
@@ -358,7 +358,6 @@ public class MyTastings extends MainActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
 
     }
 

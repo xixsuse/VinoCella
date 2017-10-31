@@ -61,5 +61,9 @@
 
     <string name="title_activity_maps">Near Tasting</string>
 
+    <!-- Tasting Menu Strings-->
+    <string name="delete_tasting">Delete Tasting</string>
+    <string name="delete_wine">Delete Wine</string>
+
 
 </resources>
