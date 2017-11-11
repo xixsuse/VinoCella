@@ -108,5 +108,7 @@ public class WinePojo {
         return (long) timestampCreated.get(Constants.FIREBASE_PROPERTY_TIMESTAMP_CREATED);
     }
 
+    //@JsonIgnore
+
 
 }

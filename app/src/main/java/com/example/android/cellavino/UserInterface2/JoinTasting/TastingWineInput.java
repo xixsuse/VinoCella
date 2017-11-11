@@ -3367,7 +3367,27 @@ public class TastingWineInput extends AppCompatActivity {
                 if (publicUserDetailsPojo == null) {
                     //TODO: Set the value of wine tastings to 0, set the value of the total points to 0, set the level to 0 and set anything else to 0
                     Toast.makeText(TastingWineInput.this, "publicUserDetailsPojo == null ", Toast.LENGTH_SHORT).show();
-                    finish();
+
+                    int mUserFirebaseTotalPoints = 0;
+                    int mUserFirebaseMostRecentTastingPoints = 0;
+                    int mUserFirebaseTotalWinesTasted = 0;
+                    int mUserFirebaseWineTastingLevel = 1;
+
+                    //Update the Total tasting points into Firebase.
+                    Firebase userTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
+                    mNewUserTotalPoints = mUserFirebaseTotalPoints + tastingPoints;
+                    userTotalPoints.setValue(mNewUserTotalPoints);
+                    Toast.makeText(TastingWineInput.this, "New Total Points: " + mNewUserTotalPoints, Toast.LENGTH_SHORT).show();
+
+                    //Add the total number of bottles (in tastings) the user has participated in
+                    Firebase userTotalWinesTasted = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TOTALWINESTASTED);
+                    mNewUserTotalWinesTasted = mUserFirebaseTotalWinesTasted + 1;
+                    userTotalWinesTasted.setValue(mNewUserTotalWinesTasted);
+
+                    //Update the details of this specific tasting into firebase
+                    Firebase userMostRecentTastingPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.MOSTRECENTTASTINGPOINTS);
+                    userMostRecentTastingPoints.setValue(tastingPoints);
+
                 }
 
                 if (publicUserDetailsPojo != null) {

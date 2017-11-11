@@ -64,6 +64,8 @@
     <!-- Tasting Menu Strings-->
     <string name="delete_tasting">Delete Tasting</string>
     <string name="delete_wine">Delete Wine</string>
-
+    <string name="edit_wine">Edit Wine</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="myProfile">My Profile</string>
 
 </resources>

@@ -2,10 +2,12 @@ package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.android.cellavino.MainActivity;
@@ -30,6 +32,7 @@ public class TastingWines extends MainActivity {
     private Firebase mEveryoneTastingFirebaseRef;
     private Firebase mTastingGEOFirebaseRef;
     private Firebase mTastingWineDetailsFirebaseRef;
+    private FloatingActionButton mAddWineFab;
 
 
     public TastingWines() {
@@ -46,6 +49,9 @@ public class TastingWines extends MainActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUid = user.getUid().toString();
+
+        mAddWineFab = (FloatingActionButton) findViewById(R.id.addWineFab);
+        mAddWineFab.setVisibility(View.GONE);
 
 
     }
@@ -77,7 +83,7 @@ public class TastingWines extends MainActivity {
         //this sets the icon for the pop up.
         //mDeleteWineAlert.setIcon(android.R.drawable.sym_def_app_icon);
         mDeleteTastingAlert.setTitle("Delete Tasting");
-        mDeleteTastingAlert.setMessage("Are you sure you want delete this tasting?" + "\n Deleting the tasting will delete all the tasting, its location and all the wines");
+        mDeleteTastingAlert.setMessage("Are you sure you want delete this tasting?" + "\nDeleting the tasting will delete all the tasting, its location and all the wines");
         mDeleteTastingAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

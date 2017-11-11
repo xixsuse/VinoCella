@@ -77,33 +77,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textSize="18sp"
-                            android:fontFamily="sans-serif-light"
-                            android:textAllCaps="false"
-                            android:textColor="@color/textColorEarthquakeLocation"
-                            android:text="Delete" />
-
-                        <ImageView
-                            android:id="@+id/delete_wine"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/ic_delete_black_24dp" />
-
-                    </RelativeLayout>
-
 
                     <ImageView
-                        android:id="@+id/add_wine_photo"
+                        android:id="@+id/tasting_wine_image"
                         android:layout_width="70dp"
                         android:layout_height="130dp"
                         android:src="@drawable/sample_wine"

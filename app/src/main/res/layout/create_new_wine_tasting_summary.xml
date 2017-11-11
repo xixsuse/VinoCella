@@ -76,7 +76,7 @@
                                 android:layout_height="wrap_content"
                                 android:ems="12"
                                 android:enabled="false"
-                                android:hint="Tasting Location"
+                                android:hint="Location"
                                 android:inputType="textAutoComplete" />
 
                             <Button

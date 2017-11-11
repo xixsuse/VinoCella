@@ -2,6 +2,7 @@ package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastingListPojo;
@@ -9,6 +10,7 @@ import com.example.android.cellavino.PojoDirectory.UI2.WineTastingPojo;
 import com.example.android.cellavino.R;
 import com.firebase.client.Query;
 import com.firebase.ui.FirebaseListAdapter;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Andrew on 13/08/2017.
@@ -53,5 +55,7 @@ public class TastingWinesAdapter extends FirebaseListAdapter<WineTastingPojo> {
         TextView textViewTastingOwner = (TextView) view.findViewById(R.id.tasting_wine_name);
         textViewTastingOwner.setText(list.getWineName());
 
+        ImageView imageViewTastingWine = (ImageView) view.findViewById(R.id.tasting_wine_image);
+        Picasso.with(mActivity).load(list.getWineImageUrl()).placeholder(R.drawable.sample_wine_flight).into(imageViewTastingWine);
     }
 }

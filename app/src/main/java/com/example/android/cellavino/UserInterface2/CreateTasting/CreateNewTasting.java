@@ -1,26 +1,46 @@
 package com.example.android.cellavino.UserInterface2.CreateTasting;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.cellavino.Interfaces.UploadImageInterface;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastePojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastingPojo;
 import com.example.android.cellavino.R;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_WINE_FLAVOR_DETAILS;
 import static com.example.android.cellavino.Utils.Constants.FIREBASE_WINE_SUMMARY_DETAILS;
+import static com.example.android.cellavino.Utils.Constants.TAKE_PICTURE;
 
 /**
  * Created by Andrew on 30/07/2017.
@@ -129,7 +149,10 @@ public class CreateNewTasting extends AppCompatActivity {
     public Button mSaveAddNext;
     public Button mSaveFinish;
 
+    public ImageView mWinePicture;
+    private Bitmap imageData;
     public Toast mToastMessage;
+    public String downloadUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +167,7 @@ public class CreateNewTasting extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         mAddTastingWineBottlePictureFab = (FloatingActionButton) findViewById(R.id.addTastingWineBottlePictureFab);
+        mWinePicture = (ImageView) findViewById(R.id.wine_photo);
 
         mWineName = (TextView) findViewById(R.id.create_wine_name);
         mWineVintage = (TextView) findViewById(R.id.create_wine_vintage);
@@ -241,7 +265,7 @@ public class CreateNewTasting extends AppCompatActivity {
         mSaveFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addWineToTastingDatabaseAndFinish();
+                addWineToTastingDatabaseAndFinish(imageData);
             }
         });
 
@@ -249,7 +273,7 @@ public class CreateNewTasting extends AppCompatActivity {
         mSaveAddNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addWineToTastingDatabaseAndMore();
+                addWineToTastingDatabaseAndMore(imageData);
             }
         });
 
@@ -258,14 +282,17 @@ public class CreateNewTasting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(CreateNewTasting.this, "Image Picker working", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, Constants.TAKE_PICTURE);
+
+                //Toast.makeText(CreateNewTasting.this, "Image Picker working", Toast.LENGTH_SHORT).show();
                 //this was the code that got the photopicker to work.
 
                 //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
+                //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                //intent.setType("image/jpeg");
+                //intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                //startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
             }
         });
 
@@ -2068,6 +2095,11 @@ public class CreateNewTasting extends AppCompatActivity {
                 requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
 
 
+        }
+        if (requestCode == Constants.TAKE_PICTURE && resultCode == RESULT_OK) {
+            imageData = (Bitmap) data.getExtras().get("data");
+            mWinePicture.setImageBitmap(imageData);
+            mWinePicture.setVisibility(View.VISIBLE);
         } else {
             Toast.makeText(CreateNewTasting.this, "Not working!", Toast.LENGTH_SHORT).show();
 
@@ -2076,122 +2108,116 @@ public class CreateNewTasting extends AppCompatActivity {
 
     ;
 
-    public void addWineToTastingDatabaseAndMore() {
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+
+        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+
+        return image;
+    }
+
+    ;
+
+
+    public void addWineToTastingDatabaseAndMore(Bitmap bitmap) {
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         String uid = user.getUid().toString();
         String userName = user.getDisplayName().toString();
         String taster = user.getDisplayName().toString();
 
-        int ratingGrapefruitTaste = mGrapefuit.getProgress();
-        int ratingLemonTaste = mLemon.getProgress();
-        int ratingLimeTaste = mLime.getProgress();
-        int ratingOrangeTaste = mOrange.getProgress();
-        int ratingPearTaste = mPear.getProgress();
-        int ratingAppleTaste = mApple.getProgress();
-        int ratingGrannysmithTaste = mGrannysmith.getProgress();
-        int ratingApricotTaste = mApricot.getProgress();
-        int ratingMelonTaste = mMelon.getProgress();
-        int ratingGuavaTaste = mGuava.getProgress();
-        int ratingBananaTaste = mBanana.getProgress();
-        int ratingPineappleTaste = mPineapple.getProgress();
-        int ratingPassionfruitTaste = mPassionfruit.getProgress();
-        int ratingLycheeTaste = mLychee.getProgress();
-        int ratingRedcurrantTaste = mRedcurrant.getProgress();
-        int ratingBlackcurrantTaste = mBlackcurrant.getProgress();
-        int ratingStrawberryTaste = mStrawberry.getProgress();
-        int ratingBlackberryTaste = mBlackberry.getProgress();
-        int ratingCherryTaste = mCherry.getProgress();
-        int ratingPlumTaste = mPlum.getProgress();
-        int ratingGreenpepperTaste = mGreenpepper.getProgress();
-        int ratingTomatoTaste = mTomato.getProgress();
-        int ratingMintTaste = mMint.getProgress();
-        int ratingTobaccoTaste = mTobacco.getProgress();
-        int ratingHayTaste = mHay.getProgress();
-        int ratingKeroseneTaste = mKerosene.getProgress();
-        int ratingButterTaste = mButter.getProgress();
-        int ratingToastedbreadTaste = mToastedbread.getProgress();
-        int ratingCoffeeTaste = mCoffee.getProgress();
-        int ratingVanilaTaste = mVanila.getProgress();
-        int ratingPepperTaste = mPepper.getProgress();
-        int ratingCinnamonTaste = mCinnamon.getProgress();
-        int ratingLicoriceTaste = mLicorice.getProgress();
-        int ratingCloveTaste = mClove.getProgress();
-        int ratingCoconutTaste = mCoconut.getProgress();
-        int ratingHazelnutTaste = mHazelnut.getProgress();
-        int ratingAlmondTaste = mAlmond.getProgress();
-        int ratingOakTaste = mOak.getProgress();
-        int ratingOrangepeelTaste = mOrangepeel.getProgress();
-        int ratingDriedapricotTaste = mDriedapricot.getProgress();
-        int ratingPruneTaste = mPrune.getProgress();
-        int ratingHoneyTaste = mHoney.getProgress();
-        int ratingChocolateTaste = mChocolate.getProgress();
-        int ratingLeatherTaste = mLeather.getProgress();
-        int ratingMushroomTaste = mMushroom.getProgress();
-        int ratingTruffleTaste = mTruffle.getProgress();
-        int ratingCorkTaste = mCork.getProgress();
-        int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
-        int ratingRubberbandTaste = mRubberband.getProgress();
-        int ratingEggTaste = mEgg.getProgress();
-        int ratingOnionTaste = mOnion.getProgress();
-        int ratingCornTaste = mCorn.getProgress();
-        int ratingGeraniumTaste = mGeranium.getProgress();
-        int ratingAppleblossumTaste = mAppleblossum.getProgress();
-        int ratingOrangeblossumTaste = mOrangeblossum.getProgress();
-        int ratingVioletTaste = mViolet.getProgress();
-        int ratingLavenderTaste = mLavender.getProgress();
-        int ratingRoseTaste = mRose.getProgress();
-        int ratingCutgrassTaste = mCutgrass.getProgress();
-        int ratingRosemaryTaste = mRosemary.getProgress();
-        int ratingThymeTaste = mThyme.getProgress();
-        int ratingEucalyptusTaste = mEucalyptus.getProgress();
-        int ratingFlintTaste = mFlint.getProgress();
-        int ratingBreadTaste = mBread.getProgress();
-        int ratingCreamTaste = mCream.getProgress();
-        int ratingSmokeTaste = mSmoke.getProgress();
-        int ratingNutmegTaste = mNutmeg.getProgress();
-        int ratingPineTaste = mPine.getProgress();
-        int ratingCedarTaste = mCedar.getProgress();
-        int ratingFigTaste = mFig.getProgress();
-        int ratingFloralTaste = mFloral.getProgress();
-        int ratingRaspberryTaste = mRaspberry.getProgress();
-        int ratingJamTaste = mJam.getProgress();
-        int ratingKiwifruitTaste = mKiwifruit.getProgress();
-        int ratingMangoTaste = mMango.getProgress();
-        int ratingChiliTaste = mChili.getProgress();
-        int ratingPomegranateTaste = mPomegranate.getProgress();
-        int ratingWatermelonTaste = mWatermelon.getProgress();
-        int ratingSaffronTaste = mSaffron.getProgress();
-        int ratingWalnutTaste = mWalnut.getProgress();
-        int ratingPeachTaste = mPeach.getProgress();
-        int ratingCantelopeTaste = mCantelope.getProgress();
-        int ratingBlueberryTaste = mBlueberry.getProgress();
-        int ratingCaramelTaste = mCaramel.getProgress();
-        int ratingBlueCheeseTaste = mBlueCheese.getProgress();
+        final int ratingGrapefruitTaste = mGrapefuit.getProgress();
+        final int ratingLemonTaste = mLemon.getProgress();
+        final int ratingLimeTaste = mLime.getProgress();
+        final int ratingOrangeTaste = mOrange.getProgress();
+        final int ratingPearTaste = mPear.getProgress();
+        final int ratingAppleTaste = mApple.getProgress();
+        final int ratingGrannysmithTaste = mGrannysmith.getProgress();
+        final int ratingApricotTaste = mApricot.getProgress();
+        final int ratingMelonTaste = mMelon.getProgress();
+        final int ratingGuavaTaste = mGuava.getProgress();
+        final int ratingBananaTaste = mBanana.getProgress();
+        final int ratingPineappleTaste = mPineapple.getProgress();
+        final int ratingPassionfruitTaste = mPassionfruit.getProgress();
+        final int ratingLycheeTaste = mLychee.getProgress();
+        final int ratingRedcurrantTaste = mRedcurrant.getProgress();
+        final int ratingBlackcurrantTaste = mBlackcurrant.getProgress();
+        final int ratingStrawberryTaste = mStrawberry.getProgress();
+        final int ratingBlackberryTaste = mBlackberry.getProgress();
+        final int ratingCherryTaste = mCherry.getProgress();
+        final int ratingPlumTaste = mPlum.getProgress();
+        final int ratingGreenpepperTaste = mGreenpepper.getProgress();
+        final int ratingTomatoTaste = mTomato.getProgress();
+        final int ratingMintTaste = mMint.getProgress();
+        final int ratingTobaccoTaste = mTobacco.getProgress();
+        final int ratingHayTaste = mHay.getProgress();
+        final int ratingKeroseneTaste = mKerosene.getProgress();
+        final int ratingButterTaste = mButter.getProgress();
+        final int ratingToastedbreadTaste = mToastedbread.getProgress();
+        final int ratingCoffeeTaste = mCoffee.getProgress();
+        final int ratingVanilaTaste = mVanila.getProgress();
+        final int ratingPepperTaste = mPepper.getProgress();
+        final int ratingCinnamonTaste = mCinnamon.getProgress();
+        final int ratingLicoriceTaste = mLicorice.getProgress();
+        final int ratingCloveTaste = mClove.getProgress();
+        final int ratingCoconutTaste = mCoconut.getProgress();
+        final int ratingHazelnutTaste = mHazelnut.getProgress();
+        final int ratingAlmondTaste = mAlmond.getProgress();
+        final int ratingOakTaste = mOak.getProgress();
+        final int ratingOrangepeelTaste = mOrangepeel.getProgress();
+        final int ratingDriedapricotTaste = mDriedapricot.getProgress();
+        final int ratingPruneTaste = mPrune.getProgress();
+        final int ratingHoneyTaste = mHoney.getProgress();
+        final int ratingChocolateTaste = mChocolate.getProgress();
+        final int ratingLeatherTaste = mLeather.getProgress();
+        final int ratingMushroomTaste = mMushroom.getProgress();
+        final int ratingTruffleTaste = mTruffle.getProgress();
+        final int ratingCorkTaste = mCork.getProgress();
+        final int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
+        final int ratingRubberbandTaste = mRubberband.getProgress();
+        final int ratingEggTaste = mEgg.getProgress();
+        final int ratingOnionTaste = mOnion.getProgress();
+        final int ratingCornTaste = mCorn.getProgress();
+        final int ratingGeraniumTaste = mGeranium.getProgress();
+        final int ratingAppleblossumTaste = mAppleblossum.getProgress();
+        final int ratingOrangeblossumTaste = mOrangeblossum.getProgress();
+        final int ratingVioletTaste = mViolet.getProgress();
+        final int ratingLavenderTaste = mLavender.getProgress();
+        final int ratingRoseTaste = mRose.getProgress();
+        final int ratingCutgrassTaste = mCutgrass.getProgress();
+        final int ratingRosemaryTaste = mRosemary.getProgress();
+        final int ratingThymeTaste = mThyme.getProgress();
+        final int ratingEucalyptusTaste = mEucalyptus.getProgress();
+        final int ratingFlintTaste = mFlint.getProgress();
+        final int ratingBreadTaste = mBread.getProgress();
+        final int ratingCreamTaste = mCream.getProgress();
+        final int ratingSmokeTaste = mSmoke.getProgress();
+        final int ratingNutmegTaste = mNutmeg.getProgress();
+        final int ratingPineTaste = mPine.getProgress();
+        final int ratingCedarTaste = mCedar.getProgress();
+        final int ratingFigTaste = mFig.getProgress();
+        final int ratingFloralTaste = mFloral.getProgress();
+        final int ratingRaspberryTaste = mRaspberry.getProgress();
+        final int ratingJamTaste = mJam.getProgress();
+        final int ratingKiwifruitTaste = mKiwifruit.getProgress();
+        final int ratingMangoTaste = mMango.getProgress();
+        final int ratingChiliTaste = mChili.getProgress();
+        final int ratingPomegranateTaste = mPomegranate.getProgress();
+        final int ratingWatermelonTaste = mWatermelon.getProgress();
+        final int ratingSaffronTaste = mSaffron.getProgress();
+        final int ratingWalnutTaste = mWalnut.getProgress();
+        final int ratingPeachTaste = mPeach.getProgress();
+        final int ratingCantelopeTaste = mCantelope.getProgress();
+        final int ratingBlueberryTaste = mBlueberry.getProgress();
+        final int ratingCaramelTaste = mCaramel.getProgress();
+        final int ratingBlueCheeseTaste = mBlueCheese.getProgress();
 
-        String mWineNameText = mWineName.getText().toString();
-        String mWineVintageText = mWineVintage.getText().toString();
-        String mWineVarietyText = mWineVariety.getText().toString();
-
-        //this will attempt to write the tasting profile to the database
-        WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
-                ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
-                ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
-                ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
-                ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
-                ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
-                ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
-                ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
-                ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
-                ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste, ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
-                ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
-                ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
-                ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
-                ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
-                ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
-
-        WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText);
-
+        final String mWineNameText = mWineName.getText().toString();
+        final String mWineVintageText = mWineVintage.getText().toString();
+        final String mWineVarietyText = mWineVariety.getText().toString();
+        //TODO: Replace with actual wineImageUrl
 
         if (mWineNameText.isEmpty()) {
             Toast.makeText(CreateNewTasting.this, "Wine Name Required", Toast.LENGTH_SHORT).show();
@@ -2202,15 +2228,58 @@ public class CreateNewTasting extends AppCompatActivity {
             Firebase wineTastingBottleFirebaseRefPushId = wineTastingBottleRef.push();
             final String wineTastingBottleRefPushId = wineTastingBottleFirebaseRefPushId.getKey();
 
-            //Firebase myTastingsLocationSummary = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(wineTastingBottleRefPushId);
-            //myTastingsLocationSummary.setValue(wineTastingPojo);
 
-            Firebase myTastingsLocationFlavour = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_FLAVOR_DETAILS);
-            Firebase myTastingsLocationDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_SUMMARY_DETAILS);
-            myTastingsLocationFlavour.setValue(wineTastePojo);
-            myTastingsLocationDetails.setValue(wineTastingPojo);
-            Firebase myTastingsSummaryRef = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingPushID).child(wineTastingBottleRefPushId);
-            myTastingsSummaryRef.setValue(wineTastingPojo);
+            uploadFile(bitmap, wineTastingBottleRefPushId, new UploadImageInterface() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot snapshot) {
+
+                    Uri downloadUrl = snapshot.getDownloadUrl();
+                    Log.d("downloadUrl-->", "" + downloadUrl);
+
+                    Toast.makeText(CreateNewTasting.this, "downloadUrl: " + downloadUrl, Toast.LENGTH_SHORT).show();
+
+                    //TODO: Set the URL into the tasting summary
+                    String wineImageUrl = downloadUrl.toString();
+
+
+                    //this will attempt to write the tasting profile to the database
+                    WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
+                            ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
+                            ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
+                            ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
+                            ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
+                            ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
+                            ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
+                            ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
+                            ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
+                            ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste, ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
+                            ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
+                            ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
+                            ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
+                            ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
+                            ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
+
+                    WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText, wineImageUrl);
+
+
+                    //Firebase myTastingsLocationSummary = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(wineTastingBottleRefPushId);
+                    //myTastingsLocationSummary.setValue(wineTastingPojo);
+
+                    Firebase myTastingsLocationFlavour = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_FLAVOR_DETAILS);
+                    Firebase myTastingsLocationDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_SUMMARY_DETAILS);
+                    myTastingsLocationFlavour.setValue(wineTastePojo);
+                    myTastingsLocationDetails.setValue(wineTastingPojo);
+                    Firebase myTastingsSummaryRef = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingPushID).child(wineTastingBottleRefPushId);
+                    myTastingsSummaryRef.setValue(wineTastingPojo);
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+
+                }
+            });
+
 
             mWineName.setText("");
 
@@ -2300,6 +2369,8 @@ public class CreateNewTasting extends AppCompatActivity {
             mCaramel.setProgress(0);
             mBlueCheese.setProgress(0);
 
+            mWinePicture.setVisibility(View.GONE);
+
         }
 
         return;
@@ -2308,7 +2379,7 @@ public class CreateNewTasting extends AppCompatActivity {
 
     ;
 
-    public void addWineToTastingDatabaseAndFinish() {
+    public void addWineToTastingDatabaseAndFinish(Bitmap bitmap) {
         Toast.makeText(CreateNewTasting.this, "Save Finish", Toast.LENGTH_SHORT).show();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -2319,115 +2390,95 @@ public class CreateNewTasting extends AppCompatActivity {
         String userName = user.getDisplayName().toString();
         String taster = user.getDisplayName().toString();
 
-        int ratingGrapefruitTaste = mGrapefuit.getProgress();
-        int ratingLemonTaste = mLemon.getProgress();
-        int ratingLimeTaste = mLime.getProgress();
-        int ratingOrangeTaste = mOrange.getProgress();
-        int ratingPearTaste = mPear.getProgress();
-        int ratingAppleTaste = mApple.getProgress();
-        int ratingGrannysmithTaste = mGrannysmith.getProgress();
-        int ratingApricotTaste = mApricot.getProgress();
-        int ratingMelonTaste = mMelon.getProgress();
-        int ratingGuavaTaste = mGuava.getProgress();
-        int ratingBananaTaste = mBanana.getProgress();
-        int ratingPineappleTaste = mPineapple.getProgress();
-        int ratingPassionfruitTaste = mPassionfruit.getProgress();
-        int ratingLycheeTaste = mLychee.getProgress();
-        int ratingRedcurrantTaste = mRedcurrant.getProgress();
-        int ratingBlackcurrantTaste = mBlackcurrant.getProgress();
-        int ratingStrawberryTaste = mStrawberry.getProgress();
-        int ratingBlackberryTaste = mBlackberry.getProgress();
-        int ratingCherryTaste = mCherry.getProgress();
-        int ratingPlumTaste = mPlum.getProgress();
-        int ratingGreenpepperTaste = mGreenpepper.getProgress();
-        int ratingTomatoTaste = mTomato.getProgress();
-        int ratingMintTaste = mMint.getProgress();
-        int ratingTobaccoTaste = mTobacco.getProgress();
-        int ratingHayTaste = mHay.getProgress();
-        int ratingKeroseneTaste = mKerosene.getProgress();
-        int ratingButterTaste = mButter.getProgress();
-        int ratingToastedbreadTaste = mToastedbread.getProgress();
-        int ratingCoffeeTaste = mCoffee.getProgress();
-        int ratingVanilaTaste = mVanila.getProgress();
-        int ratingPepperTaste = mPepper.getProgress();
-        int ratingCinnamonTaste = mCinnamon.getProgress();
-        int ratingLicoriceTaste = mLicorice.getProgress();
-        int ratingCloveTaste = mClove.getProgress();
-        int ratingCoconutTaste = mCoconut.getProgress();
-        int ratingHazelnutTaste = mHazelnut.getProgress();
-        int ratingAlmondTaste = mAlmond.getProgress();
-        int ratingOakTaste = mOak.getProgress();
-        int ratingOrangepeelTaste = mOrangepeel.getProgress();
-        int ratingDriedapricotTaste = mDriedapricot.getProgress();
-        int ratingPruneTaste = mPrune.getProgress();
-        int ratingHoneyTaste = mHoney.getProgress();
-        int ratingChocolateTaste = mChocolate.getProgress();
-        int ratingLeatherTaste = mLeather.getProgress();
-        int ratingMushroomTaste = mMushroom.getProgress();
-        int ratingTruffleTaste = mTruffle.getProgress();
-        int ratingCorkTaste = mCork.getProgress();
-        int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
-        int ratingRubberbandTaste = mRubberband.getProgress();
-        int ratingEggTaste = mEgg.getProgress();
-        int ratingOnionTaste = mOnion.getProgress();
-        int ratingCornTaste = mCorn.getProgress();
-        int ratingGeraniumTaste = mGeranium.getProgress();
-        int ratingAppleblossumTaste = mAppleblossum.getProgress();
-        int ratingOrangeblossumTaste = mOrangeblossum.getProgress();
-        int ratingVioletTaste = mViolet.getProgress();
-        int ratingLavenderTaste = mLavender.getProgress();
-        int ratingRoseTaste = mRose.getProgress();
-        int ratingCutgrassTaste = mCutgrass.getProgress();
-        int ratingRosemaryTaste = mRosemary.getProgress();
-        int ratingThymeTaste = mThyme.getProgress();
-        int ratingEucalyptusTaste = mEucalyptus.getProgress();
-        int ratingFlintTaste = mFlint.getProgress();
-        int ratingBreadTaste = mBread.getProgress();
-        int ratingCreamTaste = mCream.getProgress();
-        int ratingSmokeTaste = mSmoke.getProgress();
-        int ratingNutmegTaste = mNutmeg.getProgress();
-        int ratingPineTaste = mPine.getProgress();
-        int ratingCedarTaste = mCedar.getProgress();
-        int ratingFigTaste = mFig.getProgress();
-        int ratingFloralTaste = mFloral.getProgress();
-        int ratingRaspberryTaste = mRaspberry.getProgress();
-        int ratingJamTaste = mJam.getProgress();
-        int ratingKiwifruitTaste = mKiwifruit.getProgress();
-        int ratingMangoTaste = mMango.getProgress();
-        int ratingChiliTaste = mChili.getProgress();
-        int ratingPomegranateTaste = mPomegranate.getProgress();
-        int ratingWatermelonTaste = mWatermelon.getProgress();
-        int ratingSaffronTaste = mSaffron.getProgress();
-        int ratingWalnutTaste = mWalnut.getProgress();
-        int ratingPeachTaste = mPeach.getProgress();
-        int ratingCantelopeTaste = mCantelope.getProgress();
-        int ratingBlueberryTaste = mBlueberry.getProgress();
-        int ratingCaramelTaste = mCaramel.getProgress();
-        int ratingBlueCheeseTaste = mBlueCheese.getProgress();
+        final int ratingGrapefruitTaste = mGrapefuit.getProgress();
+        final int ratingLemonTaste = mLemon.getProgress();
+        final int ratingLimeTaste = mLime.getProgress();
+        final int ratingOrangeTaste = mOrange.getProgress();
+        final int ratingPearTaste = mPear.getProgress();
+        final int ratingAppleTaste = mApple.getProgress();
+        final int ratingGrannysmithTaste = mGrannysmith.getProgress();
+        final int ratingApricotTaste = mApricot.getProgress();
+        final int ratingMelonTaste = mMelon.getProgress();
+        final int ratingGuavaTaste = mGuava.getProgress();
+        final int ratingBananaTaste = mBanana.getProgress();
+        final int ratingPineappleTaste = mPineapple.getProgress();
+        final int ratingPassionfruitTaste = mPassionfruit.getProgress();
+        final int ratingLycheeTaste = mLychee.getProgress();
+        final int ratingRedcurrantTaste = mRedcurrant.getProgress();
+        final int ratingBlackcurrantTaste = mBlackcurrant.getProgress();
+        final int ratingStrawberryTaste = mStrawberry.getProgress();
+        final int ratingBlackberryTaste = mBlackberry.getProgress();
+        final int ratingCherryTaste = mCherry.getProgress();
+        final int ratingPlumTaste = mPlum.getProgress();
+        final int ratingGreenpepperTaste = mGreenpepper.getProgress();
+        final int ratingTomatoTaste = mTomato.getProgress();
+        final int ratingMintTaste = mMint.getProgress();
+        final int ratingTobaccoTaste = mTobacco.getProgress();
+        final int ratingHayTaste = mHay.getProgress();
+        final int ratingKeroseneTaste = mKerosene.getProgress();
+        final int ratingButterTaste = mButter.getProgress();
+        final int ratingToastedbreadTaste = mToastedbread.getProgress();
+        final int ratingCoffeeTaste = mCoffee.getProgress();
+        final int ratingVanilaTaste = mVanila.getProgress();
+        final int ratingPepperTaste = mPepper.getProgress();
+        final int ratingCinnamonTaste = mCinnamon.getProgress();
+        final int ratingLicoriceTaste = mLicorice.getProgress();
+        final int ratingCloveTaste = mClove.getProgress();
+        final int ratingCoconutTaste = mCoconut.getProgress();
+        final int ratingHazelnutTaste = mHazelnut.getProgress();
+        final int ratingAlmondTaste = mAlmond.getProgress();
+        final int ratingOakTaste = mOak.getProgress();
+        final int ratingOrangepeelTaste = mOrangepeel.getProgress();
+        final int ratingDriedapricotTaste = mDriedapricot.getProgress();
+        final int ratingPruneTaste = mPrune.getProgress();
+        final int ratingHoneyTaste = mHoney.getProgress();
+        final int ratingChocolateTaste = mChocolate.getProgress();
+        final int ratingLeatherTaste = mLeather.getProgress();
+        final int ratingMushroomTaste = mMushroom.getProgress();
+        final int ratingTruffleTaste = mTruffle.getProgress();
+        final int ratingCorkTaste = mCork.getProgress();
+        final int ratingHoneysuckleTaste = mHoneysuckle.getProgress();
+        final int ratingRubberbandTaste = mRubberband.getProgress();
+        final int ratingEggTaste = mEgg.getProgress();
+        final int ratingOnionTaste = mOnion.getProgress();
+        final int ratingCornTaste = mCorn.getProgress();
+        final int ratingGeraniumTaste = mGeranium.getProgress();
+        final int ratingAppleblossumTaste = mAppleblossum.getProgress();
+        final int ratingOrangeblossumTaste = mOrangeblossum.getProgress();
+        final int ratingVioletTaste = mViolet.getProgress();
+        final int ratingLavenderTaste = mLavender.getProgress();
+        final int ratingRoseTaste = mRose.getProgress();
+        final int ratingCutgrassTaste = mCutgrass.getProgress();
+        final int ratingRosemaryTaste = mRosemary.getProgress();
+        final int ratingThymeTaste = mThyme.getProgress();
+        final int ratingEucalyptusTaste = mEucalyptus.getProgress();
+        final int ratingFlintTaste = mFlint.getProgress();
+        final int ratingBreadTaste = mBread.getProgress();
+        final int ratingCreamTaste = mCream.getProgress();
+        final int ratingSmokeTaste = mSmoke.getProgress();
+        final int ratingNutmegTaste = mNutmeg.getProgress();
+        final int ratingPineTaste = mPine.getProgress();
+        final int ratingCedarTaste = mCedar.getProgress();
+        final int ratingFigTaste = mFig.getProgress();
+        final int ratingFloralTaste = mFloral.getProgress();
+        final int ratingRaspberryTaste = mRaspberry.getProgress();
+        final int ratingJamTaste = mJam.getProgress();
+        final int ratingKiwifruitTaste = mKiwifruit.getProgress();
+        final int ratingMangoTaste = mMango.getProgress();
+        final int ratingChiliTaste = mChili.getProgress();
+        final int ratingPomegranateTaste = mPomegranate.getProgress();
+        final int ratingWatermelonTaste = mWatermelon.getProgress();
+        final int ratingSaffronTaste = mSaffron.getProgress();
+        final int ratingWalnutTaste = mWalnut.getProgress();
+        final int ratingPeachTaste = mPeach.getProgress();
+        final int ratingCantelopeTaste = mCantelope.getProgress();
+        final int ratingBlueberryTaste = mBlueberry.getProgress();
+        final int ratingCaramelTaste = mCaramel.getProgress();
+        final int ratingBlueCheeseTaste = mBlueCheese.getProgress();
 
-        String mWineNameText = mWineName.getText().toString();
-        String mWineVintageText = mWineVintage.getText().toString();
-        String mWineVarietyText = mWineVariety.getText().toString();
-
-
-        //this will attempt to write the tasting profile to the database
-        WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
-                ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
-                ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
-                ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
-                ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
-                ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
-                ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
-                ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
-                ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
-                ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste, ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
-                ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
-                ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
-                ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
-                ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
-                ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
-
-        WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText);
+        final String mWineNameText = mWineName.getText().toString();
+        final String mWineVintageText = mWineVintage.getText().toString();
+        final String mWineVarietyText = mWineVariety.getText().toString();
 
         if (mWineNameText.isEmpty()) {
             Toast.makeText(CreateNewTasting.this, "Wine Name Required", Toast.LENGTH_SHORT).show();
@@ -2438,20 +2489,58 @@ public class CreateNewTasting extends AppCompatActivity {
             Firebase wineTastingBottleFirebaseRefPushId = wineTastingBottleRef.push();
             final String wineTastingBottleRefPushId = wineTastingBottleFirebaseRefPushId.getKey();
 
-            Firebase myTastingsLocationFlavour = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_FLAVOR_DETAILS);
-            Firebase myTastingsLocationDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_SUMMARY_DETAILS);
-            myTastingsLocationFlavour.setValue(wineTastePojo);
-            myTastingsLocationDetails.setValue(wineTastingPojo);
 
-            Firebase myTastingsSummaryRef = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingPushID).child(wineTastingBottleRefPushId);
-            myTastingsSummaryRef.setValue(wineTastingPojo);
+            uploadFile(bitmap, wineTastingBottleRefPushId, new UploadImageInterface() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot snapshot) {
 
-            /*
-            Firebase myTastingsLocation = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(Constants.FIREBASE_TASTING_NAME);
-        myTastingsLocation.setValue(mTastingName);
-             */
+                    Uri downloadUrl = snapshot.getDownloadUrl();
+                    Log.d("downloadUrl-->", "" + downloadUrl);
+
+                    Toast.makeText(CreateNewTasting.this, "downloadUrl: " + downloadUrl, Toast.LENGTH_SHORT).show();
+
+                    String wineImageUrl = downloadUrl.toString();
+
+
+                    //this will attempt to write the tasting profile to the database
+                    WineTastePojo wineTastePojo = new WineTastePojo(ratingGrapefruitTaste, ratingLemonTaste, ratingLimeTaste,
+                            ratingOrangeTaste, ratingPearTaste, ratingAppleTaste, ratingGrannysmithTaste, ratingApricotTaste, ratingMelonTaste,
+                            ratingGuavaTaste, ratingBananaTaste, ratingPineappleTaste, ratingPassionfruitTaste, ratingLycheeTaste, ratingRedcurrantTaste,
+                            ratingBlackcurrantTaste, ratingStrawberryTaste, ratingBlackberryTaste, ratingCherryTaste, ratingPlumTaste,
+                            ratingGreenpepperTaste, ratingTomatoTaste, ratingMintTaste, ratingTobaccoTaste, ratingHayTaste, ratingKeroseneTaste,
+                            ratingButterTaste, ratingToastedbreadTaste, ratingCoffeeTaste, ratingVanilaTaste, ratingPepperTaste, ratingCinnamonTaste,
+                            ratingLicoriceTaste, ratingCloveTaste, ratingCoconutTaste, ratingHazelnutTaste, ratingAlmondTaste, ratingOakTaste,
+                            ratingOrangepeelTaste, ratingDriedapricotTaste, ratingPruneTaste, ratingHoneyTaste, ratingChocolateTaste,
+                            ratingLeatherTaste, ratingMushroomTaste, ratingTruffleTaste, ratingCorkTaste, ratingRubberbandTaste, ratingEggTaste,
+                            ratingOnionTaste, ratingCornTaste, ratingHoneysuckleTaste, ratingGeraniumTaste, ratingAppleblossumTaste, ratingOrangeblossumTaste,
+                            ratingVioletTaste, ratingLavenderTaste, ratingRoseTaste,
+                            ratingCutgrassTaste, ratingRosemaryTaste, ratingThymeTaste, ratingEucalyptusTaste, ratingFlintTaste, ratingBreadTaste,
+                            ratingCreamTaste, ratingSmokeTaste, ratingNutmegTaste, ratingPineTaste, ratingCedarTaste, ratingFigTaste, ratingFloralTaste,
+                            ratingRaspberryTaste, ratingJamTaste, ratingKiwifruitTaste, ratingMangoTaste, ratingChiliTaste,
+                            ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
+                            ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
+
+                    WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText, wineImageUrl);
+
+                    Firebase myTastingsLocationFlavour = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_FLAVOR_DETAILS);
+                    Firebase myTastingsLocationDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_SUMMARY_DETAILS);
+                    myTastingsLocationFlavour.setValue(wineTastePojo);
+                    myTastingsLocationDetails.setValue(wineTastingPojo);
+
+                    Firebase myTastingsSummaryRef = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(tastingPushID).child(wineTastingBottleRefPushId);
+                    myTastingsSummaryRef.setValue(wineTastingPojo);
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+
+                }
+            });
+
 
             mWineName.setText("");
+
 
             //Send the user back the the wine list.  They'll be able to see all the wines they're recently added.
             Intent MyTastings = new Intent(CreateNewTasting.this, com.example.android.cellavino.UserInterface2.CreateTasting.MyTastings.class);
@@ -2460,6 +2549,36 @@ public class CreateNewTasting extends AppCompatActivity {
 
         }
         return;
+    }
+
+    private void uploadFile(Bitmap bitmap, String wineTastingBottleRefPushId, final UploadImageInterface uploadImageInterface) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_URL);
+        StorageReference mountainImagesRef = null;
+
+        try {
+            mountainImagesRef = storageRef.child("Wine Photos/" + URLEncoder.encode(wineTastingBottleRefPushId + ".jpg", "UTF-8"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+            byte[] data = baos.toByteArray();
+
+            UploadTask uploadTask = mountainImagesRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    uploadImageInterface.onFailure(exception);
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    uploadImageInterface.onSuccess(taskSnapshot);
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
 

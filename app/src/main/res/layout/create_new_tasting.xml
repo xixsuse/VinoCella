@@ -21,7 +21,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_photo_library_white_24dp"
+        android:src="@drawable/ic_photo_camera_white_24dp"
         app:elevation="6dp"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp"
@@ -34,8 +34,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/wine_photo_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_card_half_spacing"
+                android:elevation="@dimen/task_card_elevation"
+                card_View:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/wine_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/wine_list_item_details"
@@ -78,6 +104,16 @@
                             android:ems="10"
                             android:inputType="textAutoComplete"
                             android:hint="Variety" />
+
+                        <TextView
+                            android:id="@+id/create_wine_variety_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -137,6 +173,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_citrus_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -308,6 +345,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_tree_fruit_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -523,6 +561,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_tropical_fruit_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -784,6 +823,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_dried_fruit_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -888,6 +928,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_stone_fruit_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1014,6 +1055,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_berry_and_jam_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1231,6 +1273,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_blossom_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1333,6 +1376,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_floral_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1550,6 +1594,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_herb_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1698,6 +1743,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_earthy_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1824,6 +1870,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_leathery_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -1902,6 +1949,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_vegetable_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2048,6 +2096,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_woody_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2172,6 +2221,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_nutty_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2318,6 +2368,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_spicy_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2533,6 +2584,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_toasty_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2633,6 +2685,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_bakery_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2733,6 +2786,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_dairy_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -2856,6 +2910,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/image_other_expand_less"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -3115,6 +3170,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/submit_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/task_card_half_spacing"

@@ -1,6 +1,5 @@
 package com.example.android.cellavino;
 
-import android.*;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -37,7 +36,7 @@ import com.example.android.cellavino.PojoDirectory.UI2.LocationPojo;
 import com.example.android.cellavino.PojoDirectory.UI2.UserDetailsPojo;
 import com.example.android.cellavino.UserInterface.WineAdapter;
 import com.example.android.cellavino.UserInterface2.CreateTasting.MyTastings;
-import com.example.android.cellavino.UserInterface2.EditProfile.EditProfile;
+import com.example.android.cellavino.UserInterface2.Profile.MyProfile;
 import com.example.android.cellavino.UserInterface2.JoinTasting.JoinTasting;
 import com.example.android.cellavino.UserInterface2.WineDetails.CreateNewWine;
 import com.example.android.cellavino.UserInterface2.WineDetails.MyWinesList;
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
     Button nearbyTasting;
 
 
-    private FirebaseAuth mFirebaseAuth;
+    public FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mWineDatabaseReference;
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
     private ChildEventListener mChildEventListener;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    public ValueEventListener mTotalPointsListener;
     private FirebaseStorage mFirebaseStorage;
     private WineAdapter mWineAdapter;
     private ListView mWineListView;
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditProfile.class);
+                Intent intent = new Intent(MainActivity.this, MyProfile.class);
                 startActivity(intent);
 
             }
@@ -233,6 +233,8 @@ public class MainActivity extends AppCompatActivity implements android.location.
             String userName = user.getDisplayName();
             TextView mUsernameTextView = (TextView) findViewById(R.id.user_name);
             mUsernameTextView.setText(userName);
+            String uid = user.getUid();
+
         } else {
             TextView mUsernameTextView = (TextView) findViewById(R.id.user_name);
             mUsernameTextView.setVisibility(View.GONE);
@@ -243,7 +245,9 @@ public class MainActivity extends AppCompatActivity implements android.location.
             @Override
             public void onClick(View v) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    ActivityCompat#requestPermissions
                         // here to request the missing permissions, and then overriding

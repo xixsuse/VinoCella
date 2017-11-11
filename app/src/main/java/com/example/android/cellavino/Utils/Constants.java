@@ -78,6 +78,7 @@ public class Constants {
 
     public static final String WINE_LIST_ID = "WINE_LIST_ID";
     public static final String TASTING_LIST_ID = "TASTING_LIST_ID";
+    public static final String TASTING_WINE_ID = "TASTING_WINE_ID";
     public static final String TASTING_ID = "TASTING_ID";
     public static final String FIREBASE_MY_TASTING_NAME = "MY_TASTING_NAME";
     public static final String KEY_LAYOUT_RESOURCE = "LAYOUT_RESOURCE";

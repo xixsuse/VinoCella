@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/edit_wine"
+        android:id="@+id/edit_profile"
         android:animateLayoutChanges="true"
         android:icon="@drawable/ic_mode_edit_white_24dp"
         android:orderInCategory="100"
-        android:title="@string/edit_wine"
+        android:title="@string/edit_profile"
         android:visible="true"
         app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/delete_wine"
-        android:animateLayoutChanges="true"
-        android:icon="@drawable/ic_delete_white_24dp"
-        android:orderInCategory="100"
-        android:title="@string/delete_wine"
-        android:visible="true"
-        app:showAsAction="ifRoom" />
-
 </menu>

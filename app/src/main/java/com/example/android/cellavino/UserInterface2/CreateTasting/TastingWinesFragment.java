@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -79,6 +80,21 @@ public class TastingWinesFragment extends Fragment {
 
         mTastingWinesAdapter = new TastingWinesAdapter(getActivity(), WineTastingPojo.class, R.layout.tasting_wines_details, tastingWinesRef, mTastingWineList);
         mListView.setAdapter(mTastingWinesAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                WineTastingPojo selectedWine = mTastingWinesAdapter.getItem(position);
+                if (selectedWine != null) {
+                    String tasting_wineId = mTastingWinesAdapter.getRef(position).getKey();
+                    Intent intent = new Intent(getActivity(), TastingWineDetails.class);
+                    intent.putExtra(Constants.TASTING_WINE_ID, tasting_wineId);
+                    startActivity(intent);
+
+                } else
+                    Toast.makeText(getActivity(), "Click Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }

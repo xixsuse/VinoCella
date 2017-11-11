@@ -81,6 +81,7 @@
                                 android:textSize="20sp"
                                 tools:text="User" />
 
+
                         </LinearLayout>
 
                         <RelativeLayout
@@ -127,7 +128,7 @@
                                 android:textSize="16dp"
                                 android:textColor="@color/authui_colorPrimaryDark"
                                 style="@style/Widget.AppCompat.Button.Borderless"
-                                android:text="Edit Profile" />
+                                android:text="My Profile" />
 
                         </RelativeLayout>
 
@@ -174,7 +175,7 @@
                                 android:fontFamily="sans-serif-medium"
                                 android:textColor="@color/textColorEarthquakeLocation"
                                 android:textSize="20sp"
-                                tools:text="Wine Tastings" />
+                                android:text="Wine Tastings" />
 
                         </RelativeLayout>
 
