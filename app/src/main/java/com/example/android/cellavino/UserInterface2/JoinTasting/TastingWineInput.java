@@ -32,6 +32,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
+
+import static java.lang.Boolean.TRUE;
 
 /**
  * Created by Andrew on 17/08/2017.
@@ -722,6 +725,11 @@ public class TastingWineInput extends AppCompatActivity {
     public RelativeLayout expandCollapseOther;
     public CardView otherContainer;
 
+    public String mTastingWinePhotoUrl;
+    public ImageView winePhoto;
+    public CardView wineDescriptionInput;
+    public TextView mWineDescription;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -731,9 +739,15 @@ public class TastingWineInput extends AppCompatActivity {
         mTastingListID = bundle.getString(Constants.TASTING_LIST_ID);
 
         setContentView(R.layout.create_new_tasting);
+        winePhoto = (ImageView) findViewById(R.id.wine_photo);
+
+        wineDescriptionInput = (CardView) findViewById(R.id.wine_description_card);
+        wineDescriptionInput.setVisibility(View.GONE);
+
+        mWineDescription = (TextView) findViewById(R.id.wine_description_text);
+
 
         mTastingWineDetails = new Firebase(Constants.FIREBASE_URL_TASTING_WINE_DETAILS).child(mTastingListID).child(mTastingWineInput);
-
         mTastingWineDetails.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -744,9 +758,13 @@ public class TastingWineInput extends AppCompatActivity {
                     return;
                 }
 
+                // This displays the year and wine name in the title, and then brings up the Photo of the wine so the user can see what they're rating.
                 mTastingWineName = wineTastingPojo.getWineName();
                 mTastingWineVintage = wineTastingPojo.getWineVintage();
-
+                mTastingWinePhotoUrl = wineTastingPojo.getWineImageUrl();
+                //TODO: Finish the description of the wines.
+                mWineDescription.setText(wineTastingPojo.getWineDescription());
+                Picasso.with(TastingWineInput.this).load(mTastingWinePhotoUrl).placeholder(R.drawable.sample_wine_flight).into(winePhoto);
                 setTitle(mTastingWineVintage + " " + mTastingWineName);
             }
 
@@ -757,6 +775,7 @@ public class TastingWineInput extends AppCompatActivity {
         });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+
 
         expandCollapseCitrusFruits = (RelativeLayout) findViewById(R.id.expand_collapse_citrus_fruits);
         citrusFruitContainer = (CardView) findViewById(R.id.citrus_fruit_container);
@@ -3354,8 +3373,6 @@ public class TastingWineInput extends AppCompatActivity {
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         final String uid = user.getUid();
 
-        Toast.makeText(TastingWineInput.this, "This Tasting Points: " + tastingPoints, Toast.LENGTH_SHORT).show();
-
         //Take a snapshot off what the users current public information is, and then work out what needs to be updated.
         mUserPublicDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC);
         mUserPublicDetails.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -3365,9 +3382,7 @@ public class TastingWineInput extends AppCompatActivity {
                 PublicUserDetailsPojo publicUserDetailsPojo = dataSnapshot.getValue(PublicUserDetailsPojo.class);
 
                 if (publicUserDetailsPojo == null) {
-                    //TODO: Set the value of wine tastings to 0, set the value of the total points to 0, set the level to 0 and set anything else to 0
-                    Toast.makeText(TastingWineInput.this, "publicUserDetailsPojo == null ", Toast.LENGTH_SHORT).show();
-
+                    //This is where the user has completed their first tasting.
                     int mUserFirebaseTotalPoints = 0;
                     int mUserFirebaseMostRecentTastingPoints = 0;
                     int mUserFirebaseTotalWinesTasted = 0;
@@ -3377,7 +3392,6 @@ public class TastingWineInput extends AppCompatActivity {
                     Firebase userTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
                     mNewUserTotalPoints = mUserFirebaseTotalPoints + tastingPoints;
                     userTotalPoints.setValue(mNewUserTotalPoints);
-                    Toast.makeText(TastingWineInput.this, "New Total Points: " + mNewUserTotalPoints, Toast.LENGTH_SHORT).show();
 
                     //Add the total number of bottles (in tastings) the user has participated in
                     Firebase userTotalWinesTasted = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TOTALWINESTASTED);
@@ -3387,7 +3401,7 @@ public class TastingWineInput extends AppCompatActivity {
                     //Update the details of this specific tasting into firebase
                     Firebase userMostRecentTastingPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.MOSTRECENTTASTINGPOINTS);
                     userMostRecentTastingPoints.setValue(tastingPoints);
-
+                    //firstUseAlertDialog();
                 }
 
                 if (publicUserDetailsPojo != null) {
@@ -3400,7 +3414,6 @@ public class TastingWineInput extends AppCompatActivity {
                     Firebase userTotalPoints = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TASTINGPOINTS);
                     mNewUserTotalPoints = mUserFirebaseTotalPoints + tastingPoints;
                     userTotalPoints.setValue(mNewUserTotalPoints);
-                    Toast.makeText(TastingWineInput.this, "New Total Points: " + mNewUserTotalPoints, Toast.LENGTH_SHORT).show();
 
                     //Add the total number of bottles (in tastings) the user has participated in
                     Firebase userTotalWinesTasted = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(Constants.PUBLIC).child(Constants.TOTALWINESTASTED);
@@ -3431,6 +3444,26 @@ public class TastingWineInput extends AppCompatActivity {
         });
 
         finish();
+    }
+
+    //TODO: work out how to put a break in to stop the flash Alert Dialog.
+    public void firstUseAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TastingWineInput.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_create_tasting, null);
+        final TextView mTastingResult = (TextView) mView.findViewById(R.id.dialog_points_scored);
+
+        mTastingResult.setText("Congratulations on completing your first tasting!" +
+                "\nTaste more wines and get more points to unlock new flavours and be able to contribute to wine flavour profiles");
+
+        alertDialogBuilder.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        alertDialogBuilder.setView(mView);
+        AlertDialog dialog = alertDialogBuilder.create();
+        dialog.show();
     }
 
     //calculate the score the person has achieved by taking all their inputs and running them through the flavour / aroma calculations

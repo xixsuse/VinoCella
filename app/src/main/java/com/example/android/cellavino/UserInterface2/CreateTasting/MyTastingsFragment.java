@@ -65,12 +65,10 @@ public class MyTastingsFragment extends Fragment {
         mTastingId = intent.getStringExtra(Constants.TASTING_ID);
         if (mTastingId == null) {
             //finish();
-            Toast.makeText(getActivity(), "No Tasting Details", Toast.LENGTH_SHORT).show();
             //getActivity().finish();
             //return;
         }
         if (mTastingId != null) {
-            Toast.makeText(getActivity(), "Tastings Found", Toast.LENGTH_SHORT).show();
             return;
         }
 

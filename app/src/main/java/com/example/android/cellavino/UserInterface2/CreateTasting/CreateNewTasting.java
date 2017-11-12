@@ -13,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -153,6 +155,9 @@ public class CreateNewTasting extends AppCompatActivity {
     private Bitmap imageData;
     public Toast mToastMessage;
     public String downloadUrl;
+    public EditText mWineDescription;
+    public RatingBar mWineRating;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +177,7 @@ public class CreateNewTasting extends AppCompatActivity {
         mWineName = (TextView) findViewById(R.id.create_wine_name);
         mWineVintage = (TextView) findViewById(R.id.create_wine_vintage);
         mWineVariety = (TextView) findViewById(R.id.create_wine_variety);
+        mWineDescription = (EditText) findViewById(R.id.wine_description);
         mGrapefuit = (SeekBar) findViewById(R.id.seekBar_grapefruit);
         mLemon = (SeekBar) findViewById(R.id.seekBar_lemon);
         mLime = (SeekBar) findViewById(R.id.seekBar_lime);
@@ -268,6 +274,9 @@ public class CreateNewTasting extends AppCompatActivity {
                 addWineToTastingDatabaseAndFinish(imageData);
             }
         });
+
+        mWineRating = (RatingBar) findViewById(R.id.tasting_wine_rating);
+        mWineRating.setVisibility(View.GONE);
 
         //set the click listener on the button that  pushes wine into the database
         mSaveAddNext.setOnClickListener(new View.OnClickListener() {
@@ -2217,6 +2226,7 @@ public class CreateNewTasting extends AppCompatActivity {
         final String mWineNameText = mWineName.getText().toString();
         final String mWineVintageText = mWineVintage.getText().toString();
         final String mWineVarietyText = mWineVariety.getText().toString();
+        final String mWineDescriptionText = mWineDescription.getText().toString();
         //TODO: Replace with actual wineImageUrl
 
         if (mWineNameText.isEmpty()) {
@@ -2259,7 +2269,7 @@ public class CreateNewTasting extends AppCompatActivity {
                             ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
                             ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
 
-                    WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText, wineImageUrl);
+                    WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText, mWineDescriptionText, wineImageUrl);
 
 
                     //Firebase myTastingsLocationSummary = new Firebase(Constants.FIREBASE_URL_LOCATION_USERS).child(uid).child(FIREBASE_MY_TASTINGS).child(tastingPushID).child(wineTastingBottleRefPushId);
@@ -2479,6 +2489,8 @@ public class CreateNewTasting extends AppCompatActivity {
         final String mWineNameText = mWineName.getText().toString();
         final String mWineVintageText = mWineVintage.getText().toString();
         final String mWineVarietyText = mWineVariety.getText().toString();
+        final String mWineDescriptionText = mWineDescription.getText().toString();
+
 
         if (mWineNameText.isEmpty()) {
             Toast.makeText(CreateNewTasting.this, "Wine Name Required", Toast.LENGTH_SHORT).show();
@@ -2520,7 +2532,7 @@ public class CreateNewTasting extends AppCompatActivity {
                             ratingPomegranateTaste, ratingWatermelonTaste, ratingSaffronTaste, ratingWalnutTaste, ratingPeachTaste, ratingCantelopeTaste,
                             ratingBlueberryTaste, ratingCaramelTaste, ratingBlueCheeseTaste);
 
-                    WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText, wineImageUrl);
+                    WineTastingPojo wineTastingPojo = new WineTastingPojo(mWineNameText, mWineVintageText, mWineVarietyText, mWineDescriptionText, wineImageUrl);
 
                     Firebase myTastingsLocationFlavour = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_FLAVOR_DETAILS);
                     Firebase myTastingsLocationDetails = new Firebase(Constants.FIREBASE_URL_LOCATION_WINE_DETAILS).child(wineTastingBottleRefPushId).child(FIREBASE_WINE_SUMMARY_DETAILS);

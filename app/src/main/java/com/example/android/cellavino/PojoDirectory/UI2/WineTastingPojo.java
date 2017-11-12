@@ -15,16 +15,18 @@ public class WineTastingPojo {
     String wineName;
     String wineVintage;
     String wineVariety;
+    String wineDescription;
     String wineImageUrl;
 
 
     public WineTastingPojo() {
     }
 
-    public WineTastingPojo(String wineName, String wineVintage, String wineVariety, String wineImageUrl) {
+    public WineTastingPojo(String wineName, String wineVintage, String wineVariety, String wineDescription, String wineImageUrl) {
         this.wineName = wineName;
         this.wineVintage = wineVintage;
         this.wineVariety = wineVariety;
+        this.wineDescription = wineDescription;
         this.wineImageUrl = wineImageUrl;
 
     }
@@ -43,6 +45,10 @@ public class WineTastingPojo {
 
     public String getWineImageUrl() {
         return wineImageUrl;
+    }
+
+    public String getWineDescription() {
+        return wineDescription;
     }
 
 }

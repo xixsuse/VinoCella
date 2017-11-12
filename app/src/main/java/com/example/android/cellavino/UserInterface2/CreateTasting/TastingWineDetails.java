@@ -10,8 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,11 +24,13 @@ import com.example.android.cellavino.PojoDirectory.UI2.WinePojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastePojo;
 import com.example.android.cellavino.PojoDirectory.UI2.WineTastingPojo;
 import com.example.android.cellavino.R;
+import com.example.android.cellavino.UserInterface2.JoinTasting.TastingWineInput;
 import com.example.android.cellavino.Utils.Constants;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Andrew on 1/11/2017.
@@ -108,6 +112,14 @@ public class TastingWineDetails extends MainActivity {
     public RelativeLayout expandCollapseOther;
     public CardView otherContainer;
     public ImageView expandOtherImage;
+    public RatingBar mWineRating;
+    public CardView mSummaryCard;
+    public TextView mWineDescription;
+    public EditText mWineDescriptionEditText;
+    public String mTastingWinePhotoUrl;
+    public ImageView winePhoto;
+    public CardView mWineDescriptionCard;
+
 
     public TastingWineDetails() {
     }
@@ -124,8 +136,24 @@ public class TastingWineDetails extends MainActivity {
         //Hide the Save Finish button, and then change the text to "Submit"
         mSaveFinish = (Button) findViewById(R.id.save_finish);
         mSaveFinish.setVisibility(View.GONE);
+
         mSaveAddNext = (Button) findViewById(R.id.save_add_next);
         mSaveAddNext.setText("Update");
+
+        mSummaryCard = (CardView) findViewById(R.id.wine_photo_card);
+
+        mWineDescriptionCard = (CardView) findViewById(R.id.wine_description_card);
+        mWineDescriptionCard.setVisibility(View.GONE);
+
+        winePhoto = (ImageView) findViewById(R.id.wine_photo);
+        mWineDescription = (TextView) findViewById(R.id.wine_description_text);
+        //mWineDescription.setVisibility(View.GONE);
+
+        mWineDescriptionEditText = (EditText) findViewById(R.id.wine_description);
+        mWineDescriptionEditText.setVisibility(View.GONE);
+
+        mWineRating = (RatingBar) findViewById(R.id.tasting_wine_rating);
+        mWineRating.setVisibility(View.GONE);
 
         mSubmitCard = (CardView) findViewById(R.id.submit_card);
         mSubmitCard.setVisibility(View.GONE);
@@ -154,6 +182,10 @@ public class TastingWineDetails extends MainActivity {
 
                     setTitle(wineTastingPojo.getWineVintage() + " " + wineTastingPojo.getWineName());
                 mViewWineVarietyText.setText(wineTastingPojo.getWineVariety());
+                mWineDescription.setText(wineTastingPojo.getWineDescription());
+                mTastingWinePhotoUrl = wineTastingPojo.getWineImageUrl();
+                Picasso.with(TastingWineDetails.this).load(mTastingWinePhotoUrl).placeholder(R.drawable.sample_wine_flight).into(winePhoto);
+
                 mViewWineName.setVisibility(View.GONE);
                 mViewWineVintage.setVisibility(View.GONE);
                 mViewWineVariety.setVisibility(View.GONE);

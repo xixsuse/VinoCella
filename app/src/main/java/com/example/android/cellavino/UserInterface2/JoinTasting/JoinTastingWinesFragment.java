@@ -68,7 +68,6 @@ public class JoinTastingWinesFragment extends Fragment {
         mTastingListId = intent.getStringExtra(Constants.TASTING_LIST_ID);
         if (mTastingListId == null) {
             //finish();
-            Toast.makeText(getActivity(), "No Tasting Details", Toast.LENGTH_SHORT).show();
             //getActivity().finish();
             //return;
         }

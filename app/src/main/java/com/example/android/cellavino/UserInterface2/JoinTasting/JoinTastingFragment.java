@@ -89,7 +89,6 @@ public class JoinTastingFragment extends Fragment {
                 if (selectedTasting != null) {
                     Intent intent = new Intent(getActivity(), JoinTastingWines.class);
                     String tasting_listId = mMyTastingsAdapter.getRef(position).getKey();
-                    Toast.makeText(getActivity(), tasting_listId, Toast.LENGTH_SHORT).show();
                     intent.putExtra(Constants.TASTING_LIST_ID, tasting_listId);
                     startActivity(intent);
 
